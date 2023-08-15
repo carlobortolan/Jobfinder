@@ -44,6 +44,7 @@
 		22E73EDC2A8BFDE10042CF01 /* mobileUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mobileUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		22E73EE02A8BFDE10042CF01 /* mobileUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mobileUITests.swift; sourceTree = "<group>"; };
 		22E73EE22A8BFDE10042CF01 /* mobileUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mobileUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		22E73EEF2A8BFE090042CF01 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +75,7 @@
 		22E73EB92A8BFDDF0042CF01 = {
 			isa = PBXGroup;
 			children = (
+				22E73EEF2A8BFE090042CF01 /* README.md */,
 				22E73EC42A8BFDDF0042CF01 /* mobile */,
 				22E73ED52A8BFDE10042CF01 /* mobileTests */,
 				22E73EDF2A8BFDE10042CF01 /* mobileUITests */,
