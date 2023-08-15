@@ -72,9 +72,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		22E40B022A8C091300D3F91E /* assets */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = assets;
+			sourceTree = "<group>";
+		};
 		22E73EB92A8BFDDF0042CF01 = {
 			isa = PBXGroup;
 			children = (
+				22E40B022A8C091300D3F91E /* assets */,
 				22E73EEF2A8BFE090042CF01 /* README.md */,
 				22E73EC42A8BFDDF0042CF01 /* mobile */,
 				22E73ED52A8BFDE10042CF01 /* mobileTests */,
