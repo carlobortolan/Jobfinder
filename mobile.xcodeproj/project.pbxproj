@@ -48,6 +48,11 @@
 		2216EA6C2A8D217A00C970DD /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		2216EA6E2A8D262400C970DD /* ErrorHandlingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandlingManager.swift; sourceTree = "<group>"; };
 		2216EA702A8D2E7D00C970DD /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
+		2216EA772A8D729000C970DD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		2216EA782A8D72CB00C970DD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		2216EA792A8D72F100C970DD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		2216EA7A2A8D730E00C970DD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		2216EA7C2A8D73E600C970DD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		22E40B042A8C20DB00D3F91E /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		22E40B062A8C21AF00D3F91E /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
 		22E73EC22A8BFDDF0042CF01 /* mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,33 +93,78 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2216EA652A8CF1C000C970DD /* appViews */ = {
+		2216EA652A8CF1C000C970DD /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2216EA662A8CF24900C970DD /* StartView.swift */,
-				2216EA682A8CF5C800C970DD /* FeedView.swift */,
+				2216EA7B2A8D734B00C970DD /* PostPage */,
+				2216EA762A8D723800C970DD /* ExplorePage */,
+				2216EA752A8D721400C970DD /* AccountPage */,
+				2216EA742A8D720500C970DD /* FeedPage */,
+				2216EA732A8D71E300C970DD /* StartPage */,
 				2216EA6A2A8CF69C00C970DD /* LoginView.swift */,
 			);
-			path = appViews;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		2216EA722A8D391800C970DD /* controller */ = {
+		2216EA722A8D391800C970DD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				2216EA6C2A8D217A00C970DD /* AuthenticationManager.swift */,
 				2216EA702A8D2E7D00C970DD /* KeyChainManager.swift */,
 				2216EA6E2A8D262400C970DD /* ErrorHandlingManager.swift */,
 			);
-			path = controller;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
-		22E40B032A8C20C000D3F91E /* apiHandler */ = {
+		2216EA732A8D71E300C970DD /* StartPage */ = {
+			isa = PBXGroup;
+			children = (
+				2216EA662A8CF24900C970DD /* StartView.swift */,
+				2216EA7A2A8D730E00C970DD /* README.md */,
+			);
+			path = StartPage;
+			sourceTree = "<group>";
+		};
+		2216EA742A8D720500C970DD /* FeedPage */ = {
+			isa = PBXGroup;
+			children = (
+				2216EA682A8CF5C800C970DD /* FeedView.swift */,
+				2216EA792A8D72F100C970DD /* README.md */,
+			);
+			path = FeedPage;
+			sourceTree = "<group>";
+		};
+		2216EA752A8D721400C970DD /* AccountPage */ = {
+			isa = PBXGroup;
+			children = (
+				2216EA782A8D72CB00C970DD /* README.md */,
+			);
+			path = AccountPage;
+			sourceTree = "<group>";
+		};
+		2216EA762A8D723800C970DD /* ExplorePage */ = {
+			isa = PBXGroup;
+			children = (
+				2216EA772A8D729000C970DD /* README.md */,
+			);
+			path = ExplorePage;
+			sourceTree = "<group>";
+		};
+		2216EA7B2A8D734B00C970DD /* PostPage */ = {
+			isa = PBXGroup;
+			children = (
+				2216EA7C2A8D73E600C970DD /* README.md */,
+			);
+			path = PostPage;
+			sourceTree = "<group>";
+		};
+		22E40B032A8C20C000D3F91E /* ApiHandlers */ = {
 			isa = PBXGroup;
 			children = (
 				22E40B042A8C20DB00D3F91E /* APIManager.swift */,
 				22E40B062A8C21AF00D3F91E /* APIResponse.swift */,
 			);
-			path = apiHandler;
+			path = ApiHandlers;
 			sourceTree = "<group>";
 		};
 		22E73EB92A8BFDDF0042CF01 = {
@@ -141,9 +191,9 @@
 		22E73EC42A8BFDDF0042CF01 /* mobile */ = {
 			isa = PBXGroup;
 			children = (
-				2216EA722A8D391800C970DD /* controller */,
-				2216EA652A8CF1C000C970DD /* appViews */,
-				22E40B032A8C20C000D3F91E /* apiHandler */,
+				2216EA722A8D391800C970DD /* Controllers */,
+				2216EA652A8CF1C000C970DD /* Views */,
+				22E40B032A8C20C000D3F91E /* ApiHandlers */,
 				22E73EC52A8BFDDF0042CF01 /* mobileApp.swift */,
 				22E73EC72A8BFDDF0042CF01 /* ContentView.swift */,
 				22E73EC92A8BFDE10042CF01 /* Assets.xcassets */,
