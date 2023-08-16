@@ -68,18 +68,48 @@ class AuthenticationManager: ObservableObject {
         }
     }
     
-    // Create account, fetch tokens and and sign in
+    // Fetch tokens and and sign in
     func signUp() {
+        // Create and verify new account
+        APIManager.createAccount(email: email, firstName: firstName, lastName: lastName, password: password, passwordConfirmation: passwordConfirmation) { result in
+            switch result {
+            case .success(let apiResponse):
+                print("Successfully signed in: \(apiResponse.message)")
+                self.verify { success in
+                    if success {
+                        // Verification succeeded, fetch access token
+                        self.fetchAccessToken()
+                    }
+                    DispatchQueue.main.async {
+                        self.errorHandlingManager.errorMessage = nil
+                    }
+                }
+                print("Successfully fetched new Access Token: \(apiResponse.message)")
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self.errorHandlingManager.errorMessage = error.localizedDescription
+                }
+            }
+        }
+    }
+    
+    
+    // Create account, fetch tokens and and sign in
+    func signUpDepr() {
         APIManager.createAccount(email: email, firstName: firstName, lastName: lastName, password: password, passwordConfirmation: passwordConfirmation) { result in
             switch result {
             case .success(let apiResponse):
                 DispatchQueue.main.async {
+                    print("Successfully created account: \(apiResponse.message)")
+                    print("Successfully verified account: \(apiResponse.message)")
+                }
+                DispatchQueue.main.async {
                     self.errorHandlingManager.errorMessage = nil // Clear any previous error
                 }
-                print("Successfully created account: \(apiResponse.message)")
-                self.verify()
-                self.fetchAccessToken()
-                print("Successfully signed in")
+                DispatchQueue.main.async {
+                    self.fetchAccessToken()
+                    print("Successfully signed in")
+                }
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.errorHandlingManager.errorMessage = error.localizedDescription
@@ -93,11 +123,16 @@ class AuthenticationManager: ObservableObject {
             self.isAuthenticated = false
             self.saveRefreshToken(refreshToken: "abc")
             self.saveAccessToken(accessToken: "abc")
+            self.password = ""
+            self.passwordConfirmation = ""
+            self.email = ""
+            self.firstName = ""
+            self.lastName = ""
             print("Successfully signed out")
         }
     }
 
-    func verify() {
+    func verify(completion: @escaping (Bool) -> Void) {
         APIManager.verifyAccount(email: email, password: password) { result in
             switch result {
             case .success(let apiResponse):
@@ -106,10 +141,12 @@ class AuthenticationManager: ObservableObject {
                     self.errorHandlingManager.errorMessage = nil // Clear any previous error
                 }
                 print("Successfully verified account. Refresh token is: \(apiResponse.message)")
+                completion(true) // Indicate success
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.errorHandlingManager.errorMessage = error.localizedDescription
                 }
+                completion(false) // Indicate failure
             }
         }
     }

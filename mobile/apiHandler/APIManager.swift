@@ -166,7 +166,6 @@ class APIManager {
                                 completion(.success(APIResponse(message: messageValue)))
                             }
                         }
-                        
                     } catch { // JSON parsing error
                         completion(.failure(error))
                     }
@@ -228,8 +227,9 @@ class APIManager {
                                let refreshTokenValue = jsonDict["refresh_token"] as? String {
                                 
                                 // Successfully extracted refresh token value
-                                completion(.success(APIResponse(message: refreshTokenValue)))
-                                
+                                DispatchQueue.main.async {
+                                    completion(.success(APIResponse(message: refreshTokenValue)))
+                                }
                             } else {
                                 let error = NSError(domain: "JSON Parsing Error", code: 0, userInfo: nil)
                                 completion(.failure(error))
