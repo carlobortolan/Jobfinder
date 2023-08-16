@@ -167,5 +167,8 @@ class APIManager {
             }
         }.resume()
     }
+    
+  //  static func findJobs(email: String, password: String, completion: @escaping (Result<APIResponse, Error>) -> Void) {
+    //}
 }
 

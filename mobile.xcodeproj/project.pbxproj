@@ -16,6 +16,7 @@
 		22E73ED72A8BFDE10042CF01 /* mobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E73ED62A8BFDE10042CF01 /* mobileTests.swift */; };
 		22E73EE12A8BFDE10042CF01 /* mobileUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E73EE02A8BFDE10042CF01 /* mobileUITests.swift */; };
 		22E73EE32A8BFDE10042CF01 /* mobileUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E73EE22A8BFDE10042CF01 /* mobileUITestsLaunchTests.swift */; };
+		22F512BC2A8C534B00188FAF /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F512BB2A8C534B00188FAF /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		22E73EE02A8BFDE10042CF01 /* mobileUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mobileUITests.swift; sourceTree = "<group>"; };
 		22E73EE22A8BFDE10042CF01 /* mobileUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mobileUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		22E73EEF2A8BFE090042CF01 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		22F512BB2A8C534B00188FAF /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 				22E73EC72A8BFDDF0042CF01 /* ContentView.swift */,
 				22E73EC92A8BFDE10042CF01 /* Assets.xcassets */,
 				22E73ECB2A8BFDE10042CF01 /* Preview Content */,
+				22F512BB2A8C534B00188FAF /* LoginView.swift */,
 			);
 			path = mobile;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 				22E40B052A8C20DB00D3F91E /* APIManager.swift in Sources */,
 				22E40B072A8C21AF00D3F91E /* APIResponse.swift in Sources */,
 				22E73EC82A8BFDDF0042CF01 /* ContentView.swift in Sources */,
+				22F512BC2A8C534B00188FAF /* LoginView.swift in Sources */,
 				22E73EC62A8BFDDF0042CF01 /* mobileApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
