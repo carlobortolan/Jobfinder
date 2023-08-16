@@ -103,11 +103,9 @@ class APIManager {
                             let json = try JSONSerialization.jsonObject(with: data, options: [])
                             print("json = \(json)")
                             if let jsonDict = json as? [String: Any],
-                               let accessTokenDict = jsonDict["access_token"] as? [String: Any],
-                               let accessTokenValue = accessTokenDict["access_token"] as? String {
-                                DispatchQueue.main.async {
-                                    completion(.success(APIResponse(message: accessTokenValue)))
-                                }
+                               let accessTokenValue = jsonDict["access_token"] as? String {
+                                // Successfully extracted access token value
+                                completion(.success(APIResponse(message: accessTokenValue)))
                             }
                         } catch { // JSON parsing error
                             completion(.failure(error))

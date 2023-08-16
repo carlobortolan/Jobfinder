@@ -12,6 +12,7 @@ class AuthenticationManager: ObservableObject {
     private var errorHandlingManager: ErrorHandlingManager
     
     @AppStorage("isAuthenticated") var isAuthenticated = false
+    // @Published var isAuthenticated = false
     @Published var email = ""
     @Published var password = ""
     @Published var passwordConfirmation = ""
@@ -24,13 +25,13 @@ class AuthenticationManager: ObservableObject {
     
     private func saveRefreshToken(refreshToken: String?) {
         if let refreshToken = refreshToken {
-            KeychainManager.saveToken(refreshToken, forKey: "refreshToken")
+            KeychainManager.saveOrUpdateToken(refreshToken, forKey: "refreshToken")
         }
     }
     
     private func saveAccessToken(accessToken: String?) {
         if let accessToken = accessToken {
-            KeychainManager.saveToken(accessToken, forKey: "accessToken")
+            KeychainManager.saveOrUpdateToken(accessToken, forKey: "accessToken")
         }
     }
 
@@ -42,16 +43,22 @@ class AuthenticationManager: ObservableObject {
         return KeychainManager.loadToken(forKey: "accessToken")
     }
     
+    // Fetch tokens and and sign in
     func signIn() {
         // Fetch refresh token
         APIManager.fetchRefreshToken(email: email, password: password) { result in
             switch result {
             case .success(let apiResponse):
-                self.saveRefreshToken(refreshToken: apiResponse.message) // Save refresh token and fetch access token
+                print("Successfully signed in: \(apiResponse.message)")
+                print("Check1 isAuthenticated \(self.isAuthenticated)")
                 DispatchQueue.main.async {
-                    self.errorHandlingManager.errorMessage = nil // Clear any previous error
+                    self.saveRefreshToken(refreshToken: apiResponse.message)
+                    self.errorHandlingManager.errorMessage = nil
+                    self.fetchAccessToken()
+                    print("Check2 isAuthenticated \(self.isAuthenticated)")
                 }
-                self.fetchAccessToken()
+                print("Successfully fetched new Access Token: \(apiResponse.message)")
+
                 return
             case .failure(let error):
                 DispatchQueue.main.async {
@@ -61,8 +68,8 @@ class AuthenticationManager: ObservableObject {
         }
     }
     
+    // Create account, fetch tokens and and sign in
     func signUp() {
-        // Create account, fetch tokens and and sign in
         APIManager.createAccount(email: email, firstName: firstName, lastName: lastName, password: password, passwordConfirmation: passwordConfirmation) { result in
             switch result {
             case .success(let apiResponse):
@@ -70,9 +77,8 @@ class AuthenticationManager: ObservableObject {
                     self.errorHandlingManager.errorMessage = nil // Clear any previous error
                 }
                 print("Successfully created account: \(apiResponse.message)")
-                self.fetchAccessToken()
                 self.verify()
-                self.isAuthenticated = true
+                self.fetchAccessToken()
                 print("Successfully signed in")
             case .failure(let error):
                 DispatchQueue.main.async {
@@ -82,6 +88,15 @@ class AuthenticationManager: ObservableObject {
         }
     }
     
+    func signOut() {
+        DispatchQueue.main.async {
+            self.isAuthenticated = false
+            self.saveRefreshToken(refreshToken: "abc")
+            self.saveAccessToken(accessToken: "abc")
+            print("Successfully signed out")
+        }
+    }
+
     func verify() {
         APIManager.verifyAccount(email: email, password: password) { result in
             switch result {
@@ -99,19 +114,23 @@ class AuthenticationManager: ObservableObject {
         }
     }
     
+    // TODO: 0. Ask user whether he wants to save credentials (username & password) to secure chain or not
+    // TODO: 1. Check for refresh token validity and depending on status prompt user to log in again or automatically fetch refresh token
+    // TODO: 2. Check for auth token validity and depending on status, request new auth token
     func fetchAccessToken() {
         guard let refreshToken = loadRefreshToken() else {
             self.errorHandlingManager.errorMessage = "No Refresh Token available"
             return
         }
+
         APIManager.fetchAccessToken(refreshToken: refreshToken) { result in
             switch result {
             case .success(let apiResponse):
                 self.saveAccessToken(accessToken: apiResponse.message)
                 DispatchQueue.main.async {
                     self.errorHandlingManager.errorMessage = nil // Clear any previous error
+                    self.isAuthenticated = true
                 }
-                return
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.errorHandlingManager.errorMessage = error.localizedDescription

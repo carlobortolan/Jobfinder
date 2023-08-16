@@ -10,19 +10,14 @@ import SwiftUI
 @main
 struct mobileApp: App {
     var body: some Scene {
+        // Create instances of your managers
         let errorHandlingManager = ErrorHandlingManager()
         let authenticationManager = AuthenticationManager(errorHandlingManager: errorHandlingManager)
         
+        // Set up the main window group with ContentView
         WindowGroup {
-            NavigationView {
-                if authenticationManager.isAuthenticated {
-                    // User is authenticated, show the main application view
-                    ContentView().environmentObject(errorHandlingManager).environmentObject(authenticationManager)
-                } else {
-                    // User is not authenticated, show the login view
-                    ContentView().environmentObject(errorHandlingManager).environmentObject(authenticationManager)
-                }
-            }
+            ContentView()
+                .environmentObject(authenticationManager).environmentObject(errorHandlingManager)
         }
     }
 }

@@ -98,13 +98,23 @@
 			path = appViews;
 			sourceTree = "<group>";
 		};
-		22E40B032A8C20C000D3F91E /* apiManager */ = {
+		2216EA722A8D391800C970DD /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				2216EA6C2A8D217A00C970DD /* AuthenticationManager.swift */,
+				2216EA702A8D2E7D00C970DD /* KeyChainManager.swift */,
+				2216EA6E2A8D262400C970DD /* ErrorHandlingManager.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		22E40B032A8C20C000D3F91E /* apiHandler */ = {
 			isa = PBXGroup;
 			children = (
 				22E40B042A8C20DB00D3F91E /* APIManager.swift */,
 				22E40B062A8C21AF00D3F91E /* APIResponse.swift */,
 			);
-			path = apiManager;
+			path = apiHandler;
 			sourceTree = "<group>";
 		};
 		22E73EB92A8BFDDF0042CF01 = {
@@ -131,15 +141,13 @@
 		22E73EC42A8BFDDF0042CF01 /* mobile */ = {
 			isa = PBXGroup;
 			children = (
+				2216EA722A8D391800C970DD /* controller */,
 				2216EA652A8CF1C000C970DD /* appViews */,
-				22E40B032A8C20C000D3F91E /* apiManager */,
+				22E40B032A8C20C000D3F91E /* apiHandler */,
 				22E73EC52A8BFDDF0042CF01 /* mobileApp.swift */,
 				22E73EC72A8BFDDF0042CF01 /* ContentView.swift */,
 				22E73EC92A8BFDE10042CF01 /* Assets.xcassets */,
 				22E73ECB2A8BFDE10042CF01 /* Preview Content */,
-				2216EA6C2A8D217A00C970DD /* AuthenticationManager.swift */,
-				2216EA6E2A8D262400C970DD /* ErrorHandlingManager.swift */,
-				2216EA702A8D2E7D00C970DD /* KeyChainManager.swift */,
 			);
 			path = mobile;
 			sourceTree = "<group>";
