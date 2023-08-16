@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22E40B052A8C20DB00D3F91E /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E40B042A8C20DB00D3F91E /* APIManager.swift */; };
+		22E40B072A8C21AF00D3F91E /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E40B062A8C21AF00D3F91E /* APIResponse.swift */; };
 		22E73EC62A8BFDDF0042CF01 /* mobileApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E73EC52A8BFDDF0042CF01 /* mobileApp.swift */; };
 		22E73EC82A8BFDDF0042CF01 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E73EC72A8BFDDF0042CF01 /* ContentView.swift */; };
 		22E73ECA2A8BFDE10042CF01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22E73EC92A8BFDE10042CF01 /* Assets.xcassets */; };
@@ -34,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		22E40B042A8C20DB00D3F91E /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		22E40B062A8C21AF00D3F91E /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
 		22E73EC22A8BFDDF0042CF01 /* mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22E73EC52A8BFDDF0042CF01 /* mobileApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mobileApp.swift; sourceTree = "<group>"; };
 		22E73EC72A8BFDDF0042CF01 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -72,6 +76,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		22E40B032A8C20C000D3F91E /* apiManager */ = {
+			isa = PBXGroup;
+			children = (
+				22E40B042A8C20DB00D3F91E /* APIManager.swift */,
+				22E40B062A8C21AF00D3F91E /* APIResponse.swift */,
+			);
+			path = apiManager;
+			sourceTree = "<group>";
+		};
 		22E73EB92A8BFDDF0042CF01 = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +109,7 @@
 		22E73EC42A8BFDDF0042CF01 /* mobile */ = {
 			isa = PBXGroup;
 			children = (
+				22E40B032A8C20C000D3F91E /* apiManager */,
 				22E73EC52A8BFDDF0042CF01 /* mobileApp.swift */,
 				22E73EC72A8BFDDF0042CF01 /* ContentView.swift */,
 				22E73EC92A8BFDE10042CF01 /* Assets.xcassets */,
@@ -259,6 +273,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22E40B052A8C20DB00D3F91E /* APIManager.swift in Sources */,
+				22E40B072A8C21AF00D3F91E /* APIResponse.swift in Sources */,
 				22E73EC82A8BFDDF0042CF01 /* ContentView.swift in Sources */,
 				22E73EC62A8BFDDF0042CF01 /* mobileApp.swift in Sources */,
 			);
