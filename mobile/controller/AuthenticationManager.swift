@@ -50,16 +50,12 @@ class AuthenticationManager: ObservableObject {
             switch result {
             case .success(let apiResponse):
                 print("Successfully signed in: \(apiResponse.message)")
-                print("Check1 isAuthenticated \(self.isAuthenticated)")
                 DispatchQueue.main.async {
                     self.saveRefreshToken(refreshToken: apiResponse.message)
                     self.errorHandlingManager.errorMessage = nil
                     self.fetchAccessToken()
-                    print("Check2 isAuthenticated \(self.isAuthenticated)")
                 }
                 print("Successfully fetched new Access Token: \(apiResponse.message)")
-
-                return
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.errorHandlingManager.errorMessage = error.localizedDescription
@@ -84,7 +80,6 @@ class AuthenticationManager: ObservableObject {
                         self.errorHandlingManager.errorMessage = nil
                     }
                 }
-                print("Successfully fetched new Access Token: \(apiResponse.message)")
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.errorHandlingManager.errorMessage = error.localizedDescription
@@ -101,7 +96,6 @@ class AuthenticationManager: ObservableObject {
             case .success(let apiResponse):
                 DispatchQueue.main.async {
                     print("Successfully created account: \(apiResponse.message)")
-                    print("Successfully verified account: \(apiResponse.message)")
                 }
                 DispatchQueue.main.async {
                     self.errorHandlingManager.errorMessage = nil // Clear any previous error
@@ -140,7 +134,7 @@ class AuthenticationManager: ObservableObject {
                 DispatchQueue.main.async {
                     self.errorHandlingManager.errorMessage = nil // Clear any previous error
                 }
-                print("Successfully verified account. Refresh token is: \(apiResponse.message)")
+                print("Successfully verified account.")
                 completion(true) // Indicate success
             case .failure(let error):
                 DispatchQueue.main.async {

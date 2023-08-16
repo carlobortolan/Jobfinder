@@ -75,7 +75,6 @@ class APIManager {
     
     static func fetchAccessToken(refreshToken: String, completion: @escaping
                                  (Result<APIResponse, Error>) -> Void) {
-        print("STARTED ACCESS TOKEN")
         guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
               let atPath = ProcessInfo.processInfo.environment["AT_PATH"],
               let url = URL(string: rootUrl + atPath) else {
@@ -127,7 +126,6 @@ class APIManager {
     }
     
     static func createAccount (email: String, firstName: String, lastName: String, password: String, passwordConfirmation: String, completion: @escaping (Result<APIResponse, Error>) -> Void) {
-        print("STARTED CREATE ACCOUNT")
         guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
               let userPath = ProcessInfo.processInfo.environment["USER_PATH"],
               let url = URL(string: rootUrl + userPath) else {
@@ -162,9 +160,7 @@ class APIManager {
                         print("json = \(json)")
                         if let jsonDict = json as? [String: Any],
                            let messageValue = jsonDict["message"] as? String {
-                            DispatchQueue.main.async {
-                                completion(.success(APIResponse(message: messageValue)))
-                            }
+                            completion(.success(APIResponse(message: messageValue)))
                         }
                     } catch { // JSON parsing error
                         completion(.failure(error))
@@ -227,9 +223,7 @@ class APIManager {
                                let refreshTokenValue = jsonDict["refresh_token"] as? String {
                                 
                                 // Successfully extracted refresh token value
-                                DispatchQueue.main.async {
-                                    completion(.success(APIResponse(message: refreshTokenValue)))
-                                }
+                                completion(.success(APIResponse(message: refreshTokenValue)))
                             } else {
                                 let error = NSError(domain: "JSON Parsing Error", code: 0, userInfo: nil)
                                 completion(.failure(error))
