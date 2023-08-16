@@ -158,13 +158,22 @@
 			path = PostPage;
 			sourceTree = "<group>";
 		};
-		22E40B032A8C20C000D3F91E /* ApiHandlers */ = {
+		2216EA7D2A8D74FF00C970DD /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				22E73EC52A8BFDDF0042CF01 /* mobileApp.swift */,
+				22E73EC72A8BFDDF0042CF01 /* ContentView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		22E40B032A8C20C000D3F91E /* Networking */ = {
 			isa = PBXGroup;
 			children = (
 				22E40B042A8C20DB00D3F91E /* APIManager.swift */,
 				22E40B062A8C21AF00D3F91E /* APIResponse.swift */,
 			);
-			path = ApiHandlers;
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		22E73EB92A8BFDDF0042CF01 = {
@@ -191,11 +200,10 @@
 		22E73EC42A8BFDDF0042CF01 /* mobile */ = {
 			isa = PBXGroup;
 			children = (
+				2216EA7D2A8D74FF00C970DD /* Main */,
 				2216EA722A8D391800C970DD /* Controllers */,
 				2216EA652A8CF1C000C970DD /* Views */,
-				22E40B032A8C20C000D3F91E /* ApiHandlers */,
-				22E73EC52A8BFDDF0042CF01 /* mobileApp.swift */,
-				22E73EC72A8BFDDF0042CF01 /* ContentView.swift */,
+				22E40B032A8C20C000D3F91E /* Networking */,
 				22E73EC92A8BFDE10042CF01 /* Assets.xcassets */,
 				22E73ECB2A8BFDE10042CF01 /* Preview Content */,
 			);
