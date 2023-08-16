@@ -33,8 +33,10 @@ struct LoginView: View {
             Color("BgColor").edgesIgnoringSafeArea(.all)
             
             VStack {
-                Image(systemName: "globe")
-                    .imageScale(.large)
+                Image("EmbloyLogo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 100, height: 100)
                     .foregroundColor(Color("PrimaryColor"))
                 Text("Login")
                     .font(.largeTitle)
@@ -73,8 +75,10 @@ struct LoginView: View {
         ZStack {
             Color("BgColor").edgesIgnoringSafeArea(.all)
             VStack {
-                Image(systemName: "globe")
-                    .imageScale(.large)
+                Image("EmbloyLogo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 100, height: 100)
                     .foregroundColor(Color("PrimaryColor"))
                 Text("Sign up for embloy")
                     .font(.largeTitle)
