@@ -9,19 +9,18 @@ import SwiftUI
 
 @main
 struct mobileApp: App {
-    @AppStorage("isAuthenticated") var isAuthenticated = false
-    @AppStorage("accessToken") var accessToken: String?
-    @AppStorage("refreshToken") var refreshToken: String?
-
     var body: some Scene {
+        let errorHandlingManager = ErrorHandlingManager()
+        let authenticationManager = AuthenticationManager(errorHandlingManager: errorHandlingManager)
+        
         WindowGroup {
             NavigationView {
-                if isAuthenticated {
+                if authenticationManager.isAuthenticated {
                     // User is authenticated, show the main application view
-                    ContentView()
+                    ContentView().environmentObject(errorHandlingManager).environmentObject(authenticationManager)
                 } else {
                     // User is not authenticated, show the login view
-                    ContentView()
+                    ContentView().environmentObject(errorHandlingManager).environmentObject(authenticationManager)
                 }
             }
         }
