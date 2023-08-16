@@ -80,6 +80,16 @@
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
+            key = "USER_VERIFY_PATH"
+            value = "/user/verify"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "USER_PATH"
+            value = "/user"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
             key = "RT_PATH"
             value = "/user/auth/token/refresh"
             isEnabled = "YES">
