@@ -4,6 +4,9 @@
 //
 //  Created by cb on 16.08.23.
 //
+//  Describes the feed with all jobs, reloads after 20 jobs
+//  ==> GET /jobs
+//
 
 import SwiftUI
 

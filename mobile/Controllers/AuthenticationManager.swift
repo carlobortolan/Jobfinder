@@ -12,7 +12,6 @@ class AuthenticationManager: ObservableObject {
     private var errorHandlingManager: ErrorHandlingManager
     
     @AppStorage("isAuthenticated") var isAuthenticated = false
-    // @Published var isAuthenticated = false
     @Published var email = ""
     @Published var password = ""
     @Published var passwordConfirmation = ""
@@ -88,30 +87,6 @@ class AuthenticationManager: ObservableObject {
         }
     }
     
-    
-    // Create account, fetch tokens and and sign in
-    func signUpDepr() {
-        APIManager.createAccount(email: email, firstName: firstName, lastName: lastName, password: password, passwordConfirmation: passwordConfirmation) { result in
-            switch result {
-            case .success(let apiResponse):
-                DispatchQueue.main.async {
-                    print("Successfully created account: \(apiResponse.message)")
-                }
-                DispatchQueue.main.async {
-                    self.errorHandlingManager.errorMessage = nil // Clear any previous error
-                }
-                DispatchQueue.main.async {
-                    self.fetchAccessToken()
-                    print("Successfully signed in")
-                }
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    self.errorHandlingManager.errorMessage = error.localizedDescription
-                }
-            }
-        }
-    }
-    
     func signOut() {
         DispatchQueue.main.async {
             self.isAuthenticated = false
@@ -148,6 +123,8 @@ class AuthenticationManager: ObservableObject {
     // TODO: 0. Ask user whether he wants to save credentials (username & password) to secure chain or not
     // TODO: 1. Check for refresh token validity and depending on status prompt user to log in again or automatically fetch refresh token
     // TODO: 2. Check for auth token validity and depending on status, request new auth token
+    
+    // Request new access token and promt user to log in if refresh token is invalid
     func fetchAccessToken() {
         guard let refreshToken = loadRefreshToken() else {
             self.errorHandlingManager.errorMessage = "No Refresh Token available"
@@ -159,14 +136,45 @@ class AuthenticationManager: ObservableObject {
             case .success(let apiResponse):
                 self.saveAccessToken(accessToken: apiResponse.message)
                 DispatchQueue.main.async {
-                    self.errorHandlingManager.errorMessage = nil // Clear any previous error
+                    self.errorHandlingManager.errorMessage = nil
                     self.isAuthenticated = true
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.errorHandlingManager.errorMessage = error.localizedDescription
+                    self.isAuthenticated = false
                 }
             }
+        }
+    }
+    
+    // load access token or request a new one if missing
+    func getAccessToken() -> String? {
+        if let accessToken = loadAccessToken() {
+            return accessToken // Access token already exists
+        } else {
+            guard let refreshToken = loadRefreshToken() else {
+                self.errorHandlingManager.errorMessage = "No Refresh Token available"
+                return nil // If no refresh token is available, return nil
+            }
+
+            APIManager.fetchAccessToken(refreshToken: refreshToken) { result in
+                switch result {
+                case .success(let apiResponse):
+                    self.saveAccessToken(accessToken: apiResponse.message)
+                    DispatchQueue.main.async {
+                        self.errorHandlingManager.errorMessage = nil
+                        self.isAuthenticated = true
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        self.errorHandlingManager.errorMessage = error.localizedDescription
+                        self.isAuthenticated = false // Prompt user to log in again if refresh token is invalid
+                    }
+                }
+            }
+            
+            return nil // Return nil initially, as the new access token is being fetched
         }
     }
 }

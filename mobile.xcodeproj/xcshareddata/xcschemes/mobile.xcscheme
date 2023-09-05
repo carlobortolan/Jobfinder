@@ -80,6 +80,11 @@
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
+            key = "JOBS_FIND_PATH"
+            value = "/find"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
             key = "USER_VERIFY_PATH"
             value = "/user/verify"
             isEnabled = "YES">

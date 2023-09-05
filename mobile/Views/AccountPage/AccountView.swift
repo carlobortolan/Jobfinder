@@ -4,6 +4,8 @@
 //
 //  Created by cb on 15.08.23.
 //
+// ==> GET /user
+//
 
 import SwiftUI
 
