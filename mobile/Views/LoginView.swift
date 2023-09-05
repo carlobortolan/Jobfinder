@@ -38,17 +38,16 @@ struct LoginView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 100, height: 100)
                     .foregroundColor(Color("PrimaryColor"))
-                Text("Login")
+                Text("embloy")
                     .font(.largeTitle)
                     .padding()
-                
                 TextField("Email", text: $authenticationManager.email)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
+                    .padding(.horizontal)
                 SecureField("Password", text: $authenticationManager.password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
+                    .padding(.horizontal)
+                    .padding(.bottom)
                     Button("Login") {
                         authenticationManager.signIn()
                     }
@@ -83,34 +82,36 @@ struct LoginView: View {
                 Text("Sign up for embloy")
                     .font(.largeTitle)
                     .padding()
-                
+
                 TextField("Email", text: $authenticationManager.email)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-            
+                    .padding(.horizontal)
+                    .padding(.bottom)
+
                 TextField("First name", text: $authenticationManager.firstName)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
+                    .padding(.horizontal)
 
                 TextField("Last name", text: $authenticationManager.lastName)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
+                    .padding(.horizontal)
+                    .padding(.bottom)
+
                 SecureField("Password", text: $authenticationManager.password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
+                    .padding(.horizontal)
 
                 SecureField("Confirm password", text: $authenticationManager.passwordConfirmation)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
+                    .padding(.horizontal)
+                    .padding(.bottom)
+
                 Button("Create new account") {
                     authenticationManager.signUp()
-                }
+                }.padding(.top)
                 Button("Already have an account?") {
                     self.hasAccount = true
-                }
-                .padding()
+                }.padding()
                 
                 if let errorMessage = errorHandlingManager.errorMessage {
                     Text(errorMessage)
@@ -127,6 +128,10 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        let errorHandlingManager = ErrorHandlingManager()
+        let authenticationManager = AuthenticationManager(errorHandlingManager: errorHandlingManager)
+
+        LoginView()            .environmentObject(errorHandlingManager).environmentObject(authenticationManager)
+
     }
 }

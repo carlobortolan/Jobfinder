@@ -16,9 +16,9 @@ struct AccountView: View {
         Group {
             homeView
         }
-        .onAppear {
-            // You can also fetch access token here if needed on app launch
-        }
+//        .onAppear {
+//            // You can also fetch access token here if needed on app launch
+//        }
     }
     
         
@@ -50,8 +50,13 @@ struct AccountView: View {
     }
 }
 
-struct AccountView_Previews: PreviewProvider {
+
+struct AccountView_Preview: PreviewProvider {
     static var previews: some View {
+        let errorHandlingManager = ErrorHandlingManager()
+        let authenticationManager = AuthenticationManager(errorHandlingManager: errorHandlingManager)
+
         AccountView()
+            .environmentObject(errorHandlingManager).environmentObject(authenticationManager)
     }
 }

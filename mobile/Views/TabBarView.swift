@@ -33,8 +33,13 @@ struct TabBarView: View {
         }
     }
 }
-struct TabBarView_Previews: PreviewProvider {
+
+struct Previews_TabBarView_Previews: PreviewProvider {
     static var previews: some View {
-        TabBarView()
+        let errorHandlingManager = ErrorHandlingManager()
+        let authenticationManager = AuthenticationManager(errorHandlingManager: errorHandlingManager)
+
+        TabBarView()            .environmentObject(errorHandlingManager).environmentObject(authenticationManager)
+
     }
 }
