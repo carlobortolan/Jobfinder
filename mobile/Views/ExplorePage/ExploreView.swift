@@ -30,6 +30,7 @@ struct ExploreView: View {
                 FilterAndSortView(selectedJobType: $selectedJobType, selectedSortBy: $selectedSortBy, isLoading: $isLoading) {
                     fetchJobs(iteration: 0)
                 }
+                Spacer()
                 if isLoading {
                     ProgressView()
                 } else {
@@ -41,7 +42,9 @@ struct ExploreView: View {
             .onAppear {
                 fetchJobs(iteration: 0)
             }
-        }.padding()
+            .navigationBarHidden(true)
+        }
+        .padding()
     }
 
     func fetchJobs(iteration: Int) {

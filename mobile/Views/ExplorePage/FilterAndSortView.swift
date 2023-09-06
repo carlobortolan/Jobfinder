@@ -72,7 +72,7 @@ struct FilterAndSortView: View {
                     Text(option.label).tag(option.value)
                 }
             }
-            .pickerStyle(DefaultPickerStyle())
+            .pickerStyle(MenuPickerStyle())
             
             Button("Apply") {
                 if selectedJobType == "All" {
@@ -85,7 +85,6 @@ struct FilterAndSortView: View {
         .padding(.horizontal)
     }
 }
-
 struct SortOption: Identifiable {
     let id = UUID()
     let label: String

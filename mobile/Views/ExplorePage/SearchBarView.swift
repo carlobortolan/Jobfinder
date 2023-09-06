@@ -33,7 +33,7 @@ struct SearchBarView: View {
                         }
                     }
                 }
-        }
+        }.foregroundColor(Color("FadedTextColor"))
     }
 }
 

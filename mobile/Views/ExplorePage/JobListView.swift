@@ -18,7 +18,7 @@ struct JobListView: View {
                 VStack(spacing: 0) {
                     NavigationLink(destination: JobDetail(job: job)) {
                         JobPreview(job: job)
-                            .background(Color("BgColor"))
+                            .background(Color("FeedBgColor"))
                     }
                     .buttonStyle(PlainButtonStyle())
                     .padding(.vertical, 8)
@@ -28,5 +28,12 @@ struct JobListView: View {
                 }
             }
         }
+    }
+}
+
+struct Previews_JobListView_Previews: PreviewProvider {
+    static var previews: some View {
+        @State var jobs = JobModel.generateRandomJobResponse().jobs
+        JobListView(jobs: $jobs)
     }
 }
