@@ -313,10 +313,17 @@ class APIManager {
                 
                 if statusCode == 200 { // Check if the response code is 200 (OK)
                     if let data = data { // Parse data into [Job] if successful
+                        if let responseString = String(data: data, encoding: .utf8) {
+                            print("Response Data: \(responseString)")
+                        } else {
+                            print("Failed to convert data to string")
+                        }
                         do {
-                            let jobs = try JSONDecoder().decode([Job].self, from: data)
+                            let jobResponse = try JSONDecoder().decode(JobResponse.self, from: data)
+                            let jobs = jobResponse.jobs
                             completion(.success(jobs))
                         } catch {
+                            print("JSON Error: \(error)")
                             completion(.failure(APIError.jsonParsingError(error)))
                         }
                     } else {

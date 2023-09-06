@@ -30,7 +30,7 @@ enum APIError: Error {
         case .authenticationError:
             return "Authentication Error: Invalid access token"
         case .jsonParsingError(let error):
-            return "JSON Parsing Error: \(error.localizedDescription)"
+            return "JSON Parsing Error: \(error.localizedDescription) \(error)"
         case .argumentError(let message):
             return "Argument Error: \(message)"
         case .unknownError:

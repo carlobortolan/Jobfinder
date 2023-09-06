@@ -22,7 +22,9 @@ struct ExploreView: View {
     var body: some View {
         NavigationView {
             VStack {
-                SearchBarView(searchText: $searchText)
+                SearchBarView(searchText: $searchText) {
+                    fetchJobs(iteration: 0)
+                }
                 JobListView(jobs: $jobs)
 
                 Spacer()
@@ -65,8 +67,6 @@ struct ExploreView: View {
             }
         }
     }}
-
-
 
 struct Previews_ExploreView_Previews: PreviewProvider {
     static var previews: some View {

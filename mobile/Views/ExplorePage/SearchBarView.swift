@@ -9,23 +9,29 @@ import SwiftUI
 
 struct SearchBarView: View {
     @Binding var searchText: String
-
+    var onSearch: () -> Void // Add a callback for search
+    
     var body: some View {
         HStack {
-            Image(systemName: "magnifyingglass")
-                .foregroundColor(.gray)
-
             TextField("Search", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.vertical, 8)
+                .onSubmit { // Call onSearch when Enter is pressed
+                    onSearch()
+                }
+
+            Image(systemName: "magnifyingglass")
+                .onTapGesture { // Call onSearch when the search icon is tapped
+                    onSearch()
+                }
         }
-        .padding(.horizontal)
     }
 }
 
 struct SearchBarView_Previews: PreviewProvider {
     static var previews: some View {
         @State var searchText = "ABC"
-        SearchBarView(searchText: $searchText)
+        SearchBarView(searchText: $searchText) {
+            print("")
+        }
     }
 }
