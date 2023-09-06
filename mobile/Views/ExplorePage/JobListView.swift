@@ -18,14 +18,13 @@ struct JobListView: View {
                 VStack(spacing: 0) {
                     NavigationLink(destination: JobDetail(job: job)) {
                         JobPreview(job: job)
-                            .background(Color.black)
+                            .background(Color("BgColor"))
                     }
                     .buttonStyle(PlainButtonStyle())
                     .padding(.vertical, 8)
-                    
                     Divider()
                         .background(Color.gray.opacity(0.5))
-                        .padding(.leading, 16)
+                        .padding(.horizontal, 16)
                 }
             }
         }

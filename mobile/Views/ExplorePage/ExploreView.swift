@@ -34,13 +34,14 @@ struct ExploreView: View {
                     ProgressView()
                 } else {
                     JobListView(jobs: $jobs)
+                    Spacer()
                 }
-                Spacer()
+                
             }
             .onAppear {
                 fetchJobs(iteration: 0)
             }
-        }
+        }.padding()
     }
 
     func fetchJobs(iteration: Int) {
@@ -65,6 +66,7 @@ struct ExploreView: View {
                                 // Authentication error (e.g., access token invalid)
                                 // Refresh the access token and retry the request
                                 self.authenticationManager.fetchAccessToken()
+                                
                                 self.fetchJobs(iteration: 1)
                             } else {
                                 print("case .else")

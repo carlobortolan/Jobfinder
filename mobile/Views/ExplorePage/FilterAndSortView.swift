@@ -15,12 +15,37 @@ struct FilterAndSortView: View {
     var onApplyFilters: () -> Void
     
     // TODO: Read job categories from json/api
-    let jobCategories: [String] = [
-        "All", "Retail", "Food", "Hospitality", "Tourism", "Events", "Entertainment",
-        "Cleaning", "Landscaping", "Personal_Care", "Childcare", "Delivery", "Logistics",
-        "Transportation", "Staffing", "Warehousing", "Manufacturing", "Customer_Service",
-        "Call_Centers", "Healthcare", "Freelance", "Construction", "Real_Estate",
-        "Fitness", "Security", "Marketing", "Sales", "Administration", "IT", "Education"
+    let jobCategories: [JobCategory] = [
+        JobCategory(label: "All", value: ""),
+        JobCategory(label: "Retail", value: "Retail"),
+        JobCategory(label: "Food", value: "Food"),
+        JobCategory(label: "Hospitality", value: "Hospitality"),
+        JobCategory(label: "Tourism", value: "Tourism"),
+        JobCategory(label: "Events", value: "Events"),
+        JobCategory(label: "Entertainment", value: "Entertainment"),
+        JobCategory(label: "Cleaning", value: "Cleaning"),
+        JobCategory(label: "Landscaping", value: "Landscaping"),
+        JobCategory(label: "Personal_Care", value: "Personal_Care"),
+        JobCategory(label: "Childcare", value: "Childcare"),
+        JobCategory(label: "Delivery", value: "Delivery"),
+        JobCategory(label: "Logistics", value: "Logistics"),
+        JobCategory(label: "Transportation", value: "Transportation"),
+        JobCategory(label: "Staffing", value: "Staffing"),
+        JobCategory(label: "Warehousing", value: "Warehousing"),
+        JobCategory(label: "Manufacturing", value: "Manufacturing"),
+        JobCategory(label: "Customer_Service", value: "Customer_Service"),
+        JobCategory(label: "Call_Centers", value: "Call_Centers"),
+        JobCategory(label: "Healthcare", value: "Healthcare"),
+        JobCategory(label: "Freelance", value: "Freelance"),
+        JobCategory(label: "Construction", value: "Construction"),
+        JobCategory(label: "Real_Estate", value: "Real_Estate"),
+        JobCategory(label: "Fitness", value: "Fitness"),
+        JobCategory(label: "Security", value: "Security"),
+        JobCategory(label: "Marketing", value: "Marketing"),
+        JobCategory(label: "Sales", value: "Sales"),
+        JobCategory(label: "Administration", value: "Administration"),
+        JobCategory(label: "IT", value: "IT"),
+        JobCategory(label: "Education", value: "Education")
     ]
     
     // TODO: Read sorting options from json/api
@@ -35,8 +60,8 @@ struct FilterAndSortView: View {
     var body: some View {
         HStack {
             Picker("Job Category", selection: $selectedJobType) {
-                ForEach(jobCategories, id: \.self) { category in
-                    Text(category).tag(category)
+                ForEach(jobCategories, id: \.value) { category in
+                    Text(category.label).tag(category.value)
                 }
                 
             }
@@ -44,8 +69,7 @@ struct FilterAndSortView: View {
             
             Picker("Sort By", selection: $selectedSortBy) {
                 ForEach(sortingOptions, id: \.value) { option in
-                    Text(option.label)
-                        .tag(option.value)
+                    Text(option.label).tag(option.value)
                 }
             }
             .pickerStyle(DefaultPickerStyle())
@@ -58,11 +82,17 @@ struct FilterAndSortView: View {
                 onApplyFilters()
             }
         }
-        .padding()
+        .padding(.horizontal)
     }
 }
 
 struct SortOption: Identifiable {
+    let id = UUID()
+    let label: String
+    let value: String
+}
+
+struct JobCategory: Identifiable {
     let id = UUID()
     let label: String
     let value: String

@@ -16,11 +16,10 @@ struct SearchBarView: View {
     
     var body: some View {
         HStack {
-            TextField("Search", text: $searchText)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .onSubmit {
-                    onSearch()
-                }
+            TextField("Search", text: $searchText, onCommit: {
+                onSearch()
+            })
+            .textFieldStyle(RoundedBorderTextFieldStyle())
 
             Image(systemName: "magnifyingglass")
                 .scaleEffect(isSearching ? 0.9 : 1.0)

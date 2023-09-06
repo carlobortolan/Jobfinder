@@ -17,6 +17,7 @@ struct SignInForm: View {
             Color("BgColor").edgesIgnoringSafeArea(.all)
             
             VStack {
+                Spacer()
                 Image("EmbloyLogo")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -40,6 +41,7 @@ struct SignInForm: View {
                     hasAccount = false
                 }
                 .padding()
+                Spacer()
             }
             .padding()
             .background(Color("BgColor"))

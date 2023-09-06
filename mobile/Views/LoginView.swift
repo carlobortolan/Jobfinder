@@ -14,25 +14,36 @@ struct LoginView: View {
     @State private var hasAccount: Bool = false
     
     var body: some View {
-        Group {
-            if hasAccount {
-                SignInForm(hasAccount: $hasAccount)
-            } else {
-                SignUpForm(hasAccount: $hasAccount)
+        NavigationView {
+            ZStack {
+                Color("BgColor")
+                    .ignoresSafeArea(.all)
+                
+                ScrollView {
+                    VStack {
+                        if hasAccount {
+                            SignInForm(hasAccount: $hasAccount)
+                        } else {
+                            SignUpForm(hasAccount: $hasAccount)
+                        }
+                    }
+                    .padding()
+                }
             }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("Authentication")
         }
         .onAppear {
             // Fetch access token here if needed on app launch
         }
     }
 }
-
+ 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         let errorHandlingManager = ErrorHandlingManager()
         let authenticationManager = AuthenticationManager(errorHandlingManager: errorHandlingManager)
 
         LoginView().environmentObject(errorHandlingManager).environmentObject(authenticationManager)
-
     }
 }

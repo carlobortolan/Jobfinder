@@ -12,7 +12,7 @@ struct ContentView: View {
     @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
 
     var body: some View {
-        NavigationView {
+        Group {
             if authenticationManager.isAuthenticated {
                 TabBarView()
             } else {
