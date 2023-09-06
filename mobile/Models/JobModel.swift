@@ -51,12 +51,10 @@ struct Job: Codable, Hashable {
     let allowed_cv_format: [String]
     let image_url: String
     
-    // Implement Hashable
     func hash(into hasher: inout Hasher) {
         hasher.combine(job_id)
     }
 
-    // Optional: Implement Equatable if needed
     static func == (lhs: Job, rhs: Job) -> Bool {
         return lhs.job_id == rhs.job_id
     }
