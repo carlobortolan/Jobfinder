@@ -9,7 +9,7 @@ import Foundation
 
 class RequestHandler {
     
-    /// Performs an HTTP GET request to the specified URL with an access token and handles the response.
+    /// Performs an HTTP GET request to the specified endpoint with an access token and handles the response.
     ///
     /// This function constructs an HTTP GET request to the given URL, sets the access token in the request headers,
     /// and asynchronously performs the request. It then processes the HTTP response based on the status code
@@ -18,6 +18,7 @@ class RequestHandler {
     /// - Parameters:
     ///   - url: The URL to which the GET request will be sent.
     ///   - accessToken: The access token to be included in the request headers.
+    ///   - responseType: The type of response data to be decoded from the JSON response.
     ///   - completion: A closure that receives a `Result` containing either the decoded response data or an API error.
     ///
     /// - Note: This function handles common HTTP status codes such as 204 (No Content), 401 (Unauthorized),
@@ -29,20 +30,20 @@ class RequestHandler {
     ///
     /// Example usage:
     ///
-    /// let apiURL = URL(string: "https://example.com/api/jobs")!
-    /// RequestHandler.performRequest(url: apiURL, accessToken: "your_access_token") { result in
+    /// let apiURL = URL(string: "https://example.com/api/endpoint")!
+    /// RequestHandler.performRequest(url: apiURL, accessToken: "your_access_token", responseType: YourDecodableType.self) { result in
     ///     switch result {
-    ///         case .success(let jobs):
+    ///     case .success(let responseData):
     ///         // Handle successful response data (e.g., update UI)
-    ///         case .failure(let error):
+    ///     case .failure(let error):
     ///         // Handle API error (e.g., display error message to the user)
     ///         print("API Error: \(error)")
     ///     }
     /// }
-    /// 
+    ///
     /// - SeeAlso: `APIError` for the possible API error types.
     /// - SeeAlso: `Result` for the result type that contains either the decoded response data or an API error.
-    static func performRequest(url: URL, accessToken: String, completion: @escaping (Result<[Job], APIError>) -> Void) {
+    static func performRequest<T: Decodable>(url: URL, accessToken: String, responseType: T.Type, completion: @escaping (Result<T, APIError>) -> Void) {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.addValue(accessToken, forHTTPHeaderField: "access_token")
@@ -60,21 +61,16 @@ class RequestHandler {
 
                 switch statusCode {
                 case 204:
-                    completion(.failure(APIError.noContent("matching jobs")))
+                    completion(.failure(APIError.noContent(String(describing: T.self))))
                 case 401:
                     completion(.failure(APIError.authenticationError))
                 case 500:
                     completion(.failure(APIError.internalServerError))
                 case 200:
                     if let data = data {
-                        if let responseString = String(data: data, encoding: .utf8) {
-                            print("Response Data: \(responseString)")
-                        } else {
-                            print("Failed to convert data to string")
-                        }
                         do {
-                            let jobs = try JSONDecoder().decode([Job].self, from: data)
-                            completion(.success(jobs))
+                            let responseData = try JSONDecoder().decode(T.self, from: data)
+                            completion(.success(responseData))
                         } catch {
                             print("JSON Error: \(error)")
                             completion(.failure(APIError.jsonParsingError(error)))
@@ -87,7 +83,7 @@ class RequestHandler {
                         do {
                             let json = try JSONSerialization.jsonObject(with: data, options: [])
                             print("Error JSON = \(json)")
-                            handleApiErrors(json: json, errorKeys: ["token", "jobs"], statusCode: statusCode, completion: completion)
+                            handleApiErrors(json: json, errorKeys: ["token", String(describing: T.self)], statusCode: statusCode, completion: completion)
                         } catch {
                             completion(.failure(APIError.jsonParsingError(error)))
                         }

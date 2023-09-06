@@ -15,7 +15,7 @@ struct JobListView: View {
     
     var body: some View {
         ScrollView {
-            ForEach(Array(Set(jobs)), id: \.job_id) { job in
+            ForEach(Array(Set(jobs)), id: \.jobId) { job in
                 VStack(spacing: 0) {
                     NavigationLink(destination: JobDetail(job: job)) {
                         JobPreview(job: job)

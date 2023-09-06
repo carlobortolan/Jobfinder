@@ -14,56 +14,7 @@
 import Foundation
 
 class APIManager {
-
-    /// AccountHandler
-
-    /// Delegates the creation of a user account to AccountHandler.
-    ///
-    /// - Parameters:
-    ///   - email: The email address of the user.
-    ///   - firstName: The first name of the user.
-    ///   - lastName: The last name of the user.
-    ///   - password: The user's password.
-    ///   - passwordConfirmation: The confirmation of the user's password.
-    ///   - completion: A closure that receives a `Result` with an `APIResponse` or an `APIError`.
-    static func createAccount(email: String, firstName: String, lastName: String, password: String, passwordConfirmation: String, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
-        AccountHandler.createAccount(email: email, firstName: firstName, lastName: lastName, password: password, passwordConfirmation: passwordConfirmation, completion: completion)
-    }
-
-    /// Delegates the verification of a user account to AccountHandler.
-    ///
-    /// - Parameters:
-    ///   - email: The email address of the user.
-    ///   - password: The user's password.
-    ///   - completion: A closure that receives a `Result` with an `APIResponse` or an `APIError`.
-    static func verifyAccount(email: String, password: String, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
-        AccountHandler.verifyAccount(email: email, password: password, completion: completion)
-    }
-
-    /// Delegates the fetching of job feed to FeedHandler.
-    ///
-    /// - Parameters:
-    ///   - longitude: The longitude for location-based filtering.
-    ///   - latitude: The latitude for location-based filtering.
-    ///   - page: The page number for pagination.
-    ///   - accessToken: The user's access token for authentication.
-    ///   - completion: A closure that receives a `Result` with an array of `Job` or an `APIError`.
-    static func fetchFeed(longitude: Float, latitude: Float, page: Int, accessToken: String, completion: @escaping (Result<[Job], APIError>) -> Void) {
-        FeedHandler.fetchFeed(longitude: longitude, latitude: latitude, page: page, accessToken: accessToken, completion: completion)
-    }
-
-    /// Delegates the querying of jobs to FeedHandler.
-    ///
-    /// - Parameters:
-    ///   - query: The query string for job searching.
-    ///   - jobType: The type of job to filter by.
-    ///   - sortBy: The sorting criteria for the job list.
-    ///   - accessToken: The user's access token for authentication.
-    ///   - completion: A closure that receives a `Result` with an array of `Job` or an `APIError`.
-    static func queryJobs(query: String, jobType: String, sortBy: String, accessToken: String, completion: @escaping (Result<[Job], APIError>) -> Void) {
-        FeedHandler.queryJobs(query: query, jobType: jobType, sortBy: sortBy, accessToken: accessToken, completion: completion)
-    }
-
+    
     /// Delegates the execution of a network request to RequestHandler.
     ///
     /// - Parameters:
@@ -71,7 +22,7 @@ class APIManager {
     ///   - accessToken: The user's access token for authentication.
     ///   - completion: A closure that receives a `Result` with an array of `Job` or an `APIError`.
     static func performRequest(url: URL, accessToken: String, completion: @escaping (Result<[Job], APIError>) -> Void) {
-        RequestHandler.performRequest(url: url, accessToken: accessToken, completion: completion)
+        RequestHandler.performRequest(url: url, accessToken: accessToken, responseType: [Job].self, completion: completion)
     }
 
     /// Delegates the handling of API errors to RequestHandler.
@@ -102,4 +53,88 @@ class APIManager {
     ///   - completion: A closure that receives a `Result` with an `APIResponse` or an `APIError`.
     static func fetchAccessToken(refreshToken: String, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
         TokenHandler.fetchAccessToken(refreshToken: refreshToken, completion: completion)
-    }}
+    }
+
+    /// Delegates the creation of a user account to AccountHandler.
+    ///
+    /// - Parameters:
+    ///   - email: The email address of the user.
+    ///   - firstName: The first name of the user.
+    ///   - lastName: The last name of the user.
+    ///   - password: The user's password.
+    ///   - passwordConfirmation: The confirmation of the user's password.
+    ///   - completion: A closure that receives a `Result` with an `APIResponse` or an `APIError`.
+    static func createAccount(email: String, firstName: String, lastName: String, password: String, passwordConfirmation: String, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
+        AccountHandler.createAccount(email: email, firstName: firstName, lastName: lastName, password: password, passwordConfirmation: passwordConfirmation, completion: completion)
+    }
+
+    /// Delegates the verification of a user account to AccountHandler.
+    ///
+    /// - Parameters:
+    ///   - email: The email address of the user.
+    ///   - password: The user's password.
+    ///   - completion: A closure that receives a `Result` with an `APIResponse` or an `APIError`.
+    static func verifyAccount(email: String, password: String, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
+        AccountHandler.verifyAccount(email: email, password: password, completion: completion)
+    }
+    
+    /// Delegates the fetching of a user's account to AccountHandler.
+    ///
+    /// - Parameters:
+    ///   - accessToken: The user's access token for authentication.
+    ///   - completion: A closure that receives a `Result` with an `User` or an `APIError`.
+    static func fetchAccount(accessToken: String, completion: @escaping (Result<User, APIError>) -> Void) {
+        AccountHandler.fetchAccount(accessToken: accessToken, completion: completion)
+    }
+    
+    /// Delegates the fetching of a user's preferences to AccountHandler.
+    ///
+    /// - Parameters:
+    ///   - accessToken: The user's access token for authentication.
+    ///   - completion: A closure that receives a `Result` with an `Preferences` or an `APIError`.
+    static func fetchPreferences(accessToken: String, completion: @escaping (Result<Preferences, APIError>) -> Void) {
+        AccountHandler.fetchPreferences(accessToken: accessToken, completion: completion)
+    }
+
+    /// Delegates the fetching of of a user's own jobs to JobHandler.
+    ///
+    /// - Parameters:
+    ///   - accessToken: The user's access token for authentication.
+    ///   - completion: A closure that receives a `Result` with an array of `Job` or an `APIError`.
+    static func fetchOwnJobs(accessToken: String, completion: @escaping (Result<[Job], APIError>) -> Void) {
+        JobHandler.fetchOwnJobs(accessToken: accessToken, completion: completion)
+    }
+
+    /// Delegates the fetching of a user's own applications to ApplicationHandler.
+    ///
+    /// - Parameters:
+    ///   - accessToken: The user's access token for authentication.
+    ///   - completion: A closure that receives a `Result` with an array of `Application` or an `APIError`.
+    static func fetchOwnApplications(accessToken: String, completion: @escaping (Result<[Application], APIError>) -> Void) {
+        ApplicationHandler.fetchOwnApplications(accessToken: accessToken, completion: completion)
+    }
+    
+    /// Delegates the fetching of job feed to FeedHandler.
+    ///
+    /// - Parameters:
+    ///   - longitude: The longitude for location-based filtering.
+    ///   - latitude: The latitude for location-based filtering.
+    ///   - page: The page number for pagination.
+    ///   - accessToken: The user's access token for authentication.
+    ///   - completion: A closure that receives a `Result` with an array of `Job` or an `APIError`.
+    static func fetchFeed(longitude: Float, latitude: Float, page: Int, accessToken: String, completion: @escaping (Result<[Job], APIError>) -> Void) {
+        FeedHandler.fetchFeed(longitude: longitude, latitude: latitude, page: page, accessToken: accessToken, completion: completion)
+    }
+
+    /// Delegates the querying of jobs to FeedHandler.
+    ///
+    /// - Parameters:
+    ///   - query: The query string for job searching.
+    ///   - jobType: The type of job to filter by.
+    ///   - sortBy: The sorting criteria for the job list.
+    ///   - accessToken: The user's access token for authentication.
+    ///   - completion: A closure that receives a `Result` with an array of `Job` or an `APIError`.
+    static func queryJobs(query: String, jobType: String, sortBy: String, accessToken: String, completion: @escaping (Result<[Job], APIError>) -> Void) {
+        FeedHandler.queryJobs(query: query, jobType: jobType, sortBy: sortBy, accessToken: accessToken, completion: completion)
+    }
+}

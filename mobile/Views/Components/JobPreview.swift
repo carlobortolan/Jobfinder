@@ -21,7 +21,7 @@ struct JobPreview: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             // Image from URL
-            URLImage(URL(string: job.image_url)!) { image in
+            URLImage(URL(string: job.imageUrl)!) { image in
                 image
                    .resizable()
                    .aspectRatio(contentMode: .fill)
@@ -32,10 +32,10 @@ struct JobPreview: View {
             Text(job.title)
                 .font(.headline)
             
-            Text("Job Type: \(job.job_type)")
+            Text("Job Type: \(job.jobType)")
                 .font(.subheadline)
             
-            Text("Location: \(job.city), \(job.country_code)")
+            Text("Location: \(job.city), \(job.countryCode)")
                 .font(.subheadline)
             
             Text("Salary: \(job.salary) \(job.currency)")

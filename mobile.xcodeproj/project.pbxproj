@@ -31,10 +31,13 @@
 		22B804212AA8F90A008D7108 /* FeedHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B804202AA8F90A008D7108 /* FeedHandler.swift */; };
 		22B804232AA8F969008D7108 /* TokenHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B804222AA8F969008D7108 /* TokenHandler.swift */; };
 		22B804252AA9037A008D7108 /* AccountHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B804242AA9037A008D7108 /* AccountHandler.swift */; };
+		22B8045F2AA90E9C008D7108 /* JobHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B8045E2AA90E9C008D7108 /* JobHandler.swift */; };
+		22B804612AA90EB7008D7108 /* ApplicationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B804602AA90EB7008D7108 /* ApplicationHandler.swift */; };
+		22B804632AA91570008D7108 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B804622AA91570008D7108 /* UserModel.swift */; };
 		22D927792AA7B1400017678C /* JobModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D927782AA7B1400017678C /* JobModel.swift */; };
 		22D9277B2AA7B1500017678C /* ApplicationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D9277A2AA7B1500017678C /* ApplicationModel.swift */; };
 		22D9277D2AA7B16F0017678C /* ReviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D9277C2AA7B16F0017678C /* ReviewModel.swift */; };
-		22D9277F2AA7B1A00017678C /* PreferenceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D9277E2AA7B1A00017678C /* PreferenceModel.swift */; };
+		22D9277F2AA7B1A00017678C /* PreferencesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D9277E2AA7B1A00017678C /* PreferencesModel.swift */; };
 		22D927812AA7B4DA0017678C /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D927802AA7B4DA0017678C /* SearchBarView.swift */; };
 		22D927832AA7B4FE0017678C /* JobListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D927822AA7B4FE0017678C /* JobListView.swift */; };
 		22D927852AA7BD390017678C /* ErrorViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D927842AA7BD390017678C /* ErrorViewModifier.swift */; };
@@ -97,10 +100,13 @@
 		22B804202AA8F90A008D7108 /* FeedHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedHandler.swift; sourceTree = "<group>"; };
 		22B804222AA8F969008D7108 /* TokenHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenHandler.swift; sourceTree = "<group>"; };
 		22B804242AA9037A008D7108 /* AccountHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHandler.swift; sourceTree = "<group>"; };
+		22B8045E2AA90E9C008D7108 /* JobHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobHandler.swift; sourceTree = "<group>"; };
+		22B804602AA90EB7008D7108 /* ApplicationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationHandler.swift; sourceTree = "<group>"; };
+		22B804622AA91570008D7108 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		22D927782AA7B1400017678C /* JobModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobModel.swift; sourceTree = "<group>"; };
 		22D9277A2AA7B1500017678C /* ApplicationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationModel.swift; sourceTree = "<group>"; };
 		22D9277C2AA7B16F0017678C /* ReviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewModel.swift; sourceTree = "<group>"; };
-		22D9277E2AA7B1A00017678C /* PreferenceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceModel.swift; sourceTree = "<group>"; };
+		22D9277E2AA7B1A00017678C /* PreferencesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesModel.swift; sourceTree = "<group>"; };
 		22D927802AA7B4DA0017678C /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		22D927822AA7B4FE0017678C /* JobListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobListView.swift; sourceTree = "<group>"; };
 		22D927842AA7BD390017678C /* ErrorViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewModifier.swift; sourceTree = "<group>"; };
@@ -260,7 +266,8 @@
 				22D927782AA7B1400017678C /* JobModel.swift */,
 				22D9277A2AA7B1500017678C /* ApplicationModel.swift */,
 				22D9277C2AA7B16F0017678C /* ReviewModel.swift */,
-				22D9277E2AA7B1A00017678C /* PreferenceModel.swift */,
+				22D9277E2AA7B1A00017678C /* PreferencesModel.swift */,
+				22B804622AA91570008D7108 /* UserModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -283,6 +290,8 @@
 				22B804202AA8F90A008D7108 /* FeedHandler.swift */,
 				22B804222AA8F969008D7108 /* TokenHandler.swift */,
 				22B804242AA9037A008D7108 /* AccountHandler.swift */,
+				22B8045E2AA90E9C008D7108 /* JobHandler.swift */,
+				22B804602AA90EB7008D7108 /* ApplicationHandler.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -496,7 +505,7 @@
 				22D927882AA7FAE90017678C /* HtmlView.swift in Sources */,
 				2216EA7F2A8D75A700C970DD /* TabBarView.swift in Sources */,
 				22D9277B2AA7B1500017678C /* ApplicationModel.swift in Sources */,
-				22D9277F2AA7B1A00017678C /* PreferenceModel.swift in Sources */,
+				22D9277F2AA7B1A00017678C /* PreferencesModel.swift in Sources */,
 				226B63802AA78ACD004620EE /* JobPreview.swift in Sources */,
 				2216EA6B2A8CF69C00C970DD /* LoginView.swift in Sources */,
 				2216EA862A8D765500C970DD /* StartView.swift in Sources */,
@@ -514,10 +523,13 @@
 				22B8041D2AA891ED008D7108 /* JobDetail.swift in Sources */,
 				226B63822AA78BA1004620EE /* ApplicationForm.swift in Sources */,
 				22D927832AA7B4FE0017678C /* JobListView.swift in Sources */,
+				22B804632AA91570008D7108 /* UserModel.swift in Sources */,
 				2216EA6F2A8D262400C970DD /* ErrorHandlingManager.swift in Sources */,
 				2216EA712A8D2E7D00C970DD /* KeyChainManager.swift in Sources */,
+				22B804612AA90EB7008D7108 /* ApplicationHandler.swift in Sources */,
 				2216EA692A8CF5C800C970DD /* FeedView.swift in Sources */,
 				2216EA812A8D761700C970DD /* PostView.swift in Sources */,
+				22B8045F2AA90E9C008D7108 /* JobHandler.swift in Sources */,
 				22E73EC62A8BFDDF0042CF01 /* mobileApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

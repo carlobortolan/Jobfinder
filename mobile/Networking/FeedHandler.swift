@@ -66,7 +66,7 @@ class FeedHandler {
         
         print("URL: \(url)")
 
-        RequestHandler.performRequest(url: url, accessToken: accessToken, completion: completion)
+        RequestHandler.performRequest(url: url, accessToken: accessToken, responseType: [Job].self, completion: completion)
     }
 
     /// Fetches a feed of jobs based on geographical coordinates and access token.
@@ -129,6 +129,6 @@ class FeedHandler {
         
         print("URL: \(url)")
 
-        RequestHandler.performRequest(url: url, accessToken: accessToken, completion: completion)
+        RequestHandler.performRequest(url: url, accessToken: accessToken, responseType: [Job].self, completion: completion)
     }
 }

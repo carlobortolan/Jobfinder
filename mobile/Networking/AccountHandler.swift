@@ -144,11 +144,6 @@ class AccountHandler {
             return
         }
        
-        // Add email and password as query parameters
-        /*urlComponents.queryItems = [
-            URLQueryItem(name: "email", value: email),
-            URLQueryItem(name: "password", value: password)
-        ]*/
         guard let url = urlComponents.url else {
             completion(.failure(.invalidURL))
             return
@@ -204,6 +199,16 @@ class AccountHandler {
                 }
             }
         }.resume()
+    }
+    
+    // TODO: Implement fetchAccount
+    static func fetchAccount(accessToken: String, completion: @escaping (Result<User, APIError>) -> Void) {
+    
+    }
+    
+    // TODO: Implement fetchPreferences
+    static func fetchPreferences(accessToken: String, completion: @escaping (Result<Preferences, APIError>) -> Void) {
+    
     }
 
 }
