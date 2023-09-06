@@ -9,12 +9,13 @@ import Foundation
 import SwiftUI
 import WebKit
 
+
 struct JobListView: View {
     @Binding var jobs: [Job]
-
+    
     var body: some View {
         ScrollView {
-            ForEach(jobs, id: \.job_id) { job in
+            ForEach(Array(Set(jobs)), id: \.job_id) { job in
                 VStack(spacing: 0) {
                     NavigationLink(destination: JobDetail(job: job)) {
                         JobPreview(job: job)

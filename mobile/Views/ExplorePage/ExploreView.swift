@@ -25,29 +25,27 @@ struct ExploreView: View {
         NavigationView {
             VStack {
                 SearchBarView(searchText: $searchText) {
-                    fetchJobs(iteration: 0)
+                    loadJobs(iteration: 0)
                 }
                 FilterAndSortView(selectedJobType: $selectedJobType, selectedSortBy: $selectedSortBy, isLoading: $isLoading) {
-                    fetchJobs(iteration: 0)
+                    loadJobs(iteration: 0)
                 }
-                Spacer()
                 if isLoading {
                     ProgressView()
                 } else {
                     JobListView(jobs: $jobs)
-                    Spacer()
                 }
-                
+                Spacer()
             }
             .onAppear {
-                fetchJobs(iteration: 0)
+                loadJobs(iteration: 0)
             }
             .navigationBarHidden(true)
         }
         .padding()
     }
 
-    func fetchJobs(iteration: Int) {
+    func loadJobs(iteration: Int) {
         print("Iteration \(iteration)")
         isLoading = true
         if let accessToken = authenticationManager.getAccessToken() {
@@ -70,7 +68,7 @@ struct ExploreView: View {
                                 // Refresh the access token and retry the request
                                 self.authenticationManager.fetchAccessToken()
                                 
-                                self.fetchJobs(iteration: 1)
+                                self.loadJobs(iteration: 1)
                             } else {
                                 print("case .else")
                                 // Handle other errors

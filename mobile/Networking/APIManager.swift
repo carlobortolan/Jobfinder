@@ -316,6 +316,11 @@ class APIManager {
                     return
                 }
                 
+                if statusCode == 500 {
+                    completion(.failure(APIError.internalServerError))
+                    return
+                }
+                
                 if statusCode == 200 { // Check if the response code is 200 (OK)
                     if let data = data { // Parse data into [Job] if successful
                         if let responseString = String(data: data, encoding: .utf8) {
@@ -339,7 +344,7 @@ class APIManager {
                         do {
                             let json = try JSONSerialization.jsonObject(with: data, options: [])
                             print("Error JSON = \(json)")
-                            handleApiErrors(json: json, errorKeys: ["token", "job"], statusCode: statusCode, completion: completion)
+                            handleApiErrors(json: json, errorKeys: ["token", "jobs"], statusCode: statusCode, completion: completion)
                         } catch {
                             completion(.failure(APIError.jsonParsingError(error)))
                         }
@@ -351,46 +356,99 @@ class APIManager {
         }.resume()
     }
 
-    static func fetchFeed(query: String, jobType: String, sortBy: String, completion: @escaping (Result<[Job], Error>) -> Void) {
+    static func fetchFeed(longitude: Float, latitude: Float, page: Int, accessToken: String, completion: @escaping (Result<[Job], APIError>) -> Void) {
+        print("Started fetching feed with: \npage: \(page)\naccess_token: \(accessToken)")
         guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
-              let jobsFeedPath = ProcessInfo.processInfo.environment["JOBS_FEED_PATH"],
-              var urlComponents = URLComponents(string: rootUrl + jobsFeedPath) else {
-            completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
+              let jobsFindPath = ProcessInfo.processInfo.environment["JOBS_FEED_PATH"],
+              var urlComponents = URLComponents(string: rootUrl + jobsFindPath) else {
+            completion(.failure(APIError.invalidURL))
             return
         }
 
         // Add query parameters
         urlComponents.queryItems = [
-            URLQueryItem(name: "query", value: query),
-            URLQueryItem(name: "jobType", value: jobType),
-            URLQueryItem(name: "sortBy", value: sortBy)
+            URLQueryItem(name: "latitude", value: "\(latitude)"),
+            URLQueryItem(name: "longitude", value: "\(longitude)"),
+            // TODO: Add pagination for /jobs to Rails API:
+            // URLQueryItem(name: "page", value: "\(page)")
         ]
         guard let url = urlComponents.url else {
-            completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
+            completion(.failure(APIError.invalidURL))
             return
         }
+        
+        print("URL: \(url)")
 
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-
+        request.addValue(accessToken, forHTTPHeaderField: "access_token")
+        
+        
+        print("Request: \(String(describing: request.allHTTPHeaderFields))")
         // Create and send the network request
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            // Handle the response and parse data into [Job] if successful
-            if let data = data {
-                print("Data: \(data)")
-                do {
-                    let jobs = try JSONDecoder().decode([Job].self, from: data)
-                    completion(.success(jobs))
-                } catch {
-                    completion(.failure(error))
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print("Error fetching data: \(error)")
+                completion(.failure(APIError.networkError(error)))
+                return
+           }
+
+            if let httpResponse = response as? HTTPURLResponse {
+
+                let statusCode = httpResponse.statusCode
+                print("HTTP Response Code: \(statusCode)")
+                
+                
+                if statusCode == 401 {
+                    completion(.failure(APIError.authenticationError))
+                    return
                 }
-            } else if let error = error {
-                completion(.failure(error))
+                
+                if statusCode == 204 {
+                    completion(.failure(APIError.noContent("feed")))
+                    return
+                }
+                
+                if statusCode == 500 {
+                    completion(.failure(APIError.internalServerError))
+                    return
+                }
+                
+                if statusCode == 200 { // Check if the response code is 200 (OK)
+                    if let data = data { // Parse data into [Job] if successful
+                        if let responseString = String(data: data, encoding: .utf8) {
+                            print("Response Data: \(responseString)")
+                        } else {
+                            print("Failed to convert data to string")
+                        }
+                        do {
+                            let feedResponse = try JSONDecoder().decode(FeedResponse.self, from: data)
+                            let jobs = feedResponse.feed
+                            completion(.success(jobs))
+                        } catch {
+                            print("JSON Error: \(error)")
+                            completion(.failure(APIError.jsonParsingError(error)))
+                        }
+                    } else {
+                        completion(.failure(APIError.unknownError))
+                    }
+                } else { // Handle non-200 response codes
+                    if let data = data {
+                        do {
+                            let json = try JSONSerialization.jsonObject(with: data, options: [])
+                            print("Error JSON = \(json)")
+                            handleApiErrors(json: json, errorKeys: ["token", "feed"], statusCode: statusCode, completion: completion)
+                        } catch {
+                            completion(.failure(APIError.jsonParsingError(error)))
+                        }
+                    } else {
+                        completion(.failure(APIError.unknownError))
+                    }
+                }
             }
         }.resume()
     }
 
-    
     static func handleApiErrors<T: Decodable>(json: Any, errorKeys: [String], statusCode: Int, completion: @escaping (Result<T, APIError>) -> Void) {
         if let errorDict = json as? [String: Any] {
             var errorMessages: [String] = []

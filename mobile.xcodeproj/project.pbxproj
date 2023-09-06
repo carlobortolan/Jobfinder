@@ -199,7 +199,6 @@
 				2216EA772A8D729000C970DD /* README.md */,
 				2216EA822A8D762400C970DD /* ExploreView.swift */,
 				22D927802AA7B4DA0017678C /* SearchBarView.swift */,
-				22D927822AA7B4FE0017678C /* JobListView.swift */,
 				22D927892AA8015C0017678C /* FilterAndSortView.swift */,
 			);
 			path = ExplorePage;
@@ -261,6 +260,7 @@
 		22D927862AA7FAD50017678C /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				22D927822AA7B4FE0017678C /* JobListView.swift */,
 				22D927872AA7FAE90017678C /* HtmlView.swift */,
 			);
 			path = Shared;

@@ -11,7 +11,11 @@ struct JobResponse: Codable {
     let jobs: [Job]
 }
 
-struct Job: Codable {
+struct FeedResponse: Codable {
+    let feed: [Job]
+}
+
+struct Job: Codable, Hashable {
     let job_id: Int
     let job_type: String
     let job_type_value: Int
@@ -46,6 +50,16 @@ struct Job: Codable {
     let job_value: String
     let allowed_cv_format: [String]
     let image_url: String
+    
+    // Implement Hashable
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(job_id)
+    }
+
+    // Optional: Implement Equatable if needed
+    static func == (lhs: Job, rhs: Job) -> Bool {
+        return lhs.job_id == rhs.job_id
+    }
 }
 
 struct JobDescription: Codable {
@@ -59,9 +73,7 @@ struct JobDescription: Codable {
 }
 
 class JobModel {
-    // Function to generate a random Job object
     static func generateRandomJob() -> Job {
-        // You can customize this function to generate random values for each property
         let randomJob = Job(
             job_id: Int.random(in: 1...1000),
             job_type: ["Cleaning", "Retail", "Engineering"].randomElement() ?? "Other",
@@ -110,9 +122,14 @@ class JobModel {
         return randomJob
     }
     
-    // Function to generate a random JobResponse object
     static func generateRandomJobResponse() -> JobResponse {
         let randomJobs = (1...5).map { _ in generateRandomJob() }
         return JobResponse(jobs: randomJobs)
     }
+
+    static func generateRandomFeedResponse() -> FeedResponse {
+        let randomJobs = (1...5).map { _ in generateRandomJob() }
+        return FeedResponse(feed: randomJobs)
+    }
+
 }
