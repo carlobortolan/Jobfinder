@@ -43,7 +43,7 @@ struct SignInForm: View {
                 .padding()
                 Spacer()
             }
-            .padding()
+            //.padding()
             .background(Color("BgColor"))
             .foregroundColor(Color("FgColor"))
         }

@@ -55,7 +55,7 @@ struct SignUpForm: View {
                     self.hasAccount = true
                 }.padding()
             }
-            .padding()
+            //.padding()
             .background(Color("BgColor"))
             .foregroundColor(Color("FgColor"))
         }

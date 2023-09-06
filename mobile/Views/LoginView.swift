@@ -12,22 +12,38 @@ struct LoginView: View {
     @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
     
     @State private var hasAccount: Bool = false
+    @State private var contentHeight: CGFloat = 0
     
     var body: some View {
         NavigationView {
             ZStack {
                 Color("BgColor")
                     .ignoresSafeArea(.all)
-                
-                ScrollView {
-                    VStack {
-                        if hasAccount {
-                            SignInForm(hasAccount: $hasAccount)
+                GeometryReader { geometry in
+                    ScrollView {
+                        VStack {
+                            if hasAccount {
+                                SignInForm(hasAccount: $hasAccount)
+                            } else {
+                                SignUpForm(hasAccount: $hasAccount)
+                            }
+                        }
+                        .padding()
+                        .background(
+                            GeometryReader { contentGeometry in
+                                Color.clear.preference(key: ViewHeightKey.self, value: contentGeometry.size.height)
+                            }
+                        )
+                    }
+                    .frame(minHeight: geometry.size.height)
+                    .onPreferenceChange(ViewHeightKey.self) { viewHeight in
+                        let screenHeight = UIScreen.main.bounds.height
+                        if viewHeight > screenHeight {
+                            UIScrollView.appearance().isScrollEnabled = true
                         } else {
-                            SignUpForm(hasAccount: $hasAccount)
+                            UIScrollView.appearance().isScrollEnabled = false
                         }
                     }
-                    .padding()
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -38,7 +54,14 @@ struct LoginView: View {
         }
     }
 }
- 
+
+struct ViewHeightKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = max(value, nextValue())
+    }
+}
+
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         let errorHandlingManager = ErrorHandlingManager()
