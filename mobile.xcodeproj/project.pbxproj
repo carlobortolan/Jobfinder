@@ -27,6 +27,10 @@
 		226B638B2AA790E6004620EE /* SignUpForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226B638A2AA790E6004620EE /* SignUpForm.swift */; };
 		22B8041B2AA890BC008D7108 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 22B8041A2AA890BC008D7108 /* URLImage */; };
 		22B8041D2AA891ED008D7108 /* JobDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B8041C2AA891ED008D7108 /* JobDetail.swift */; };
+		22B8041F2AA8F813008D7108 /* APIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B8041E2AA8F813008D7108 /* APIHandler.swift */; };
+		22B804212AA8F90A008D7108 /* FeedHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B804202AA8F90A008D7108 /* FeedHandler.swift */; };
+		22B804232AA8F969008D7108 /* TokenHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B804222AA8F969008D7108 /* TokenHandler.swift */; };
+		22B804252AA9037A008D7108 /* AccountHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B804242AA9037A008D7108 /* AccountHandler.swift */; };
 		22D927792AA7B1400017678C /* JobModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D927782AA7B1400017678C /* JobModel.swift */; };
 		22D9277B2AA7B1500017678C /* ApplicationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D9277A2AA7B1500017678C /* ApplicationModel.swift */; };
 		22D9277D2AA7B16F0017678C /* ReviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D9277C2AA7B16F0017678C /* ReviewModel.swift */; };
@@ -89,6 +93,10 @@
 		226B63882AA790DB004620EE /* SignInForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInForm.swift; sourceTree = "<group>"; };
 		226B638A2AA790E6004620EE /* SignUpForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpForm.swift; sourceTree = "<group>"; };
 		22B8041C2AA891ED008D7108 /* JobDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetail.swift; sourceTree = "<group>"; };
+		22B8041E2AA8F813008D7108 /* APIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHandler.swift; sourceTree = "<group>"; };
+		22B804202AA8F90A008D7108 /* FeedHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedHandler.swift; sourceTree = "<group>"; };
+		22B804222AA8F969008D7108 /* TokenHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenHandler.swift; sourceTree = "<group>"; };
+		22B804242AA9037A008D7108 /* AccountHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHandler.swift; sourceTree = "<group>"; };
 		22D927782AA7B1400017678C /* JobModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobModel.swift; sourceTree = "<group>"; };
 		22D9277A2AA7B1500017678C /* ApplicationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationModel.swift; sourceTree = "<group>"; };
 		22D9277C2AA7B16F0017678C /* ReviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewModel.swift; sourceTree = "<group>"; };
@@ -271,6 +279,10 @@
 			children = (
 				22E40B042A8C20DB00D3F91E /* APIManager.swift */,
 				22E40B062A8C21AF00D3F91E /* APIResponse.swift */,
+				22B8041E2AA8F813008D7108 /* APIHandler.swift */,
+				22B804202AA8F90A008D7108 /* FeedHandler.swift */,
+				22B804222AA8F969008D7108 /* TokenHandler.swift */,
+				22B804242AA9037A008D7108 /* AccountHandler.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -476,8 +488,10 @@
 				2216EA6D2A8D217A00C970DD /* AuthenticationManager.swift in Sources */,
 				226B637E2AA78AB4004620EE /* JobItem.swift in Sources */,
 				22D9278A2AA8015C0017678C /* FilterAndSortView.swift in Sources */,
+				22B804232AA8F969008D7108 /* TokenHandler.swift in Sources */,
 				226B638B2AA790E6004620EE /* SignUpForm.swift in Sources */,
 				22D927852AA7BD390017678C /* ErrorViewModifier.swift in Sources */,
+				22B8041F2AA8F813008D7108 /* APIHandler.swift in Sources */,
 				22D9277D2AA7B16F0017678C /* ReviewModel.swift in Sources */,
 				22D927882AA7FAE90017678C /* HtmlView.swift in Sources */,
 				2216EA7F2A8D75A700C970DD /* TabBarView.swift in Sources */,
@@ -491,9 +505,11 @@
 				226B63862AA78C1F004620EE /* ApplicationPreview.swift in Sources */,
 				226B637C2AA78A85004620EE /* JobPosting.swift in Sources */,
 				226B63892AA790DB004620EE /* SignInForm.swift in Sources */,
+				22B804252AA9037A008D7108 /* AccountHandler.swift in Sources */,
 				226B63842AA78BCC004620EE /* JobForm.swift in Sources */,
 				22E73EC82A8BFDDF0042CF01 /* ContentView.swift in Sources */,
 				22D927812AA7B4DA0017678C /* SearchBarView.swift in Sources */,
+				22B804212AA8F90A008D7108 /* FeedHandler.swift in Sources */,
 				2216EA832A8D762400C970DD /* ExploreView.swift in Sources */,
 				22B8041D2AA891ED008D7108 /* JobDetail.swift in Sources */,
 				226B63822AA78BA1004620EE /* ApplicationForm.swift in Sources */,
