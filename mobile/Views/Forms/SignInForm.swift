@@ -40,12 +40,6 @@ struct SignInForm: View {
                     hasAccount = false
                 }
                 .padding()
-                
-                /*if let errorMessage = errorHandlingManager.errorMessage {
-                    Text(errorMessage)
-                        .foregroundColor(Color("AlertColor"))
-                        .padding()
-                }*/
             }
             .padding()
             .background(Color("BgColor"))

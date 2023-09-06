@@ -8,14 +8,13 @@
 import Foundation
 import SwiftUI
 
-import SwiftUI
-
 struct FilterAndSortView: View {
     @Binding var selectedJobType: String
     @Binding var selectedSortBy: String
+    var isLoading: Binding<Bool>
     var onApplyFilters: () -> Void
     
-    // Define job categories
+    // TODO: Read job categories from json/api
     let jobCategories: [String] = [
         "All", "Retail", "Food", "Hospitality", "Tourism", "Events", "Entertainment",
         "Cleaning", "Landscaping", "Personal_Care", "Childcare", "Delivery", "Logistics",
@@ -24,19 +23,17 @@ struct FilterAndSortView: View {
         "Fitness", "Security", "Marketing", "Sales", "Administration", "IT", "Education"
     ]
     
-    // Define sorting options
+    // TODO: Read sorting options from json/api
     let sortingOptions: [SortOption] = [
         SortOption(label: " Relevance", value: ""),
         SortOption(label: "Salary - High to Low", value: "salary_desc"),
         SortOption(label: "Salary - Low to High", value: "salary_asc"),
         SortOption(label: "Date - Newest First", value: "date_desc"),
         SortOption(label: "Date - Oldest First", value: "date_asc")
-        // Add more sorting options as needed
     ]
     
     var body: some View {
         HStack {
-            // Job Category Filter
             Picker("Job Category", selection: $selectedJobType) {
                 ForEach(jobCategories, id: \.self) { category in
                     Text(category).tag(category)
@@ -57,7 +54,7 @@ struct FilterAndSortView: View {
                 if selectedJobType == "All" {
                     selectedJobType = ""
                 }
-
+                isLoading.wrappedValue = true
                 onApplyFilters()
             }
         }

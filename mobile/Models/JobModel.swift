@@ -104,7 +104,7 @@ class JobModel {
             cv_required: true,
             job_value: "Random Job Value",
             allowed_cv_format: [".pdf", ".docx"],
-            image_url: "https://example.com/random_image.jpg"
+            image_url: "https://f005.backblazeb2.com/file/TestEmbloy/qpew2qrgj79r6vnrn5g9r0k0dkyk?Authorization=3_20230906105048_88964a7efef142dda956c4dd_cda0284ea7abf86a4035a68ca856f843216154a4_005_20230913105048_0028_dnld"
         )
         
         return randomJob

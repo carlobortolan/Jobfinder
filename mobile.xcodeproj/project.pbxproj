@@ -25,6 +25,8 @@
 		226B63862AA78C1F004620EE /* ApplicationPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226B63852AA78C1F004620EE /* ApplicationPreview.swift */; };
 		226B63892AA790DB004620EE /* SignInForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226B63882AA790DB004620EE /* SignInForm.swift */; };
 		226B638B2AA790E6004620EE /* SignUpForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226B638A2AA790E6004620EE /* SignUpForm.swift */; };
+		22B8041B2AA890BC008D7108 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 22B8041A2AA890BC008D7108 /* URLImage */; };
+		22B8041D2AA891ED008D7108 /* JobDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B8041C2AA891ED008D7108 /* JobDetail.swift */; };
 		22D927792AA7B1400017678C /* JobModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D927782AA7B1400017678C /* JobModel.swift */; };
 		22D9277B2AA7B1500017678C /* ApplicationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D9277A2AA7B1500017678C /* ApplicationModel.swift */; };
 		22D9277D2AA7B16F0017678C /* ReviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D9277C2AA7B16F0017678C /* ReviewModel.swift */; };
@@ -86,6 +88,7 @@
 		226B63852AA78C1F004620EE /* ApplicationPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationPreview.swift; sourceTree = "<group>"; };
 		226B63882AA790DB004620EE /* SignInForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInForm.swift; sourceTree = "<group>"; };
 		226B638A2AA790E6004620EE /* SignUpForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpForm.swift; sourceTree = "<group>"; };
+		22B8041C2AA891ED008D7108 /* JobDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetail.swift; sourceTree = "<group>"; };
 		22D927782AA7B1400017678C /* JobModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobModel.swift; sourceTree = "<group>"; };
 		22D9277A2AA7B1500017678C /* ApplicationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationModel.swift; sourceTree = "<group>"; };
 		22D9277C2AA7B16F0017678C /* ReviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewModel.swift; sourceTree = "<group>"; };
@@ -115,6 +118,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22B8041B2AA890BC008D7108 /* URLImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +242,7 @@
 				226B637D2AA78AB4004620EE /* JobItem.swift */,
 				226B637F2AA78ACD004620EE /* JobPreview.swift */,
 				226B63852AA78C1F004620EE /* ApplicationPreview.swift */,
+				22B8041C2AA891ED008D7108 /* JobDetail.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -346,6 +351,9 @@
 			dependencies = (
 			);
 			name = mobile;
+			packageProductDependencies = (
+				22B8041A2AA890BC008D7108 /* URLImage */,
+			);
 			productName = mobile;
 			productReference = 22E73EC22A8BFDDF0042CF01 /* mobile.app */;
 			productType = "com.apple.product-type.application";
@@ -418,6 +426,9 @@
 				Base,
 			);
 			mainGroup = 22E73EB92A8BFDDF0042CF01;
+			packageReferences = (
+				22B804192AA890BC008D7108 /* XCRemoteSwiftPackageReference "url-image" */,
+			);
 			productRefGroup = 22E73EC32A8BFDDF0042CF01 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -484,6 +495,7 @@
 				22E73EC82A8BFDDF0042CF01 /* ContentView.swift in Sources */,
 				22D927812AA7B4DA0017678C /* SearchBarView.swift in Sources */,
 				2216EA832A8D762400C970DD /* ExploreView.swift in Sources */,
+				22B8041D2AA891ED008D7108 /* JobDetail.swift in Sources */,
 				226B63822AA78BA1004620EE /* ApplicationForm.swift in Sources */,
 				22D927832AA7B4FE0017678C /* JobListView.swift in Sources */,
 				2216EA6F2A8D262400C970DD /* ErrorHandlingManager.swift in Sources */,
@@ -819,6 +831,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		22B804192AA890BC008D7108 /* XCRemoteSwiftPackageReference "url-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmytro-anokhin/url-image.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		22B8041A2AA890BC008D7108 /* URLImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 22B804192AA890BC008D7108 /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 22E73EBA2A8BFDDF0042CF01 /* Project object */;
 }

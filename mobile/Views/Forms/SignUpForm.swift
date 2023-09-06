@@ -54,12 +54,6 @@ struct SignUpForm: View {
                 Button("Already have an account?") {
                     self.hasAccount = true
                 }.padding()
-                
-                /*if let errorMessage = errorHandlingManager.errorMessage {
-                    Text(errorMessage)
-                        .foregroundColor(Color("AlertColor"))
-                        .padding()
-                }*/
             }
             .padding()
             .background(Color("BgColor"))

@@ -5,32 +5,30 @@
 //  Created by cb on 05.09.23.
 //
 
-import SwiftUI
-
+import Foundation
 import SwiftUI
 
 struct SearchBarView: View {
     @Binding var searchText: String
-    var onSearch: () -> Void // Add a callback for search
+    var onSearch: () -> Void
     
-    @State private var isSearching = false // Track if searching animation is active
+    @State private var isSearching = false
     
     var body: some View {
         HStack {
             TextField("Search", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .onSubmit { // Call onSearch when Enter is pressed
+                .onSubmit {
                     onSearch()
                 }
 
             Image(systemName: "magnifyingglass")
-                .scaleEffect(isSearching ? 0.9 : 1.0) // Scale down the button when isSearching is true
-                .onTapGesture { // Call onSearch when the search icon is tapped
+                .scaleEffect(isSearching ? 0.9 : 1.0)
+                .onTapGesture {
                     withAnimation {
-                        isSearching = true // Trigger the animation
+                        isSearching = true
                         onSearch()
                         
-                        // Reset the animation after a short delay
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                             isSearching = false
                         }

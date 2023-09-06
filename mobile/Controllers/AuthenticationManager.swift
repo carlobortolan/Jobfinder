@@ -126,6 +126,7 @@ class AuthenticationManager: ObservableObject {
     
     // Request new access token and promt user to log in if refresh token is invalid
     func fetchAccessToken() {
+        print("Started fetchAccessToken")
         guard let refreshToken = loadRefreshToken() else {
             self.errorHandlingManager.errorMessage = "No Refresh Token available"
             return
@@ -134,12 +135,14 @@ class AuthenticationManager: ObservableObject {
         APIManager.fetchAccessToken(refreshToken: refreshToken) { result in
             switch result {
             case .success(let apiResponse):
+                print("\tfetchAccessToken.success")
                 self.saveAccessToken(accessToken: apiResponse.message)
                 DispatchQueue.main.async {
                     self.errorHandlingManager.errorMessage = nil
                     self.isAuthenticated = true
                 }
             case .failure(let error):
+                print("\tfetchAccessToken.failure")
                 DispatchQueue.main.async {
                     self.errorHandlingManager.errorMessage = error.localizedDescription
                     self.isAuthenticated = false
