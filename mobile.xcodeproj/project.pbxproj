@@ -33,6 +33,7 @@
 		22D927832AA7B4FE0017678C /* JobListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D927822AA7B4FE0017678C /* JobListView.swift */; };
 		22D927852AA7BD390017678C /* ErrorViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D927842AA7BD390017678C /* ErrorViewModifier.swift */; };
 		22D927882AA7FAE90017678C /* HtmlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D927872AA7FAE90017678C /* HtmlView.swift */; };
+		22D9278A2AA8015C0017678C /* FilterAndSortView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D927892AA8015C0017678C /* FilterAndSortView.swift */; };
 		22E40B052A8C20DB00D3F91E /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E40B042A8C20DB00D3F91E /* APIManager.swift */; };
 		22E40B072A8C21AF00D3F91E /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E40B062A8C21AF00D3F91E /* APIResponse.swift */; };
 		22E73EC62A8BFDDF0042CF01 /* mobileApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E73EC52A8BFDDF0042CF01 /* mobileApp.swift */; };
@@ -93,6 +94,7 @@
 		22D927822AA7B4FE0017678C /* JobListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobListView.swift; sourceTree = "<group>"; };
 		22D927842AA7BD390017678C /* ErrorViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewModifier.swift; sourceTree = "<group>"; };
 		22D927872AA7FAE90017678C /* HtmlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HtmlView.swift; sourceTree = "<group>"; };
+		22D927892AA8015C0017678C /* FilterAndSortView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAndSortView.swift; sourceTree = "<group>"; };
 		22E40B042A8C20DB00D3F91E /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		22E40B062A8C21AF00D3F91E /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
 		22E73EC22A8BFDDF0042CF01 /* mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -194,6 +196,7 @@
 				2216EA822A8D762400C970DD /* ExploreView.swift */,
 				22D927802AA7B4DA0017678C /* SearchBarView.swift */,
 				22D927822AA7B4FE0017678C /* JobListView.swift */,
+				22D927892AA8015C0017678C /* FilterAndSortView.swift */,
 			);
 			path = ExplorePage;
 			sourceTree = "<group>";
@@ -461,6 +464,7 @@
 				22E40B052A8C20DB00D3F91E /* APIManager.swift in Sources */,
 				2216EA6D2A8D217A00C970DD /* AuthenticationManager.swift in Sources */,
 				226B637E2AA78AB4004620EE /* JobItem.swift in Sources */,
+				22D9278A2AA8015C0017678C /* FilterAndSortView.swift in Sources */,
 				226B638B2AA790E6004620EE /* SignUpForm.swift in Sources */,
 				22D927852AA7BD390017678C /* ErrorViewModifier.swift in Sources */,
 				22D9277D2AA7B16F0017678C /* ReviewModel.swift in Sources */,

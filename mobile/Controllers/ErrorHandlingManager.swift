@@ -19,6 +19,7 @@ enum APIError: Error {
     case jsonParsingError(Error)
     case argumentError(String)
     case unknownError
+    case noContent(String)
     // TODO: Add other error cases as needed
 
     var localizedDescription: String {
@@ -33,6 +34,8 @@ enum APIError: Error {
             return "JSON Parsing Error: \(error.localizedDescription) \(error)"
         case .argumentError(let message):
             return "Argument Error: \(message)"
+        case .noContent(let cause):
+            return "No \(cause) found"
         case .unknownError:
             return "Unknown Error"
         }

@@ -15,14 +15,17 @@ struct ExploreView: View {
     @EnvironmentObject var authenticationManager: AuthenticationManager
 
     @State private var searchText = "searchtest"
-    @State private var selectedJobType = "Retail"
+    @State private var selectedJobType = "" // Default value for job category filter
     @State private var selectedSortBy = "date_desc"
     @State private var jobs: [Job] = []
-
+    
     var body: some View {
         NavigationView {
             VStack {
                 SearchBarView(searchText: $searchText) {
+                    fetchJobs(iteration: 0)
+                }
+                FilterAndSortView(selectedJobType: $selectedJobType, selectedSortBy: $selectedSortBy) {
                     fetchJobs(iteration: 0)
                 }
                 JobListView(jobs: $jobs)

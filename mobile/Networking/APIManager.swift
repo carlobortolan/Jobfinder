@@ -276,7 +276,7 @@ class APIManager {
         // Add query parameters
         urlComponents.queryItems = [
             URLQueryItem(name: "query", value: query),
-            URLQueryItem(name: "jobType", value: jobType),
+            URLQueryItem(name: "job_type", value: jobType),
             URLQueryItem(name: "sortBy", value: sortBy)
         ]
         guard let url = urlComponents.url else {
@@ -308,6 +308,11 @@ class APIManager {
                 
                 if statusCode == 401 {
                     completion(.failure(APIError.authenticationError))
+                    return
+                }
+                
+                if statusCode == 204 {
+                    completion(.failure(APIError.noContent("matching jobs")))
                     return
                 }
                 

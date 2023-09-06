@@ -7,9 +7,13 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct SearchBarView: View {
     @Binding var searchText: String
     var onSearch: () -> Void // Add a callback for search
+    
+    @State private var isSearching = false // Track if searching animation is active
     
     var body: some View {
         HStack {
@@ -20,8 +24,17 @@ struct SearchBarView: View {
                 }
 
             Image(systemName: "magnifyingglass")
+                .scaleEffect(isSearching ? 0.9 : 1.0) // Scale down the button when isSearching is true
                 .onTapGesture { // Call onSearch when the search icon is tapped
-                    onSearch()
+                    withAnimation {
+                        isSearching = true // Trigger the animation
+                        onSearch()
+                        
+                        // Reset the animation after a short delay
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            isSearching = false
+                        }
+                    }
                 }
         }
     }
