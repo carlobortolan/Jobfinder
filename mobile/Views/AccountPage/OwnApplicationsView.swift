@@ -86,4 +86,16 @@ struct OwnApplicationsView: View {
             }
         }
     }
+    
+    struct OwnApplicationsView_Previews: PreviewProvider {
+        static var previews: some View {
+            let errorHandlingManager = ErrorHandlingManager()
+            let authenticationManager = AuthenticationManager(errorHandlingManager: errorHandlingManager)
+            let ownApplications = Application.generateRandomApplications().applications
+            
+            return OwnApplicationsView(ownApplications: ownApplications)
+                .environmentObject(errorHandlingManager)
+                .environmentObject(authenticationManager)
+        }
+    }
 }

@@ -24,7 +24,7 @@ struct AccountView: View {
             VStack(spacing: 0) {
                 AccountInfo(user: authenticationManager.current)
                     .padding()
-                    .border(Color.gray, width: 1)
+                    .frame(height: 175.0)
                 
                 Picker("Select Tab", selection: $selectedTab) {
                     Text("About").tag(Tab.profile)
@@ -38,8 +38,8 @@ struct AccountView: View {
                 Divider()
                 
                 tabView
+                    .frame(maxHeight: .infinity) // Fill the remaining space
             }
-            .navigationBarTitle("Account")
             .navigationBarItems(trailing: Button("Log Out") {
                 authenticationManager.signOut()
             })

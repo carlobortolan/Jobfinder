@@ -10,10 +10,10 @@ import SwiftUI
 struct PreferencesView: View {
     @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
     @EnvironmentObject var authenticationManager: AuthenticationManager
-
+    
     @State var preferences: Preferences?
     @State var isLoading = false
-
+    
     var body: some View {
         NavigationView {
             List {
@@ -28,10 +28,6 @@ struct PreferencesView: View {
                         Text("Key Skills: \(preferences.keySkills ?? "n.a.")")
                         Text("Salary Range: \(String(format: "%.1f - %.1f", preferences.salaryRange?[0] ?? 0, preferences.salaryRange?[1] ?? 0))")
                         Text("CV URL: \(preferences.cvURL ?? "n.a.")")
-                    } else {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: .blue))
-                            .scaleEffect(1.5, anchor: .center)
                     }
                 }
             }
@@ -39,9 +35,19 @@ struct PreferencesView: View {
             .onAppear {
                 loadPreferences(iteration: 0)
             }
+            .overlay(
+                Group {
+                    if isLoading {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                            .scaleEffect(1.5, anchor: .center)
+                    }
+                }
+            )
+
         }
     }
-
+    
     func loadPreferences(iteration: Int) {
         print("Iteration \(iteration)")
         isLoading = true
@@ -69,7 +75,7 @@ struct PreferencesView: View {
                                     } else {
                                         self.errorHandlingManager.errorMessage = error.localizedDescription
                                     }
-                                }   
+                                }
                             } else {
                                 print("case .else")
                                 // Handle other errors
@@ -83,6 +89,18 @@ struct PreferencesView: View {
                     }
                 }
             }
+        }
+    }
+    
+    struct PreferencesView_Previews: PreviewProvider {
+        static var previews: some View {
+            let errorHandlingManager = ErrorHandlingManager()
+            let authenticationManager = AuthenticationManager(errorHandlingManager: errorHandlingManager)
+            let preferences = Preferences.generateRandomPreference()
+            
+            return PreferencesView(preferences: preferences)
+                .environmentObject(errorHandlingManager)
+                .environmentObject(authenticationManager)
         }
     }
 }

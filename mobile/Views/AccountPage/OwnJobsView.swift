@@ -87,4 +87,15 @@ struct OwnJobsView: View {
             }
         }
     }
+    
+    struct OwnJobsView_Previews: PreviewProvider {
+        static var previews: some View {
+            let errorHandlingManager = ErrorHandlingManager()
+            let authenticationManager = AuthenticationManager(errorHandlingManager: errorHandlingManager)
+
+            return OwnJobsView(ownJobs: JobModel.generateRandomJobResponse().jobs)
+                .environmentObject(errorHandlingManager)
+                .environmentObject(authenticationManager)
+        }
+    }
 }

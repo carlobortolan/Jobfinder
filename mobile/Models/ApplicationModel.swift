@@ -39,4 +39,22 @@ struct Application: Codable, Hashable {
     static func == (lhs: Application, rhs: Application) -> Bool {
         return lhs.jobId == rhs.jobId && lhs.userId == rhs.userId
     }
+    
+    static func generateRandomApplication() -> Application {
+        return Application(
+            jobId: Int.random(in: 0...10),
+            userId: Int.random(in: 0...10),
+            createdAt: "2023-09-05T12:45:06.070Z",
+            updatedAt: "2023-09-05T12:45:06.070Z",
+            status: ["Pending", "Accepted", "Rejected"].randomElement()!,
+            applicationText: "This is an application",
+            applicationDocuments: nil,
+            response: nil
+        )
+    }
+    
+    static func generateRandomApplications() -> ApplicationResponse {
+        let randomApplications = (1...5).map { _ in generateRandomApplication() }
+        return ApplicationResponse(applications: randomApplications)
+    }
 }

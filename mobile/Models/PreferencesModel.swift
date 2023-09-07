@@ -37,4 +37,27 @@ struct Preferences: Codable {
         case salaryRange = "salary_range"
         case cvURL = "cv_url"
     }
+    
+    static func generateRandomPreference() -> Preferences {
+        let userId = Int.random(in: 1...1000)
+        let interests = ["Technology", "Art", "Finance", "Health", "Sports"].randomElement()
+        let experience = ["Entry Level", "Mid Level", "Senior"].randomElement()
+        let degree = ["High School", "Bachelor's", "Master's", "Ph.D."].randomElement()
+        let numJobsDone = Int.random(in: 0...100)
+        let gender = ["Male", "Female", "Other"].randomElement()
+        let spontaneity = Double.random(in: 0...1)
+        let keySkills = ["Communication", "Problem Solving", "Teamwork", "Creativity"].randomElement()
+        let salaryRange: [Double] = [Double.random(in: 20000...50000), Double.random(in: 50000...100000)]
+        let cvURL = "https://example.com/cv/\(userId)"
+
+        var jobTypes: [String: Int] = [:]
+        let jobTypeCount = Int.random(in: 1...5)
+        for _ in 1...jobTypeCount {
+            let jobType = ["Full-time", "Part-time", "Contract", "Freelance"].randomElement() ?? "Full-time"
+            let jobTypeValue = Int.random(in: 1...10)
+            jobTypes[jobType] = jobTypeValue
+        }
+
+        return Preferences(userId: userId, interests: interests, experience: experience, degree: degree, numJobsDone: numJobsDone, gender: gender, spontaneity: spontaneity, jobTypes: jobTypes.isEmpty ? nil : jobTypes, keySkills: keySkills, salaryRange: salaryRange, cvURL: cvURL)
+    }
 }
