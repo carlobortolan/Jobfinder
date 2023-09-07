@@ -136,7 +136,7 @@ class TokenHandler {
     /// - SeeAlso: `APIError` for the possible API error types.
     /// - SeeAlso: `Result` for the result type that contains either the decoded response data or an API error.
     static func fetchAccessToken(refreshToken: String, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
-        print("Started fetchAccessToken")
+        print("Started fetchAccessToken with: \nrefreshToken: \(refreshToken)")
         guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
               let atPath = ProcessInfo.processInfo.environment["AT_PATH"],
               let url = URL(string: rootUrl + atPath) else {

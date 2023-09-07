@@ -12,21 +12,19 @@ struct PreferencesResponse: Codable {
 }
 
 struct Preferences: Codable {
-    let id: Int
     let userId: Int
-    let interests: String
-    let experience: String
-    let degree: String
+    let interests: String?
+    let experience: String?
+    let degree: String?
     let numJobsDone: Int
     let gender: String?
-    let spontaneity: Double
-    let jobTypes: [String: Int]
-    let keySkills: String
-    let salaryRange: [Double]
-    let cvURL: String
+    let spontaneity: Double?
+    let jobTypes: [String: Int]?
+    let keySkills: String?
+    let salaryRange: [Double]?
+    let cvURL: String?
 
     enum CodingKeys: String, CodingKey {
-        case id
         case userId = "user_id"
         case interests
         case experience

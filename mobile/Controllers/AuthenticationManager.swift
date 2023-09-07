@@ -49,19 +49,26 @@ class AuthenticationManager: ObservableObject {
     // Fetch tokens and and sign in
     func signIn() {
         // Fetch refresh token
-        APIManager.fetchRefreshToken(email: current.email, password: password) { result in
-            switch result {
+        APIManager.fetchRefreshToken(email: current.email, password: password) { refreshTokenSuccess in
+            print("Step: 0")
+            switch refreshTokenSuccess {
             case .success(let apiResponse):
                 print("Successfully signed in: \(apiResponse.message)")
+                print("Step: 1")
                 DispatchQueue.main.async {
+                    print("Step: 2")
                     self.saveRefreshToken(refreshToken: apiResponse.message)
+                    print("Step: 3")
                     self.errorHandlingManager.errorMessage = nil
-                        
-                    if let accessToken = self.requestAccessToken() {
-                        self.fetchUserData(accessToken: accessToken)
+                    print("Step: 4")
+                    self.requestAccessToken() { accessTokenSuccess in
+                        if accessTokenSuccess {
+                            if let accessToken = self.getAccessToken() {
+                                self.fetchUserData(accessToken: accessToken)
+                            }
+                        }
                     }
                 }
-                print("Successfully fetched new Access Token: \(apiResponse.message)")
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.errorHandlingManager.errorMessage = error.localizedDescription
@@ -73,15 +80,19 @@ class AuthenticationManager: ObservableObject {
     // Fetch tokens and and sign in
     func signUp() {
         // Create and verify new account
-        APIManager.createAccount(email: current.email, firstName: current.firstName, lastName: current.lastName, password: password, passwordConfirmation: passwordConfirmation) { result in
-            switch result {
+        APIManager.createAccount(email: current.email, firstName: current.firstName, lastName: current.lastName, password: password, passwordConfirmation: passwordConfirmation) { accountSuccess in
+            switch accountSuccess {
             case .success(let apiResponse):
                 print("Successfully signed in: \(apiResponse.message)")
-                self.verify { success in
-                    if success {
+                self.verify { verifySuccess in
+                    if verifySuccess {
                         // Verification succeeded, fetch access token and user
-                        if let accessToken = self.requestAccessToken() {
-                            self.fetchUserData(accessToken: accessToken)
+                        self.requestAccessToken() { accessTokenSuccess in
+                            if accessTokenSuccess {
+                                if let accessToken = self.getAccessToken() {
+                                    self.fetchUserData(accessToken: accessToken)
+                                }
+                            }
                         }
                     }
                     DispatchQueue.main.async {
@@ -130,7 +141,7 @@ class AuthenticationManager: ObservableObject {
     }
         
     // Request new access token and prompt user to log in if refresh token is invalid
-    func fetchAccessToken() {
+    /* func fetchAccessToken() {
         print("Started fetchAccessToken")
         guard let refreshToken = loadRefreshToken() else {
             self.errorHandlingManager.errorMessage = "No Refresh Token available"
@@ -154,8 +165,34 @@ class AuthenticationManager: ObservableObject {
                 }
             }
         }
-    }
+    }*/
     
+    func requestAccessToken(completion: @escaping (Bool) -> Void) {
+        guard let refreshToken = loadRefreshToken() else {
+            self.errorHandlingManager.errorMessage = "No Refresh Token available"
+            completion(false)
+            return
+        }
+
+        APIManager.fetchAccessToken(refreshToken: refreshToken) { result in
+            switch result {
+            case .success(let apiResponse):
+                self.saveAccessToken(accessToken: apiResponse.message)
+                DispatchQueue.main.async {
+                    self.errorHandlingManager.errorMessage = nil
+                    self.isAuthenticated = true
+                    completion(true)
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self.errorHandlingManager.errorMessage = error.localizedDescription
+                    self.isAuthenticated = false // Prompt user to log in again if refresh token is invalid
+                    completion(false)
+                }
+            }
+        }
+    }
+
     // load access token or request a new one if missing
     func getAccessToken() -> String? {
         if let accessToken = loadAccessToken() {
@@ -185,33 +222,6 @@ class AuthenticationManager: ObservableObject {
             return nil // Return nil initially, as the new access token is being fetched
         }
     }
-    
-    // load access token or request a new one if missing
-    func requestAccessToken() -> String? {
-        guard let refreshToken = loadRefreshToken() else {
-            self.errorHandlingManager.errorMessage = "No Refresh Token available"
-            return nil // If no refresh token is available, return nil
-        }
-
-        APIManager.fetchAccessToken(refreshToken: refreshToken) { result in
-            switch result {
-            case .success(let apiResponse):
-                self.saveAccessToken(accessToken: apiResponse.message)
-                DispatchQueue.main.async {
-                    self.errorHandlingManager.errorMessage = nil
-                    self.isAuthenticated = true
-                }
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    self.errorHandlingManager.errorMessage = error.localizedDescription
-                    self.isAuthenticated = false // Prompt user to log in again if refresh token is invalid
-                }
-            }
-        }
-        
-        return nil // Return nil initially, as the new access token is being fetched
-    }
-
     
     func fetchUserData(accessToken: String) {
         APIManager.fetchAccount(accessToken: accessToken) { result in

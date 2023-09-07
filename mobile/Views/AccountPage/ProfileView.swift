@@ -40,9 +40,13 @@ struct ProfileView: View {
                                 print("case .authenticationError")
                                 // Authentication error (e.g., access token invalid)
                                 // Refresh the access token and retry the request
-                                self.authenticationManager.fetchAccessToken()
-                                
-                                self.loadProfile(iteration: 1)
+                                self.authenticationManager.requestAccessToken() { accessTokenSuccess in
+                                    if accessTokenSuccess{
+                                        self.loadProfile(iteration: 1)
+                                    } else {
+                                        self.errorHandlingManager.errorMessage = error.localizedDescription
+                                    }
+                                }
                             } else {
                                 print("case .else")
                                 // Handle other errors

@@ -19,15 +19,15 @@ struct PreferencesView: View {
             List {
                 Section(header: Text("Preferences").font(.largeTitle)) {
                     if let preferences = preferences {
-                        Text("Interests: \(preferences.interests)")
-                        Text("Experience: \(preferences.experience)")
-                        Text("Degree: \(preferences.degree)")
+                        Text("Interests: \(preferences.interests ?? "n.a.")")
+                        Text("Experience: \(preferences.experience ?? "n.a.")")
+                        Text("Degree: \(preferences.degree ?? "n.a.")")
                         Text("Number of Jobs Done: \(preferences.numJobsDone)")
                         Text("Gender: \(preferences.gender ?? "Not specified")")
-                        Text("Spontaneity: \(String(format: "%.1f", preferences.spontaneity))")
-                        Text("Key Skills: \(preferences.keySkills)")
-                        Text("Salary Range: \(String(format: "%.1f - %.1f", preferences.salaryRange[0], preferences.salaryRange[1]))")
-                        Text("CV URL: \(preferences.cvURL)")
+                        Text("Spontaneity: \(String(format: "%.1f", preferences.spontaneity ?? 0))")
+                        Text("Key Skills: \(preferences.keySkills ?? "n.a.")")
+                        Text("Salary Range: \(String(format: "%.1f - %.1f", preferences.salaryRange?[0] ?? 0, preferences.salaryRange?[1] ?? 0))")
+                        Text("CV URL: \(preferences.cvURL ?? "n.a.")")
                     } else {
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle(tint: .blue))
@@ -63,9 +63,13 @@ struct PreferencesView: View {
                                 print("case .authenticationError")
                                 // Authentication error (e.g., access token invalid)
                                 // Refresh the access token and retry the request
-                                self.authenticationManager.fetchAccessToken()
-                                
-                                self.loadPreferences(iteration: 1)
+                                self.authenticationManager.requestAccessToken() { accessTokenSuccess in
+                                    if accessTokenSuccess{
+                                        self.loadPreferences(iteration: 1)
+                                    } else {
+                                        self.errorHandlingManager.errorMessage = error.localizedDescription
+                                    }
+                                }   
                             } else {
                                 print("case .else")
                                 // Handle other errors
