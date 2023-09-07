@@ -22,7 +22,7 @@ class APIManager {
     ///   - accessToken: The user's access token for authentication.
     ///   - completion: A closure that receives a `Result` with an array of `Job` or an `APIError`.
     static func performRequest(url: URL, accessToken: String, completion: @escaping (Result<[Job], APIError>) -> Void) {
-        RequestHandler.performRequest(url: url, accessToken: accessToken, responseType: [Job].self, completion: completion)
+        RequestHandler.performRequest(url: url, httpMethod: "GET", accessToken: accessToken, responseType: [Job].self, completion: completion)
     }
 
     /// Delegates the handling of API errors to RequestHandler.
@@ -85,6 +85,15 @@ class APIManager {
     ///   - completion: A closure that receives a `Result` with an `UserResponse` or an `APIError`.
     static func fetchAccount(accessToken: String, completion: @escaping (Result<UserResponse, APIError>) -> Void) {
         AccountHandler.fetchAccount(accessToken: accessToken, completion: completion)
+    }
+
+    /// Delegates the removing of a user's profile image to AccountHandler.
+    ///
+    /// - Parameters:
+    ///   - accessToken: The user's access token for authentication.
+    ///   - completion: A closure that receives a `Result` with an `APIResponse` or an `APIError`.
+    static func removeUserImage(accessToken: String, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
+        AccountHandler.removeImage(accessToken: accessToken, completion: completion)
     }
     
     /// Delegates the fetching of a user's preferences to AccountHandler.

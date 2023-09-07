@@ -218,7 +218,7 @@ class AccountHandler {
         
         print("URL: \(url)")
 
-        RequestHandler.performRequest(url: url, accessToken: accessToken, responseType: UserResponse.self, completion: completion)
+        RequestHandler.performRequest(url: url, httpMethod: "GET", accessToken: accessToken, responseType: UserResponse.self, completion: completion)
     }
     
     // TODO: Implement fetchPreferences
@@ -238,6 +238,26 @@ class AccountHandler {
         
         print("URL: \(url)")
 
-        RequestHandler.performRequest(url: url, accessToken: accessToken, responseType: PreferencesResponse.self, completion: completion)
+        RequestHandler.performRequest(url: url, httpMethod: "GET", accessToken: accessToken, responseType: PreferencesResponse.self, completion: completion)
+    }
+    
+    // TODO: Implement removeImage
+    static func removeImage(accessToken: String, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
+        print("Started removing image with: \naccess_token: \(accessToken)")
+        guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
+              let preferencesPath = ProcessInfo.processInfo.environment["USER_IMAGE_PATH"],
+              let urlComponents = URLComponents(string: rootUrl + preferencesPath) else {
+            completion(.failure(APIError.invalidURL))
+            return
+        }
+
+        guard let url = urlComponents.url else {
+            completion(.failure(APIError.invalidURL))
+            return
+        }
+        
+        print("URL: \(url)")
+
+        RequestHandler.performRequest(url: url, httpMethod: "DELETE", accessToken: accessToken, responseType: APIResponse.self, completion: completion)
     }
 }

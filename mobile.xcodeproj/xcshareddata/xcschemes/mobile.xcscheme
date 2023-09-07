@@ -80,6 +80,11 @@
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
+            key = "USER_IMAGE_PATH"
+            value = "/user/image"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
             key = "JOBS_FEED_PATH"
             value = "/jobs"
             isEnabled = "YES">

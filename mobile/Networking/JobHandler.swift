@@ -26,6 +26,6 @@ class JobHandler {
         
         print("URL: \(url)")
 
-        RequestHandler.performRequest(url: url, accessToken: accessToken, responseType:JobResponse.self, completion: completion)
+        RequestHandler.performRequest(url: url, httpMethod: "GET", accessToken: accessToken, responseType:JobResponse.self, completion: completion)
     }
 }

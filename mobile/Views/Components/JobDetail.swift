@@ -25,15 +25,7 @@ struct JobDetail: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            // Use URLImage to load and display the remote image
-            URLImage(URL(string: job.imageUrl)!) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    //.frame(height: 200)
-            }
-            
+        VStack(alignment: .leading, spacing: 10) {            
             Text(job.title)
                 .font(.headline)
 

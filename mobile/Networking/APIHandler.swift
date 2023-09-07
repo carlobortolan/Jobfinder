@@ -17,6 +17,7 @@ class RequestHandler {
     ///
     /// - Parameters:
     ///   - url: The URL to which the GET request will be sent.
+    ///   - httpMethod: The http method of the request.
     ///   - accessToken: The access token to be included in the request headers.
     ///   - responseType: The type of response data to be decoded from the JSON response.
     ///   - completion: A closure that receives a `Result` containing either the decoded response data or an API error.
@@ -31,7 +32,7 @@ class RequestHandler {
     /// Example usage:
     ///
     /// let apiURL = URL(string: "https://example.com/api/endpoint")!
-    /// RequestHandler.performRequest(url: apiURL, accessToken: "your_access_token", responseType: YourDecodableType.self) { result in
+    /// RequestHandler.performRequest(url: apiURL, httpMethod: "GET" accessToken: "your_access_token", responseType: YourDecodableType.self) { result in
     ///     switch result {
     ///     case .success(let responseData):
     ///         // Handle successful response data (e.g., update UI)
@@ -43,9 +44,9 @@ class RequestHandler {
     ///
     /// - SeeAlso: `APIError` for the possible API error types.
     /// - SeeAlso: `Result` for the result type that contains either the decoded response data or an API error.
-    static func performRequest<T: Decodable>(url: URL, accessToken: String, responseType: T.Type, completion: @escaping (Result<T, APIError>) -> Void) {
+    static func performRequest<T: Decodable>(url: URL, httpMethod: String, accessToken: String, responseType: T.Type, completion: @escaping (Result<T, APIError>) -> Void) {
         var request = URLRequest(url: url)
-        request.httpMethod = "GET"
+        request.httpMethod = httpMethod
         request.addValue(accessToken, forHTTPHeaderField: "access_token")
 
         URLSession.shared.dataTask(with: request) { (data, response, error) in

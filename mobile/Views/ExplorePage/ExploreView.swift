@@ -15,7 +15,7 @@ struct ExploreView: View {
     @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
     @EnvironmentObject var authenticationManager: AuthenticationManager
 
-    @State private var searchText = "searchtest"
+    @State private var searchText = ""
     @State private var selectedJobType = ""
     @State private var selectedSortBy = ""
     @State private var jobs: [Job] = []
@@ -37,10 +37,7 @@ struct ExploreView: View {
                 }
                 Spacer()
             }
-            .onAppear {
-                loadJobs(iteration: 0)
-            }
-            .navigationBarHidden(true)
+                .navigationBarHidden(true)
         }
         .padding()
     }
@@ -87,7 +84,8 @@ struct ExploreView: View {
                 }
             }
         }
-    }}
+    }
+}
 
 struct Previews_ExploreView_Previews: PreviewProvider {
     static var previews: some View {

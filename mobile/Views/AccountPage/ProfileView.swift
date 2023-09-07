@@ -8,60 +8,136 @@ struct ProfileView: View {
 
     var body: some View {
         ScrollView {
-            VStack {
-                Text("User Profile")
-                    .font(.largeTitle)
-                
-                Text("Name: \(authenticationManager.current.firstName) \(authenticationManager.current.lastName)")
-                Text("Email: \(authenticationManager.current.email)")
-                
-                Group {
-                    Text("Activity Status: \(authenticationManager.current.activityStatus)")
-                    Text("Longitude: \(authenticationManager.current.longitude ?? 0.0)")
-                    Text("Latitude: \(authenticationManager.current.latitude ?? 0.0)")
-                    Text("Country Code: \(authenticationManager.current.countryCode ?? "n.a.")")
-                    Text("Postal Code: \(authenticationManager.current.postalCode ?? "n.a.")")
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Description:")
+                    .font(.headline)
+                    .fontWeight(.light)
+                    .multilineTextAlignment(.leading)
+                Text("\"Hey, I'm \(authenticationManager.current.firstName) \(authenticationManager.current.lastName)\"")
+                    .font(.body)
+                    .multilineTextAlignment(.leading)
+
+                HStack {
+                    Text("From:")
+                        .font(.headline)
+                        .fontWeight(.light)
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                    Text("\(authenticationManager.current.city ?? "n.a."), \(authenticationManager.current.countryCode ?? "n.a.")")
+                        .font(.body)
+                        .fontWeight(.bold)
+                        .multilineTextAlignment(.trailing)
+                }
+                HStack {
+                    Text("Member since:")
+                        .font(.headline)
+                        .fontWeight(.light)
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                    Text(formatDate(dateString: authenticationManager.current.createdAt) ?? "n.a.")
+                        .font(.body)
+                        .fontWeight(.bold)
+                        .multilineTextAlignment(.trailing)
+                }
+
+                HStack {
+                    Text("Email:")
+                        .font(.headline)
+                        .fontWeight(.light)
+                    Spacer()
+                    if let mailtoURL = URL(string: "mailto:\(authenticationManager.current.email)") {
+                        Link(destination: mailtoURL, label: {
+                            Text(authenticationManager.current.email)
+                                .fontWeight(.bold)
+                        })
+                    }
+                }
+
+                // TODO: Add personal website
+                HStack {
+                    Text("Website:")
+                        .font(.headline)
+                        .fontWeight(.light)
+                    Spacer()
+                    if let websiteURL = URL(string: "https://about.embloy.com"),
+                       let websiteName = getWebsiteName(from: websiteURL.absoluteString) {
+                        Link(destination: websiteURL, label: {
+                            Text(websiteName)
+                                .fontWeight(.bold)
+                        })
+                    }
                 }
                 
-                Group {
-                    Text("City: \(authenticationManager.current.city ?? "n.a.")")
-                    Text("Address: \(authenticationManager.current.address ?? "n.a.")")
-                    Text("Date of Birth: \(authenticationManager.current.dateOfBirth ?? "n.a.")")
-                    Text("User Type: \(authenticationManager.current.userType)")
+                HStack {
+                    Text("Account Status:")
+                        .font(.headline)
+                        .fontWeight(.light)
+                    Spacer()
+                    Text(authenticationManager.current.activityStatus == 1 ? "Active" : "Inactive")
+                        .font(.body)
+                        .fontWeight(.bold)
+                }
+            }.padding()
+            
+            HStack(alignment: .center, spacing: 10) {
+                if let linkedInURL = authenticationManager.current.linkedinURL {
+                    Button(action: {
+                        openSocialMediaProfile(urlString: linkedInURL)
+                    }) {
+                        Image("linkedInIcon") // Replace "linkedinIcon" with the name of your LinkedIn icon image asset
+                            .resizable()
+                            .frame(width: 24, height: 24) // Adjust the size as needed
+                            .foregroundColor(.blue)
+                    }
                 }
                 
-                Group {
-                    Text("View Count: \(authenticationManager.current.viewCount)")
-                    Text("Created At: \(authenticationManager.current.createdAt)")
-                    Text("Updated At: \(authenticationManager.current.updatedAt)")
-                    Text("Applications Count: \(authenticationManager.current.applicationsCount)")
-                    Text("Jobs Count: \(authenticationManager.current.jobsCount)")
+                if let twitterURL = authenticationManager.current.twitterURL {
+                    Button(action: {
+                        openSocialMediaProfile(urlString: twitterURL)
+                    }) {
+                        Image("twitterIcon") // Replace "twitterIcon" with the name of your Twitter icon image asset
+                            .resizable()
+                            .frame(width: 24, height: 24) // Adjust the size as needed
+                            .foregroundColor(.blue)
+                    }
                 }
                 
-                Group {
-                    Text("User Role: \(authenticationManager.current.userRole)")
-                    Text("Application Notifications: \(authenticationManager.current.applicationNotifications ? "Enabled" : "Disabled")")
-                    Text("Twitter URL: \(authenticationManager.current.twitterURL ?? "n.a.")")
-                    Text("Facebook URL: \(authenticationManager.current.facebookURL ?? "n.a.")")
-                    Text("Instagram URL: \(authenticationManager.current.instagramURL ?? "n.a.")")
+                if let facebookURL = authenticationManager.current.facebookURL {
+                    Button(action: {
+                        openSocialMediaProfile(urlString: facebookURL)
+                    }) {
+                        Image("facebookIcon") // Replace "facebookIcon" with the name of your Facebook icon image asset
+                            .resizable()
+                            .frame(width: 24, height: 24) // Adjust the size as needed
+                            .foregroundColor(.blue)
+                    }
                 }
                 
-                Group {
-                    Text("Phone: \(authenticationManager.current.phone ?? "n.a.")")
-                    Text("Degree: \(authenticationManager.current.degree ?? "n.a.")")
-                    Text("LinkedIn URL: \(authenticationManager.current.linkedinURL ?? "n.a.")")
-                    Text("Image URL: \(authenticationManager.current.imageURL ?? "n.a.")")
+                if let instagramURL = authenticationManager.current.instagramURL {
+                    Button(action: {
+                        openSocialMediaProfile(urlString: instagramURL)
+                    }) {
+                        Image("instagramIcon") // Replace "instagramIcon" with the name of your Instagram icon image asset
+                            .resizable()
+                            .frame(width: 24, height: 24) // Adjust the size as needed
+                            .foregroundColor(.orange)
+                    }
                 }
-                
-                Spacer()
-            }
-            .padding()
+            }.padding()
+            
+            Spacer()
+                .frame(maxHeight: .infinity) // Fill the remaining space
         }
         .onAppear {
             loadProfile(iteration: 0)
         }
+        .padding()
     }
-        
+    func openSocialMediaProfile(urlString: String) {
+        if let url = URL(string: urlString) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
     
     func loadProfile(iteration: Int) {
         print("Iteration \(iteration)")
@@ -107,6 +183,27 @@ struct ProfileView: View {
         }
     }
     
+    private func getWebsiteName(from urlString: String) -> String? {
+        if let url = URL(string: urlString) {
+            if let host = url.host {
+                return host
+            }
+        }
+        return nil
+    }
+    
+    func formatDate(dateString: String) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ" // Adjust the format according to your date string
+        
+        if let date = dateFormatter.date(from: dateString) {
+            dateFormatter.dateFormat = "MMM yyyy" // Adjust the desired output format
+            return dateFormatter.string(from: date)
+        } else {
+            return nil
+        }
+    }
+    
     struct ProfileView_Previews: PreviewProvider {
         static var previews: some View {
             let errorHandlingManager = ErrorHandlingManager()
@@ -118,3 +215,4 @@ struct ProfileView: View {
         }
     }
 }
+ 

@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "3225190_app_linkedin_logo_media_popular_icon.svg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "3225190_app_linkedin_logo_media_popular_icon 1.svg",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "3225190_app_linkedin_logo_media_popular_icon 2.svg",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
