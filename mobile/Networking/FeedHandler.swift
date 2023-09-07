@@ -21,7 +21,7 @@ class FeedHandler {
     ///   - jobType: The type of jobs to search for (e.g., "full-time," "part-time").
     ///   - sortBy: The sorting criteria for search results (e.g., "relevance," "date").
     ///   - accessToken: The access token required for authentication with the API.
-    ///   - completion: A closure that receives a `Result` containing either an array of jobs or an API error.
+    ///   - completion: A closure that receives a `Result` containing either a `JobResponse` or an API error.
     ///
     /// Example usage:
     ///
@@ -43,9 +43,10 @@ class FeedHandler {
     /// ```
     ///
     /// - SeeAlso: `performRequest` for the underlying request implementation.
+    /// - SeeAlso: `JobResponse` for the response that contains the decoded `Job` array.
     /// - SeeAlso: `APIError` for the possible API error types.
     /// - SeeAlso: `Result` for the result type that contains either the decoded response data or an API error.
-    static func queryJobs(query: String, jobType: String, sortBy: String, accessToken: String, completion: @escaping (Result<[Job], APIError>) -> Void) {
+    static func queryJobs(query: String, jobType: String, sortBy: String, accessToken: String, completion: @escaping (Result<JobResponse, APIError>) -> Void) {
         print("Started querying jobs with: \nquery: \(query)\njobType: \(jobType)\nsortBy: \(sortBy)\naccess_token: \(accessToken)")
         guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
               let jobsFindPath = ProcessInfo.processInfo.environment["JOBS_FIND_PATH"],
@@ -66,7 +67,7 @@ class FeedHandler {
         
         print("URL: \(url)")
 
-        RequestHandler.performRequest(url: url, accessToken: accessToken, responseType: [Job].self, completion: completion)
+        RequestHandler.performRequest(url: url, accessToken: accessToken, responseType: JobResponse.self, completion: completion)
     }
 
     /// Fetches a feed of jobs based on geographical coordinates and access token.
@@ -81,7 +82,7 @@ class FeedHandler {
     ///   - latitude: The latitude coordinate for the job search location.
     ///   - page: The page number for paginating results (currently not implemented).
     ///   - accessToken: The access token required for authentication with the API.
-    ///   - completion: A closure that receives a `Result` containing either an array of jobs or an API error.
+    ///   - completion: A closure that receives a `Result` containing either a `FeedResult` or an API error.
     ///
     /// - Note: This function does not currently implement pagination with the `page` parameter, but the TODO comment
     ///         indicates the intent to add pagination in the future. Ensure that the API supports pagination when
@@ -105,9 +106,10 @@ class FeedHandler {
     /// }
     ///
     /// - SeeAlso: `performRequest` for the underlying request implementation.
+    /// - SeeAlso: `FeedResponse` for the response that contains the decoded `Job` array.
     /// - SeeAlso: `APIError` for the possible API error types.
     /// - SeeAlso: `Result` for the result type that contains either the decoded response data or an API error.
-    static func fetchFeed(longitude: Float, latitude: Float, page: Int, accessToken: String, completion: @escaping (Result<[Job], APIError>) -> Void) {
+    static func fetchFeed(longitude: Float, latitude: Float, page: Int, accessToken: String, completion: @escaping (Result<FeedResponse, APIError>) -> Void) {
         print("Started fetching feed with: \npage: \(page)\naccess_token: \(accessToken)")
         guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
               let jobsFindPath = ProcessInfo.processInfo.environment["JOBS_FEED_PATH"],
@@ -129,6 +131,6 @@ class FeedHandler {
         
         print("URL: \(url)")
 
-        RequestHandler.performRequest(url: url, accessToken: accessToken, responseType: [Job].self, completion: completion)
+        RequestHandler.performRequest(url: url, accessToken: accessToken, responseType: FeedResponse.self, completion: completion)
     }
 }

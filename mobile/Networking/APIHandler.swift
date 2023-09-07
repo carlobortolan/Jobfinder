@@ -62,13 +62,24 @@ class RequestHandler {
                 switch statusCode {
                 case 204:
                     completion(.failure(APIError.noContent(String(describing: T.self))))
+                //case 400:
+                //    completion(.failure(APIError.badRequest))
                 case 401:
                     completion(.failure(APIError.authenticationError))
+                case 403:
+                    completion(.failure(APIError.forbidden))
+                case 404:
+                    completion(.failure(APIError.notFound))
                 case 500:
                     completion(.failure(APIError.internalServerError))
                 case 200:
                     if let data = data {
                         do {
+                            if let responseString = String(data: data, encoding: .utf8) {
+                                print("Data as String: \(responseString)")
+                            } else {
+                                print("Failed to convert data to string")
+                            }
                             let responseData = try JSONDecoder().decode(T.self, from: data)
                             completion(.success(responseData))
                         } catch {

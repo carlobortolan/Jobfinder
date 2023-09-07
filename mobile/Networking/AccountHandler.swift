@@ -202,13 +202,42 @@ class AccountHandler {
     }
     
     // TODO: Implement fetchAccount
-    static func fetchAccount(accessToken: String, completion: @escaping (Result<User, APIError>) -> Void) {
-    
+    static func fetchAccount(accessToken: String, completion: @escaping (Result<UserResponse, APIError>) -> Void) {
+        print("Started fetching account with: \naccess_token: \(accessToken)")
+        guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
+              let userPath = ProcessInfo.processInfo.environment["USER_PATH"],
+              let urlComponents = URLComponents(string: rootUrl + userPath) else {
+            completion(.failure(APIError.invalidURL))
+            return
+        }
+
+        guard let url = urlComponents.url else {
+            completion(.failure(APIError.invalidURL))
+            return
+        }
+        
+        print("URL: \(url)")
+
+        RequestHandler.performRequest(url: url, accessToken: accessToken, responseType: UserResponse.self, completion: completion)
     }
     
     // TODO: Implement fetchPreferences
-    static func fetchPreferences(accessToken: String, completion: @escaping (Result<Preferences, APIError>) -> Void) {
-    
-    }
+    static func fetchPreferences(accessToken: String, completion: @escaping (Result<PreferencesResponse, APIError>) -> Void) {
+        print("Started fetching preferences with: \naccess_token: \(accessToken)")
+        guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
+              let preferencesPath = ProcessInfo.processInfo.environment["USER_PREFERENCES_PATH"],
+              let urlComponents = URLComponents(string: rootUrl + preferencesPath) else {
+            completion(.failure(APIError.invalidURL))
+            return
+        }
 
+        guard let url = urlComponents.url else {
+            completion(.failure(APIError.invalidURL))
+            return
+        }
+        
+        print("URL: \(url)")
+
+        RequestHandler.performRequest(url: url, accessToken: accessToken, responseType: PreferencesResponse.self, completion: completion)
+    }
 }

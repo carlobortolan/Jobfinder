@@ -10,11 +10,11 @@ import Foundation
 class ApplicationHandler {
     
     // TODO: Implement own applications
-    static func fetchOwnApplications(accessToken: String, completion: @escaping (Result<[Application], APIError>) -> Void) {
+    static func fetchOwnApplications(accessToken: String, completion: @escaping (Result<ApplicationResponse, APIError>) -> Void) {
         print("Started fetching own applications with: \naccess_token: \(accessToken)")
         guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
-              let ownApplicationsPath = ProcessInfo.processInfo.environment["OWN_APPLICATIONS_PATH"],
-              let urlComponents = URLComponents(string: rootUrl + ownApplicationsPath) else {
+              let userApplicationsPath = ProcessInfo.processInfo.environment["USER_APPLICATIONS_PATH"],
+              let urlComponents = URLComponents(string: rootUrl + userApplicationsPath) else {
             completion(.failure(APIError.invalidURL))
             return
         }
@@ -26,8 +26,7 @@ class ApplicationHandler {
         
         print("URL: \(url)")
 
-        RequestHandler.performRequest(url: url, accessToken: accessToken, responseType: [Application].self, completion: completion)
+        RequestHandler.performRequest(url: url, accessToken: accessToken, responseType: ApplicationResponse.self, completion: completion)
     }
-
 }
 

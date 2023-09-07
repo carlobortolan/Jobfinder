@@ -82,8 +82,8 @@ class APIManager {
     ///
     /// - Parameters:
     ///   - accessToken: The user's access token for authentication.
-    ///   - completion: A closure that receives a `Result` with an `User` or an `APIError`.
-    static func fetchAccount(accessToken: String, completion: @escaping (Result<User, APIError>) -> Void) {
+    ///   - completion: A closure that receives a `Result` with an `UserResponse` or an `APIError`.
+    static func fetchAccount(accessToken: String, completion: @escaping (Result<UserResponse, APIError>) -> Void) {
         AccountHandler.fetchAccount(accessToken: accessToken, completion: completion)
     }
     
@@ -91,8 +91,8 @@ class APIManager {
     ///
     /// - Parameters:
     ///   - accessToken: The user's access token for authentication.
-    ///   - completion: A closure that receives a `Result` with an `Preferences` or an `APIError`.
-    static func fetchPreferences(accessToken: String, completion: @escaping (Result<Preferences, APIError>) -> Void) {
+    ///   - completion: A closure that receives a `Result` with a `PreferencesResponse` or an `APIError`.
+    static func fetchPreferences(accessToken: String, completion: @escaping (Result<PreferencesResponse, APIError>) -> Void) {
         AccountHandler.fetchPreferences(accessToken: accessToken, completion: completion)
     }
 
@@ -100,8 +100,8 @@ class APIManager {
     ///
     /// - Parameters:
     ///   - accessToken: The user's access token for authentication.
-    ///   - completion: A closure that receives a `Result` with an array of `Job` or an `APIError`.
-    static func fetchOwnJobs(accessToken: String, completion: @escaping (Result<[Job], APIError>) -> Void) {
+    ///   - completion: A closure that receives a `Result` with an `JobResponse` or an `APIError`.
+    static func fetchOwnJobs(accessToken: String, completion: @escaping (Result<JobResponse, APIError>) -> Void) {
         JobHandler.fetchOwnJobs(accessToken: accessToken, completion: completion)
     }
 
@@ -109,8 +109,8 @@ class APIManager {
     ///
     /// - Parameters:
     ///   - accessToken: The user's access token for authentication.
-    ///   - completion: A closure that receives a `Result` with an array of `Application` or an `APIError`.
-    static func fetchOwnApplications(accessToken: String, completion: @escaping (Result<[Application], APIError>) -> Void) {
+    ///   - completion: A closure that receives a `Result` with a `ApplicationResponse` or an `APIError`.
+    static func fetchOwnApplications(accessToken: String, completion: @escaping (Result<ApplicationResponse, APIError>) -> Void) {
         ApplicationHandler.fetchOwnApplications(accessToken: accessToken, completion: completion)
     }
     
@@ -121,8 +121,8 @@ class APIManager {
     ///   - latitude: The latitude for location-based filtering.
     ///   - page: The page number for pagination.
     ///   - accessToken: The user's access token for authentication.
-    ///   - completion: A closure that receives a `Result` with an array of `Job` or an `APIError`.
-    static func fetchFeed(longitude: Float, latitude: Float, page: Int, accessToken: String, completion: @escaping (Result<[Job], APIError>) -> Void) {
+    ///   - completion: A closure that receives a `Result` with a `FeedResponse` or an `APIError`.
+    static func fetchFeed(longitude: Float, latitude: Float, page: Int, accessToken: String, completion: @escaping (Result<FeedResponse, APIError>) -> Void) {
         FeedHandler.fetchFeed(longitude: longitude, latitude: latitude, page: page, accessToken: accessToken, completion: completion)
     }
 
@@ -133,8 +133,8 @@ class APIManager {
     ///   - jobType: The type of job to filter by.
     ///   - sortBy: The sorting criteria for the job list.
     ///   - accessToken: The user's access token for authentication.
-    ///   - completion: A closure that receives a `Result` with an array of `Job` or an `APIError`.
-    static func queryJobs(query: String, jobType: String, sortBy: String, accessToken: String, completion: @escaping (Result<[Job], APIError>) -> Void) {
+    ///   - completion: A closure that receives a `Result` with a `JobResponse` or an `APIError`.
+    static func queryJobs(query: String, jobType: String, sortBy: String, accessToken: String, completion: @escaping (Result<JobResponse, APIError>) -> Void) {
         FeedHandler.queryJobs(query: query, jobType: jobType, sortBy: sortBy, accessToken: accessToken, completion: completion)
     }
 }
