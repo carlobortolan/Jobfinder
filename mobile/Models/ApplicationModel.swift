@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct ApplicationResponse: Codable {
+    let applications: [Application]
+}
+
 struct Application: Codable, Hashable {
     let jobId: Int
     let userId: Int
