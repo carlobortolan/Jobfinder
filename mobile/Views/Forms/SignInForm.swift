@@ -26,7 +26,7 @@ struct SignInForm: View {
                 Text("embloy")
                     .font(.largeTitle)
                     .padding()
-                TextField("Email", text: $authenticationManager.email)
+                TextField("Email", text: $authenticationManager.current.email)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
                 SecureField("Password", text: $authenticationManager.password)

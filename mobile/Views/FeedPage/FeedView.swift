@@ -15,39 +15,51 @@ struct FeedView: View {
     @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
     @EnvironmentObject var authenticationManager: AuthenticationManager
 
-    @State private var page = 0
-    @State private var latitude = Float(1.0)
-    @State private var longitude = Float(1.0)
-    @State private var jobs: [Job] = JobModel.generateRandomFeedResponse().feed
+    @State private var page = 1 // Start with page 1
     @State private var isLoading = false
-    @State private var shouldLoadMore = true
+    @State private var jobs: [Job] = []
+    @State private var longitude = Float(1.0)
+    @State private var latitude = Float(1.0)
+
+    // Threshold value to determine when the user is near the bottom
+    private let nearBottomThreshold: CGFloat = 100
 
     var body: some View {
         NavigationView {
-            VStack {
-                if isLoading {
-                    ProgressView()
-                } else {
-                    ScrollView {
-                        JobListView(jobs: $jobs)
-                            .onAppear {
-                                if shouldLoadMore {
-                                    page += 1
-                                    loadFeed(iteration: 0, page: page)
-                                }
-                            }
+            // Use a GeometryReader to detect when the user is near the bottom
+            GeometryReader { geometry in
+                List {
+                    JobListView(jobs: $jobs)
+                    if isLoading {
+                        ProgressView()
+                            .frame(maxWidth: .infinity, alignment: .center)
                     }
                 }
-                Spacer()
+                .onAppear {
+                    if jobs.isEmpty {
+                        loadFeed(iteration: 0, page: page)
+                    }
+                }
+                .onAppear(perform: {
+                    UITableView.appearance().separatorStyle = .none
+                })
+                .onAppear {
+                    if isNearBottom(offset: geometry.frame(in: .global).maxY, threshold: nearBottomThreshold) {
+                        // User is near the bottom, print a message
+                        print("User is near the bottom of the feed")
+                    }
+                }
             }
-            .navigationBarHidden(true)
         }
+        .navigationBarHidden(true)
         .padding()
-//        .onAppear {
-//            loadFeed(iteration: 0, page: page)
-//        }
     }
 
+    private func isNearBottom(offset: CGFloat, threshold: CGFloat) -> Bool {
+        let scrollViewHeight = UIScreen.main.bounds.height - 100
+        return offset > scrollViewHeight - threshold
+    }
+    
     func loadFeed(iteration: Int, page: Int) {
         // TODO: Remove max. feed requests per session once S3 is set up
         if page <= 4 {
@@ -56,10 +68,10 @@ struct FeedView: View {
         if let accessToken = authenticationManager.getAccessToken() {
             APIManager.fetchFeed(longitude: longitude, latitude: latitude, page: page, accessToken: accessToken) { result in
                 switch result {
-                case .success(let jobs):
+                case .success(let feedResponse):
                     DispatchQueue.main.async {
                         print("case .success")
-                        self.jobs += jobs
+                        self.jobs += feedResponse.feed
                         self.errorHandlingManager.errorMessage = nil
                         isLoading = false
                     }

@@ -34,6 +34,11 @@
 		22B8045F2AA90E9C008D7108 /* JobHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B8045E2AA90E9C008D7108 /* JobHandler.swift */; };
 		22B804612AA90EB7008D7108 /* ApplicationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B804602AA90EB7008D7108 /* ApplicationHandler.swift */; };
 		22B804632AA91570008D7108 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B804622AA91570008D7108 /* UserModel.swift */; };
+		22B804672AA91D37008D7108 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B804662AA91D37008D7108 /* ProfileView.swift */; };
+		22B804692AA91D42008D7108 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B804682AA91D42008D7108 /* PreferencesView.swift */; };
+		22B8046B2AA91D4B008D7108 /* OwnJobsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B8046A2AA91D4B008D7108 /* OwnJobsView.swift */; };
+		22B8046D2AA91D54008D7108 /* OwnApplicationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B8046C2AA91D54008D7108 /* OwnApplicationsView.swift */; };
+		22B8046F2AA92781008D7108 /* AccountInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B8046E2AA92781008D7108 /* AccountInfo.swift */; };
 		22D927792AA7B1400017678C /* JobModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D927782AA7B1400017678C /* JobModel.swift */; };
 		22D9277B2AA7B1500017678C /* ApplicationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D9277A2AA7B1500017678C /* ApplicationModel.swift */; };
 		22D9277D2AA7B16F0017678C /* ReviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D9277C2AA7B16F0017678C /* ReviewModel.swift */; };
@@ -103,6 +108,11 @@
 		22B8045E2AA90E9C008D7108 /* JobHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobHandler.swift; sourceTree = "<group>"; };
 		22B804602AA90EB7008D7108 /* ApplicationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationHandler.swift; sourceTree = "<group>"; };
 		22B804622AA91570008D7108 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		22B804662AA91D37008D7108 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		22B804682AA91D42008D7108 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
+		22B8046A2AA91D4B008D7108 /* OwnJobsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnJobsView.swift; sourceTree = "<group>"; };
+		22B8046C2AA91D54008D7108 /* OwnApplicationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnApplicationsView.swift; sourceTree = "<group>"; };
+		22B8046E2AA92781008D7108 /* AccountInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfo.swift; sourceTree = "<group>"; };
 		22D927782AA7B1400017678C /* JobModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobModel.swift; sourceTree = "<group>"; };
 		22D9277A2AA7B1500017678C /* ApplicationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationModel.swift; sourceTree = "<group>"; };
 		22D9277C2AA7B16F0017678C /* ReviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewModel.swift; sourceTree = "<group>"; };
@@ -203,6 +213,11 @@
 			children = (
 				2216EA782A8D72CB00C970DD /* README.md */,
 				2216EA662A8CF24900C970DD /* AccountView.swift */,
+				22B804662AA91D37008D7108 /* ProfileView.swift */,
+				22B804682AA91D42008D7108 /* PreferencesView.swift */,
+				22B8046A2AA91D4B008D7108 /* OwnJobsView.swift */,
+				22B8046C2AA91D54008D7108 /* OwnApplicationsView.swift */,
+				22B8046E2AA92781008D7108 /* AccountInfo.swift */,
 			);
 			path = AccountPage;
 			sourceTree = "<group>";
@@ -520,10 +535,15 @@
 				22D927812AA7B4DA0017678C /* SearchBarView.swift in Sources */,
 				22B804212AA8F90A008D7108 /* FeedHandler.swift in Sources */,
 				2216EA832A8D762400C970DD /* ExploreView.swift in Sources */,
+				22B8046D2AA91D54008D7108 /* OwnApplicationsView.swift in Sources */,
+				22B8046F2AA92781008D7108 /* AccountInfo.swift in Sources */,
 				22B8041D2AA891ED008D7108 /* JobDetail.swift in Sources */,
 				226B63822AA78BA1004620EE /* ApplicationForm.swift in Sources */,
 				22D927832AA7B4FE0017678C /* JobListView.swift in Sources */,
 				22B804632AA91570008D7108 /* UserModel.swift in Sources */,
+				22B804692AA91D42008D7108 /* PreferencesView.swift in Sources */,
+				22B8046B2AA91D4B008D7108 /* OwnJobsView.swift in Sources */,
+				22B804672AA91D37008D7108 /* ProfileView.swift in Sources */,
 				2216EA6F2A8D262400C970DD /* ErrorHandlingManager.swift in Sources */,
 				2216EA712A8D2E7D00C970DD /* KeyChainManager.swift in Sources */,
 				22B804612AA90EB7008D7108 /* ApplicationHandler.swift in Sources */,

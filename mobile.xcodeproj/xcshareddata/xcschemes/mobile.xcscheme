@@ -116,7 +116,12 @@
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "USER_APPLICATIONS_PATH"
-            value = "/user/application"
+            value = "/user/applications"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "USER_PREFERENCES_PATH"
+            value = "/user/preferences"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable

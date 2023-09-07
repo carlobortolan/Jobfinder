@@ -25,16 +25,16 @@ struct SignUpForm: View {
                     .font(.largeTitle)
                     .padding()
 
-                TextField("Email", text: $authenticationManager.email)
+                TextField("Email", text: $authenticationManager.current.email)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
                     .padding(.bottom)
 
-                TextField("First name", text: $authenticationManager.firstName)
+                TextField("First name", text: $authenticationManager.current.firstName)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
 
-                TextField("Last name", text: $authenticationManager.lastName)
+                TextField("Last name", text: $authenticationManager.current.lastName)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
                     .padding(.bottom)

@@ -51,10 +51,10 @@ struct ExploreView: View {
         if let accessToken = authenticationManager.getAccessToken() {
             APIManager.queryJobs(query: searchText, jobType: selectedJobType, sortBy: selectedSortBy, accessToken: accessToken) { result in
                 switch result {
-                case .success(let jobs):
+                case .success(let jobResponse):
                     DispatchQueue.main.async {
                         print("case .success")
-                        self.jobs = jobs
+                        self.jobs = jobResponse.jobs
                         self.errorHandlingManager.errorMessage = nil
                         isLoading = false
                     }
