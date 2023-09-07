@@ -33,7 +33,7 @@ Before running the app, ensure you have the following:
 
 - Xcode: The app is developed using Xcode, so make sure you have it installed on your macOS.
 
-- Swift and SwiftUI Knowledge: Familiarity with Swift programming language and SwiftUI framework is recommended to understand and extend the app. Some classes (e.g. APIHandlers in [/networking](/mobile/networking)) already contain detailed method documentation.
+- Swift and SwiftUI Knowledge: Familiarity with Swift programming language and SwiftUI framework is recommended to understand and extend the app. Some classes (e.g. APIHandlers in [/networking](/mobile/Networking)) already contain detailed method documentation.
 
 ## Getting Started
 
