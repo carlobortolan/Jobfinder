@@ -9,10 +9,10 @@ import Foundation
 
 class AccountHandler {
            
-    static func createAccountNew (email: String, firstName: String, lastName: String, password: String, passwordConfirmation: String, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
+    static func createAccount (email: String, firstName: String, lastName: String, password: String, passwordConfirmation: String, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
         print("Started creating account with: \nemail: \(email)\nfirstName: \(firstName)\nlastName: \(lastName)\npassword: \(password)\npasswordConfirmation: \(passwordConfirmation)")
         guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
-              let preferencesPath = ProcessInfo.processInfo.environment["USER_VERIFY_PATH"],
+              let preferencesPath = ProcessInfo.processInfo.environment["USER_PATH"],
               let urlComponents = URLComponents(string: rootUrl + preferencesPath) else {
             completion(.failure(APIError.invalidURL))
             return

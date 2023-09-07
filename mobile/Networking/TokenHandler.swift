@@ -9,6 +9,7 @@ import Foundation
  
 class TokenHandler {
     
+    // TODO: SWITCH TO APINET
     /// Fetches a refresh token using an email and password.
     ///
     /// This function initiates a network request to obtain a refresh token using the provided email and password.
@@ -107,6 +108,7 @@ class TokenHandler {
         }.resume()
     }
     
+    // TODO: SWITCH TO APINET
     /// Fetches a new access token using a refresh token.
     ///
     /// This function initiates a network request to obtain a new access token using a provided refresh token.

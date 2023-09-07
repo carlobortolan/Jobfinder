@@ -57,7 +57,7 @@ struct AccountInfo: View {
             // Image Picker
             .sheet(isPresented: $isImagePickerPresented) {
                 NavigationView {
-                    ImagePickerView(selectedImage: $selectedImage, isImagePickerPresented: $isImagePickerPresented)
+                    ImagePickerView(selectedImage: $selectedImage, isImagePickerPresented: $isImagePickerPresented, useCase: "profile")
                         .navigationBarItems(trailing: Button("Done") {
                             isImagePickerPresented.toggle() // Close the image picker
                         })

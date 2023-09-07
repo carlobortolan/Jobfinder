@@ -10,10 +10,12 @@ import SwiftUI
 struct ImagePickerView: View {
     @Binding var selectedImage: UIImage?
     @Binding var isImagePickerPresented: Bool
-
+    
+    let useCase: String
+        
     var body: some View {
         VStack {
-            Text("Select Profile Image")
+            Text("Select \(useCase) Image")
                 .font(.title)
                 .padding()
 
