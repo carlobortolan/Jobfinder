@@ -6,15 +6,34 @@
 //
 
 import SwiftUI
+import URLImage
 
 struct AccountInfo: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    let user: User
+    
+    init(user: User) {
+        self.user = user
     }
-}
 
-struct AccountInfo_Previews: PreviewProvider {
-    static var previews: some View {
-        AccountInfo()
+    var body: some View {
+        VStack {
+            URLImage(URL(string: user.imageUrl)!) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 100, height: 100)
+                    .clipShape(Circle())
+            }
+            
+            Text(user.email)
+                .font(.headline)
+
+            Text(user.firstName)
+            
+            Text(user.lastName)
+            
+            Spacer()
+        }
+        .padding()
     }
 }

@@ -8,13 +8,71 @@
 import SwiftUI
 
 struct OwnJobsView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
+    @EnvironmentObject var authenticationManager: AuthenticationManager
 
-struct OwnJobsView_Previews: PreviewProvider {
-    static var previews: some View {
-        OwnJobsView()
+    @State var ownJobs: [Job] = []
+    @State var isLoading = false
+
+    var body: some View {
+        NavigationView {
+            List {
+                Section(header: Text("Your Jobs").font(.largeTitle)) {
+                    if ownJobs.isEmpty {
+                        Text("No jobs created yet.")
+                    } else {
+                        // TODO: Implement JobPosting
+                        ForEach(ownJobs, id: \.jobId) { job in
+                            Text(job.title)
+                            Text(job.position)
+                        }
+                    }
+                }
+            }
+            .listStyle(GroupedListStyle())
+            .onAppear {
+                loadOwnJobs(iteration: 0)
+            }
+        }
+    }
+
+    func loadOwnJobs(iteration: Int) {
+        print("Iteration \(iteration)")
+        isLoading = true
+        if let accessToken = authenticationManager.getAccessToken() {
+            APIManager.fetchOwnJobs(accessToken: accessToken) { result in
+                switch result {
+                case .success(let jobsResponse):
+                    DispatchQueue.main.async {
+                        print("case .success")
+                        self.ownJobs = jobsResponse.jobs
+                        self.errorHandlingManager.errorMessage = nil
+                        isLoading = false
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print("case .failure, iteration: \(iteration)")
+                        if iteration == 0 {
+                            if case .authenticationError = error {
+                                print("case .authenticationError")
+                                // Authentication error (e.g., access token invalid)
+                                // Refresh the access token and retry the request
+                                self.authenticationManager.fetchAccessToken()
+                                
+                                self.loadOwnJobs(iteration: 1)
+                            } else {
+                                print("case .else")
+                                // Handle other errors
+                                self.errorHandlingManager.errorMessage = error.localizedDescription
+                            }
+                        } else {
+                            self.authenticationManager.isAuthenticated = false
+                            self.errorHandlingManager.errorMessage = "Tokens expired. Log in to refresh tokens."
+                        }
+                        isLoading = false
+                    }
+                }
+            }
+        }
     }
 }

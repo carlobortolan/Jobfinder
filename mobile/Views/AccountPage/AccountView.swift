@@ -10,55 +10,64 @@
 import SwiftUI
 
 struct AccountView: View {
+    enum Tab {
+        case profile, preferences, ownJobs, ownApplications
+    }
+    
     @EnvironmentObject var authenticationManager: AuthenticationManager
     @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
     
+    @State private var selectedTab: Tab = .profile
+    
     var body: some View {
-        
-        Group {
-            homeView
+        NavigationView {
+            VStack(spacing: 0) {
+                AccountInfo(user: authenticationManager.current)
+                    .padding()
+                    .border(Color.gray, width: 1)
+                
+                Picker("Select Tab", selection: $selectedTab) {
+                    Text("About").tag(Tab.profile)
+                    Text("Preferences").tag(Tab.preferences)
+                    Text("Jobs").tag(Tab.ownJobs)
+                    Text("Applications").tag(Tab.ownApplications)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
+                
+                Divider()
+                
+                tabView
+            }
+            .navigationBarTitle("Account")
+            .navigationBarItems(trailing: Button("Log Out") {
+                authenticationManager.signOut()
+            })
         }
-//        .onAppear {
-//            // You can also fetch access token here if needed on app launch
-//        }
     }
     
-        
     @ViewBuilder
-    private var homeView: some View {
-        ZStack {
-            Color("BgColor").edgesIgnoringSafeArea(.all)
-            
-            VStack {
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundColor(Color("PrimaryColor"))
-                Text("Home")
-                    .font(.largeTitle)
-                    .padding()
-                Button("Log out") {
-                    authenticationManager.signOut()
-                }
-                if let errorMessage = errorHandlingManager.errorMessage {
-                    Text(errorMessage)
-                        .foregroundColor(Color("AlertColor"))
-                        .padding()
-                }
-            }
-            .padding()
-            .background(Color("BgColor"))
-            .foregroundColor(Color("FgColor"))
+    private var tabView: some View {
+        switch selectedTab {
+        case .profile:
+            ProfileView()
+        case .preferences:
+            PreferencesView()
+        case .ownJobs:
+            OwnJobsView()
+        case .ownApplications:
+            OwnApplicationsView()
         }
     }
 }
 
-
-struct AccountView_Preview: PreviewProvider {
+struct AccountView_Previews: PreviewProvider {
     static var previews: some View {
         let errorHandlingManager = ErrorHandlingManager()
         let authenticationManager = AuthenticationManager(errorHandlingManager: errorHandlingManager)
 
-        AccountView()
-            .environmentObject(errorHandlingManager).environmentObject(authenticationManager)
+        return AccountView()
+            .environmentObject(errorHandlingManager)
+            .environmentObject(authenticationManager)
     }
 }
