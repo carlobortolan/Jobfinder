@@ -20,6 +20,8 @@ enum APIError: Error {
     case argumentError(String)
     case unknownError
     case internalServerError
+    case forbidden
+    case notFound
     case noContent(String)
     // TODO: Add other error cases as needed
 
@@ -39,6 +41,10 @@ enum APIError: Error {
             return "Unknown Error"
         case .internalServerError:
             return "Internal Server Error: Something went wrong on our end."
+        case .forbidden:
+            return "Forbidden. Proceeding is inhibited by an access restriction"
+        case .notFound:
+            return "Not found. This page does not exist."
         case .noContent(let cause):
             return "No \(cause) found"
         }
