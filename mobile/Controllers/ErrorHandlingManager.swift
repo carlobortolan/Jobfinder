@@ -17,12 +17,14 @@ enum APIError: Error {
     case networkError(Error)
     case authenticationError
     case jsonParsingError(Error)
+    case jsonEncodingError(Error)
     case argumentError(String)
     case unknownError
     case internalServerError
     case forbidden
     case notFound
     case noContent(String)
+    
     // TODO: Add other error cases as needed
 
     var localizedDescription: String {
@@ -35,6 +37,8 @@ enum APIError: Error {
             return "Authentication Error: Invalid access token"
         case .jsonParsingError(let error):
             return "JSON Parsing Error: \(error.localizedDescription) \(error)"
+        case .jsonEncodingError(let error):
+            return "JSON Encoding Error: \(error.localizedDescription) \(error)"
         case .argumentError(let message):
             return "Argument Error: \(message)"
         case .unknownError:

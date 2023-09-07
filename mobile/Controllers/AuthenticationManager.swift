@@ -124,8 +124,8 @@ class AuthenticationManager: ObservableObject {
     func verify(completion: @escaping (Bool) -> Void) {
         APIManager.verifyAccount(email: current.email, password: password) { result in
             switch result {
-            case .success(let apiResponse):
-                self.saveRefreshToken(refreshToken: apiResponse.message)
+            case .success(let refreshTokenResponse):
+                self.saveRefreshToken(refreshToken: refreshTokenResponse.refresh_token)
                 DispatchQueue.main.async {
                     self.errorHandlingManager.errorMessage = nil
                 }

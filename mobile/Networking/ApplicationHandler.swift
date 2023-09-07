@@ -9,7 +9,6 @@ import Foundation
 
 class ApplicationHandler {
     
-    // TODO: Implement own applications
     static func fetchOwnApplications(accessToken: String, completion: @escaping (Result<ApplicationResponse, APIError>) -> Void) {
         print("Started fetching own applications with: \naccess_token: \(accessToken)")
         guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
@@ -26,7 +25,7 @@ class ApplicationHandler {
         
         print("URL: \(url)")
 
-        RequestHandler.performRequest(url: url, httpMethod: "GET", accessToken: accessToken, responseType: ApplicationResponse.self, completion: completion)
+        RequestHandler.performRequest(url: url, httpMethod: HTTPMethod.GET, accessToken: accessToken, responseType: ApplicationResponse.self, completion: completion)
     }
 }
 

@@ -11,6 +11,14 @@ struct UserResponse: Codable {
     let user: User
 }
 
+struct RefreshTokenResponse: Codable {
+    let refresh_token: String
+}
+
+struct AccessTokenResponse: Codable {
+    let access_token: String
+}
+
 struct User: Codable {
     let userId: Int
     var email: String

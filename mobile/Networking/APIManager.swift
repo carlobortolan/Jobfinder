@@ -22,7 +22,7 @@ class APIManager {
     ///   - accessToken: The user's access token for authentication.
     ///   - completion: A closure that receives a `Result` with an array of `Job` or an `APIError`.
     static func performRequest(url: URL, accessToken: String, completion: @escaping (Result<[Job], APIError>) -> Void) {
-        RequestHandler.performRequest(url: url, httpMethod: "GET", accessToken: accessToken, responseType: [Job].self, completion: completion)
+        RequestHandler.performRequest(url: url, httpMethod: HTTPMethod.GET, accessToken: accessToken, responseType: [Job].self, completion: completion)
     }
 
     /// Delegates the handling of API errors to RequestHandler.
@@ -73,8 +73,8 @@ class APIManager {
     /// - Parameters:
     ///   - email: The email address of the user.
     ///   - password: The user's password.
-    ///   - completion: A closure that receives a `Result` with an `APIResponse` or an `APIError`.
-    static func verifyAccount(email: String, password: String, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
+    ///   - completion: A closure that receives a `Result` with an `RefreshTokenResponse` or an `APIError`.
+    static func verifyAccount(email: String, password: String, completion: @escaping (Result<RefreshTokenResponse, APIError>) -> Void) {
         AccountHandler.verifyAccount(email: email, password: password, completion: completion)
     }
     

@@ -15,13 +15,9 @@ struct AccountInfo: View {
     @State private var isImagePickerPresented = false
     @State private var isImageRemoveAlertPresented = false
     @State private var selectedImage: UIImage?
-    @State private var isLoading = false
 
     var body: some View {
         VStack {
-            if isLoading {
-                ProgressView()
-            }
             URLImage(URL(string: user.imageURL ?? "https://embloy.onrender.com/assets/img/features_3.png")!) { image in
                 image
                     .resizable()
@@ -107,15 +103,13 @@ struct AccountInfo: View {
     
     func removeUserImage(iteration: Int) {
         print("Iteration \(iteration)")
-        isLoading = true
         if let accessToken = authenticationManager.getAccessToken() {
             APIManager.removeUserImage(accessToken: accessToken) { result in
                 switch result {
                 case .success(let apiResponse):
                     DispatchQueue.main.async {
-                        print("case .success")
+                        print("case .success \(apiResponse)")
                         self.errorHandlingManager.errorMessage = nil
-                        isLoading = false
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
@@ -141,7 +135,6 @@ struct AccountInfo: View {
                             self.authenticationManager.isAuthenticated = false
                             self.errorHandlingManager.errorMessage = "Tokens expired. Log in to refresh tokens."
                         }
-                        isLoading = false
                     }
                 }
             }
