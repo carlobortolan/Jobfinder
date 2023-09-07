@@ -18,10 +18,9 @@ struct OwnApplicationsView: View {
         NavigationView {
             List {
                 Section(header: Text("Your Applications").font(.largeTitle)) {
-                    if ownApplications.isEmpty {
+                    if ownApplications.isEmpty && !isLoading {
                         Text("No applications yet.")
                     } else {
-                        // TODO: Implement JobPosting
                         ForEach(ownApplications, id: \.jobId) { application in
                             Text(application.applicationText)
                         }
@@ -32,6 +31,15 @@ struct OwnApplicationsView: View {
             .onAppear {
                 loadOwnApplications(iteration: 0)
             }
+            .overlay(
+                Group {
+                    if isLoading {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                            .scaleEffect(1.5, anchor: .center)
+                    }
+                }
+            )
         }
     }
 

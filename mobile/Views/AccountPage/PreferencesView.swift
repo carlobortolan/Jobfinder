@@ -29,7 +29,9 @@ struct PreferencesView: View {
                         Text("Salary Range: \(String(format: "%.1f - %.1f", preferences.salaryRange[0], preferences.salaryRange[1]))")
                         Text("CV URL: \(preferences.cvURL)")
                     } else {
-                        Text("Loading...")
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                            .scaleEffect(1.5, anchor: .center)
                     }
                 }
             }

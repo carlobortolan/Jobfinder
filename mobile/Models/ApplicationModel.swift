@@ -14,12 +14,12 @@ struct ApplicationResponse: Codable {
 struct Application: Codable, Hashable {
     let jobId: Int
     let userId: Int
-    let createdAt: Date
-    let updatedAt: Date
+    let createdAt: String
+    let updatedAt: String
     let status: String
     let applicationText: String
-    let applicationDocuments: String
-    let response: String
+    let applicationDocuments: String?
+    let response: String?
 
     enum CodingKeys: String, CodingKey {
         case jobId = "job_id"
