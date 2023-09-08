@@ -96,12 +96,27 @@ struct UserData: Encodable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
+        try container.encode(firstName, forKey: .firstName)
+        try container.encode(lastName, forKey: .lastName)
+        try container.encode(email, forKey: .email)
+        try container.encode(phone, forKey: .phone)
+        try container.encode(degree, forKey: .degree)
+        try container.encode(countryCode, forKey: .countryCode)
+        try container.encode(city, forKey: .city)
+        try container.encode(postalCode, forKey: .postalCode)
+        try container.encode(address, forKey: .address)
+
         if let dateOfBirth = dateOfBirth {
             let dateString = DateFormattedISO8601.dateFormatter.string(from: dateOfBirth)
             try container.encode(dateString, forKey: .dateOfBirth)
         } else {
             try container.encode("", forKey: .dateOfBirth)
         }
+
+        try container.encode(twitterURL, forKey: .twitterURL)
+        try container.encode(facebookURL, forKey: .facebookURL)
+        try container.encode(linkedinURL, forKey: .linkedinURL)
+        try container.encode(instagramURL, forKey: .instagramURL)
     }
 
     init(from decoder: Decoder) throws {
@@ -112,16 +127,15 @@ struct UserData: Encodable {
         self.email = try container.decodeIfPresent(String.self, forKey: .email)
         self.longitude = try Double(container.decodeIfPresent(String.self, forKey: .longitude) ?? "0")
         self.latitude = try Double(container.decodeIfPresent(String.self, forKey: .latitude) ?? "0")
-        self.phone = try container.decodeIfPresent(String.self, forKey: .phone)
+        // TODO: Improve in the future
+        self.phone = try String(format: "%.0f", Double(container.decodeIfPresent(String.self, forKey: .phone) ?? "0") ?? "")
         self.degree = try container.decodeIfPresent(String.self, forKey: .degree)
-
         let dateString = try container.decode(String.self, forKey: .dateOfBirth)
         if dateString.isEmpty {
             self.dateOfBirth = nil
         } else {
             self.dateOfBirth = DateFormattedISO8601.dateFormatter.date(from: dateString)
         }
-
         self.countryCode = try container.decodeIfPresent(String.self, forKey: .countryCode)
         self.city = try container.decodeIfPresent(String.self, forKey: .city)
         self.postalCode = try container.decodeIfPresent(String.self, forKey: .postalCode)
@@ -305,7 +319,8 @@ struct UserData: Encodable {
             instagramURL = try container.decodeIfPresent(String.self, forKey: .instagramURL)
             linkedinURL = try container.decodeIfPresent(String.self, forKey: .linkedinURL)
             imageURL = try container.decodeIfPresent(String.self, forKey: .imageURL)
-            phone = try container.decodeIfPresent(String.self, forKey: .phone)
+            // TODO: Improve in the future
+            self.phone = try String(format: "%.0f", Double(container.decodeIfPresent(String.self, forKey: .phone) ?? "0") ?? "")
             degree = try container.decodeIfPresent(String.self, forKey: .degree)
         }
 

@@ -22,6 +22,9 @@ struct UpdateUserView: View {
     @State private var isAddressValid = true
 
     var body: some View {
+        let maximumDateOfBirth = Calendar.current.date(byAdding: .year, value: -18, to: Date()) ?? Date()
+        let reasonableMinimumDate = Calendar.current.date(byAdding: .year, value: -100, to: Date()) ?? Date()
+        
         VStack {
             Text("Update Profile")
                 .font(.largeTitle)
@@ -71,12 +74,11 @@ struct UpdateUserView: View {
                           .foregroundColor(isPhoneValid ? .primary : .red)
 
                         DatePicker("Date of Birth", selection: Binding(
-                            get: { user.dateOfBirth ?? Date.distantPast },
+                            get: { user.dateOfBirth ?? maximumDateOfBirth },
                             set: { user.dateOfBirth = $0 }
-                        ), in: ...Date(), displayedComponents: .date)
-                            .foregroundColor(isDateOfBirthValid ? .primary : .red)
-                            .datePickerStyle(WheelDatePickerStyle()) // You can choose a different style if you prefer
-                        
+                        ), in: reasonableMinimumDate...maximumDateOfBirth, displayedComponents: .date)
+                        .foregroundColor(isDateOfBirthValid ? .primary : .red)
+                        .datePickerStyle(CompactDatePickerStyle())
                     }
 
                     Section(header: Text("Address Information")) {
