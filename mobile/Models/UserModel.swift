@@ -28,128 +28,135 @@
     }
 
 
-struct UserData: Encodable {
-    let firstName: String?
-    let lastName: String?
-    let email: String?
-    let longitude: Double?
-    let latitude: Double?
-    let phone: String?
-    let degree: String?
-    var dateOfBirth: Date?
-    let countryCode: String?
-    let city: String?
-    let postalCode: String?
-    let address: String?
-    let twitterURL: String?
-    let facebookURL: String?
-    let linkedinURL: String?
-    let instagramURL: String?
+    struct UserData: Encodable {
+        let firstName: String?
+        let lastName: String?
+        let email: String?
+        let longitude: Double?
+        let latitude: Double?
+        let phone: String?
+        let degree: String?
+        var dateOfBirth: Date?
+        let countryCode: String?
+        let city: String?
+        let postalCode: String?
+        let address: String?
+        let twitterURL: String?
+        let facebookURL: String?
+        let linkedinURL: String?
+        let instagramURL: String?
 
-    init(user: User) {
-        self.firstName = user.firstName
-        self.lastName = user.lastName
-        self.email = user.email
-        self.longitude = user.longitude
-        self.latitude = user.latitude
-        self.phone = user.phone
-        self.degree = user.degree
-        self.dateOfBirth = user.dateOfBirth
-        self.countryCode = user.countryCode
-        self.city = user.city
-        self.postalCode = user.postalCode
-        self.address = user.address
-        self.twitterURL = user.twitterURL
-        self.facebookURL = user.facebookURL
-        self.linkedinURL = user.linkedinURL
-        self.instagramURL = user.instagramURL
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case firstName = "first_name"
-        case lastName = "last_name"
-        case email
-        case longitude
-        case latitude
-        case countryCode = "country_code"
-        case postalCode = "postal_code"
-        case city
-        case address
-        case dateOfBirth = "date_of_birth"
-        case userType = "user_type"
-        case viewCount = "view_count"
-        case createdAt = "created_at"
-        case updatedAt = "updated_at"
-        case applicationsCount = "applications_count"
-        case jobsCount = "jobs_count"
-        case userRole = "user_role"
-        case applicationNotifications = "application_notifications"
-        case twitterURL = "twitter_url"
-        case facebookURL = "facebook_url"
-        case instagramURL = "instagram_url"
-        case linkedinURL = "linkedin_url"
-        case imageURL = "image_url"
-        case phone
-        case degree
-    }
-
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
+        init(user: User) {
+            print("UserData - INIT: \(user)")
+            self.firstName = user.firstName
+            self.lastName = user.lastName
+            self.email = user.email
+            self.longitude = user.longitude
+            self.latitude = user.latitude
+            self.phone = user.phone
+            self.degree = user.degree
+            self.dateOfBirth = user.dateOfBirth
+            self.countryCode = user.countryCode
+            self.city = user.city
+            self.postalCode = user.postalCode
+            self.address = user.address
+            self.twitterURL = user.twitterURL
+            self.facebookURL = user.facebookURL
+            self.linkedinURL = user.linkedinURL
+            self.instagramURL = user.instagramURL
+        }
         
-        try container.encode(firstName, forKey: .firstName)
-        try container.encode(lastName, forKey: .lastName)
-        try container.encode(email, forKey: .email)
-        try container.encode(phone, forKey: .phone)
-        try container.encode(degree, forKey: .degree)
-        try container.encode(countryCode, forKey: .countryCode)
-        try container.encode(city, forKey: .city)
-        try container.encode(postalCode, forKey: .postalCode)
-        try container.encode(address, forKey: .address)
-
-        if let dateOfBirth = dateOfBirth {
-            let dateString = DateFormattedISO8601.dateFormatter.string(from: dateOfBirth)
-            try container.encode(dateString, forKey: .dateOfBirth)
-        } else {
-            try container.encode("", forKey: .dateOfBirth)
+        enum CodingKeys: String, CodingKey {
+            case firstName = "first_name"
+            case lastName = "last_name"
+            case email
+            case longitude
+            case latitude
+            case countryCode = "country_code"
+            case postalCode = "postal_code"
+            case city
+            case address
+            case dateOfBirth = "date_of_birth"
+            case userType = "user_type"
+            case viewCount = "view_count"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+            case applicationsCount = "applications_count"
+            case jobsCount = "jobs_count"
+            case userRole = "user_role"
+            case applicationNotifications = "application_notifications"
+            case twitterURL = "twitter_url"
+            case facebookURL = "facebook_url"
+            case instagramURL = "instagram_url"
+            case linkedinURL = "linkedin_url"
+            case imageURL = "image_url"
+            case phone
+            case degree
         }
 
-        try container.encode(twitterURL, forKey: .twitterURL)
-        try container.encode(facebookURL, forKey: .facebookURL)
-        try container.encode(linkedinURL, forKey: .linkedinURL)
-        try container.encode(instagramURL, forKey: .instagramURL)
+        func encode(to encoder: Encoder) throws {
+            print("UserData - ENCODE: \(encoder)")
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            
+            try container.encode(firstName, forKey: .firstName)
+            try container.encode(lastName, forKey: .lastName)
+            try container.encode(email, forKey: .email)
+            try container.encodeIfPresent(phone, forKey: .phone)
+            try container.encodeIfPresent(degree, forKey: .degree)
+            try container.encodeIfPresent(countryCode, forKey: .countryCode)
+            try container.encodeIfPresent(city, forKey: .city)
+            try container.encodeIfPresent(postalCode, forKey: .postalCode)
+            try container.encodeIfPresent(address, forKey: .address)
+
+            if let dateOfBirth = dateOfBirth {
+                print("FOO")
+                let dateString = DateFormattedISO8601.dateFormatter.string(from: dateOfBirth)
+                try container.encodeIfPresent(dateString, forKey: .dateOfBirth)
+            } else {
+                print("BAR")
+                try container.encodeIfPresent("", forKey: .dateOfBirth)
+            }
+
+            try container.encodeIfPresent(twitterURL, forKey: .twitterURL)
+            try container.encodeIfPresent(facebookURL, forKey: .facebookURL)
+            try container.encodeIfPresent(linkedinURL, forKey: .linkedinURL)
+            try container.encodeIfPresent(instagramURL, forKey: .instagramURL)
+        }
+
+        init(from decoder: Decoder) throws {
+            print("UserData - INIT: \(decoder)")
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+
+            self.firstName = try container.decodeIfPresent(String.self, forKey: .firstName)
+            self.lastName = try container.decodeIfPresent(String.self, forKey: .lastName)
+            self.email = try container.decodeIfPresent(String.self, forKey: .email)
+            self.longitude = try Double(container.decodeIfPresent(String.self, forKey: .longitude) ?? "0")
+            self.latitude = try Double(container.decodeIfPresent(String.self, forKey: .latitude) ?? "0")
+            // TODO: Improve in the future
+            if let phoneString = try container.decodeIfPresent(String.self, forKey: .phone), !phoneString.isEmpty, phoneString != "0" {
+                self.phone = String(format: "%.0f", Double(phoneString) ?? 0)
+            } else {
+                self.phone = ""
+            }
+            self.degree = try container.decodeIfPresent(String.self, forKey: .degree)
+            let dateString = try container.decodeIfPresent(String.self, forKey: .dateOfBirth)
+            if let dateString {
+                if dateString.isEmpty {
+                    self.dateOfBirth = nil
+                } else {
+                    self.dateOfBirth = DateFormattedISO8601.dateFormatter.date(from: dateString)
+                }
+            }
+            self.countryCode = try container.decodeIfPresent(String.self, forKey: .countryCode)
+            self.city = try container.decodeIfPresent(String.self, forKey: .city)
+            self.postalCode = try container.decodeIfPresent(String.self, forKey: .postalCode)
+            self.address = try container.decodeIfPresent(String.self, forKey: .address)
+            self.twitterURL = try container.decodeIfPresent(String.self, forKey: .twitterURL)
+            self.facebookURL = try container.decodeIfPresent(String.self, forKey: .facebookURL)
+            self.linkedinURL = try container.decodeIfPresent(String.self, forKey: .linkedinURL)
+            self.instagramURL = try container.decodeIfPresent(String.self, forKey: .instagramURL)
+        }
     }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.firstName = try container.decodeIfPresent(String.self, forKey: .firstName)
-        self.lastName = try container.decodeIfPresent(String.self, forKey: .lastName)
-        self.email = try container.decodeIfPresent(String.self, forKey: .email)
-        self.longitude = try Double(container.decodeIfPresent(String.self, forKey: .longitude) ?? "0")
-        self.latitude = try Double(container.decodeIfPresent(String.self, forKey: .latitude) ?? "0")
-        // TODO: Improve in the future
-        if let phoneString = try container.decodeIfPresent(String.self, forKey: .phone), !phoneString.isEmpty, phoneString != "0" {
-            self.phone = String(format: "%.0f", Double(phoneString) ?? 0)
-        } else {
-            self.phone = ""
-        }
-        self.degree = try container.decodeIfPresent(String.self, forKey: .degree)
-        let dateString = try container.decode(String.self, forKey: .dateOfBirth)
-        if dateString.isEmpty {
-            self.dateOfBirth = nil
-        } else {
-            self.dateOfBirth = DateFormattedISO8601.dateFormatter.date(from: dateString)
-        }
-        self.countryCode = try container.decodeIfPresent(String.self, forKey: .countryCode)
-        self.city = try container.decodeIfPresent(String.self, forKey: .city)
-        self.postalCode = try container.decodeIfPresent(String.self, forKey: .postalCode)
-        self.address = try container.decodeIfPresent(String.self, forKey: .address)
-        self.twitterURL = try container.decodeIfPresent(String.self, forKey: .twitterURL)
-        self.facebookURL = try container.decodeIfPresent(String.self, forKey: .facebookURL)
-        self.linkedinURL = try container.decodeIfPresent(String.self, forKey: .linkedinURL)
-        self.instagramURL = try container.decodeIfPresent(String.self, forKey: .instagramURL)
-    }
-}
 
 
     struct User: Codable {
@@ -165,7 +172,6 @@ struct UserData: Encodable {
         var postalCode: String?
         var city: String?
         var address: String?
-        @DateFormattedISO8601
         var dateOfBirth: Date?
         var userType: String
         var viewCount: Int
@@ -215,6 +221,7 @@ struct UserData: Encodable {
         }
 
         init() {
+            print("User - INIT")
             self.userId = 0
             self.email = ""
             self.passwordDigest = ""
@@ -276,18 +283,53 @@ struct UserData: Encodable {
             self.degree = degree
         }
         
-        func encode(to encoder: Encoder) throws {
+        /*func encode(to encoder: Encoder) throws {
+            print("FOO1")
             var container = encoder.container(keyedBy: CodingKeys.self)
-            
-            if let dateOfBirth = dateOfBirth {
-                let dateString = DateFormattedISO8601.dateFormatter.string(from: dateOfBirth)
-                try container.encode(dateString, forKey: .dateOfBirth)
-            } else {
-                try container.encode("", forKey: .dateOfBirth)
-            }
-        }
 
+            try container.encode(userId, forKey: .userId)
+            try container.encode(email, forKey: .email)
+            try container.encode(passwordDigest, forKey: .passwordDigest)
+            try container.encode(activityStatus, forKey: .activityStatus)
+            try container.encode(firstName, forKey: .firstName)
+            try container.encode(lastName, forKey: .lastName)
+            try container.encodeIfPresent(longitude, forKey: .longitude)
+            try container.encodeIfPresent(latitude, forKey: .latitude)
+            try container.encodeIfPresent(countryCode, forKey: .countryCode)
+            try container.encodeIfPresent(postalCode, forKey: .postalCode)
+            try container.encodeIfPresent(city, forKey: .city)
+            try container.encodeIfPresent(address, forKey: .address)
+            print("FOO2")
+
+            if let dateOfBirth = dateOfBirth {
+                print("FOO3")
+                let dateString = DateFormattedISO8601.dateFormatter.string(from: dateOfBirth)
+                try container.encodeIfPresent(dateString, forKey: .dateOfBirth)
+            } else {
+                print("BAR")
+                try container.encodeIfPresent("", forKey: .dateOfBirth)
+            }
+
+            try container.encode(userType, forKey: .userType)
+            try container.encode(viewCount, forKey: .viewCount)
+            try container.encode(createdAt, forKey: .createdAt)
+            try container.encode(updatedAt, forKey: .updatedAt)
+            try container.encode(applicationsCount, forKey: .applicationsCount)
+            try container.encode(jobsCount, forKey: .jobsCount)
+            try container.encode(userRole, forKey: .userRole)
+            try container.encode(applicationNotifications, forKey: .applicationNotifications)
+            try container.encodeIfPresent(twitterURL, forKey: .twitterURL)
+            try container.encodeIfPresent(facebookURL, forKey: .facebookURL)
+            try container.encodeIfPresent(instagramURL, forKey: .instagramURL)
+            try container.encodeIfPresent(linkedinURL, forKey: .linkedinURL)
+            try container.encodeIfPresent(imageURL, forKey: .imageURL)
+            try container.encodeIfPresent(phone, forKey: .phone)
+            try container.encodeIfPresent(degree, forKey: .degree)
+        }
+        */
+        
         init(from decoder: Decoder) throws {
+            print("User - INIT: \(decoder)")
             let container = try decoder.container(keyedBy: CodingKeys.self)
             
             userId = try container.decode(Int.self, forKey: .userId)
@@ -303,11 +345,13 @@ struct UserData: Encodable {
             city = try container.decodeIfPresent(String.self, forKey: .city)
             address = try container.decodeIfPresent(String.self, forKey: .address)
 
-            let dateString = try container.decode(String.self, forKey: .dateOfBirth)
-            if dateString.isEmpty {
-                self.dateOfBirth = nil
-            } else {
-                self.dateOfBirth = DateFormattedISO8601.dateFormatter.date(from: dateString)
+            let dateString = try container.decodeIfPresent(String.self, forKey: .dateOfBirth)
+            if let dateString {
+                if dateString.isEmpty {
+                    self.dateOfBirth = nil
+                } else {
+                    self.dateOfBirth = DateFormattedISO8601.dateFormatter.date(from: dateString)
+                }
             }
 
             userType = try container.decode(String.self, forKey: .userType)
@@ -333,6 +377,7 @@ struct UserData: Encodable {
         }
 
         func toJSON() -> String? {
+            print("User - TO JSON")
             let encoder = JSONEncoder()
             encoder.dateEncodingStrategy = .formatted(DateFormattedISO8601.dateFormatter)
             
@@ -343,18 +388,19 @@ struct UserData: Encodable {
         }
         
         static func fromJSON(_ jsonString: String) -> User? {
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .formatted(DateFormattedISO8601.dateFormatter)
-            
-            if let data = jsonString.data(using: .utf8) {
-                if let user = try? decoder.decode(User.self, from: data) {
-                    return user
-                }
+        print("User - FROM JSON: \(jsonString)")
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(DateFormattedISO8601.dateFormatter)
+        
+        if let data = jsonString.data(using: .utf8) {
+            if let user = try? decoder.decode(User.self, from: data) {
+                return user
             }
-            return nil
         }
+        return nil
+    }
 
-     static func generateRandomUser() -> User {
+        static func generateRandomUser() -> User {
             let userId = Int.random(in: 1...1000)
             let email = "\(userId)@example.com"
             let passwordDigest = "RandomPasswordDigest\(userId)"
@@ -386,4 +432,4 @@ struct UserData: Encodable {
             
             return User(userId: userId, email: email, passwordDigest: passwordDigest, activityStatus: activityStatus, firstName: firstName, lastName: lastName, longitude: longitude, latitude: latitude, countryCode: countryCode, postalCode: postalCode, city: city, address: address, dateOfBirth: dateOfBirth, userType: userType, viewCount: viewCount, createdAt: createdAt, updatedAt: updatedAt, applicationsCount: applicationsCount, jobsCount: jobsCount, userRole: userRole, applicationNotifications: applicationNotifications, twitterURL: twitterURL, facebookURL: facebookURL, instagramURL: instagramURL, linkedinURL: linkedinURL, imageURL: imageURL, phone: phone, degree: degree)
         }
-    }
+}

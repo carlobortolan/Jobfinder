@@ -13,17 +13,17 @@ struct OwnApplicationsView: View {
     @EnvironmentObject var jobManager: JobManager
     @EnvironmentObject var applicationManager: ApplicationManager
 
-    @State var ownApplications: [Application] = []
+//    @State var ownApplications: [Application] = []
     @State var isLoading = false
 
     var body: some View {
         NavigationView {
             List {
                 Section(header: Text("Your Applications").font(.largeTitle)) {
-                    if ownApplications.isEmpty && !isLoading {
+                    if applicationManager.ownApplications.isEmpty && !isLoading {
                         Text("No applications yet.")
                     } else {
-                        ForEach(ownApplications, id: \.jobId) { application in
+                        ForEach(applicationManager.ownApplications, id: \.jobId) { application in
                             Text(application.applicationText)
                         }
                     }
@@ -32,6 +32,7 @@ struct OwnApplicationsView: View {
             .listStyle(GroupedListStyle())
             .onAppear {
                 isLoading = true
+                print("STARTED AOO")
                 applicationManager.loadOwnApplications(iteration: 0) {
                     isLoading = false
                 }
@@ -53,9 +54,8 @@ struct OwnApplicationsView: View {
         static var previews: some View {
             let errorHandlingManager = ErrorHandlingManager()
             let authenticationManager = AuthenticationManager(errorHandlingManager: errorHandlingManager)
-            let ownApplications = Application.generateRandomApplications().applications
             
-            return OwnApplicationsView(ownApplications: ownApplications)
+            return OwnApplicationsView()
                 .environmentObject(errorHandlingManager)
                 .environmentObject(authenticationManager)
         }

@@ -14,7 +14,7 @@ struct AccountInfo: View {
     @EnvironmentObject var jobManager: JobManager
     @EnvironmentObject var applicationManager: ApplicationManager
     
-    @Binding var user: User
+  //  @Binding var user: User
     
     @State private var isImagePickerPresented = false
     @State private var isImageRemoveAlertPresented = false
@@ -22,7 +22,7 @@ struct AccountInfo: View {
 
     var body: some View {
         VStack {
-            URLImage(URL(string: user.imageURL ?? "https://embloy.onrender.com/assets/img/features_3.png")!) { image in
+            URLImage(URL(string: authenticationManager.current.imageURL ?? "https://embloy.onrender.com/assets/img/features_3.png")!) { image in
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -33,7 +33,7 @@ struct AccountInfo: View {
                             .stroke(Color("FgColor"), lineWidth: 5)
                     )
                     .onTapGesture {
-                        if user.imageURL != nil {
+                        if authenticationManager.current.imageURL != nil {
                             // Show the option to remove or upload a new image
                             isImageRemoveAlertPresented.toggle()
                         } else {
@@ -49,7 +49,7 @@ struct AccountInfo: View {
                     message: Text("Do you want to remove your profile image or upload a new one?"),
                     primaryButton: .destructive(Text("Remove"), action: {
                         // Handle image removal
-                        user.imageURL = nil // Set the user's image URL to nil
+                        authenticationManager.current.imageURL = nil // Set the user's image URL to nil
                         removeUserImage(iteration: 0)
                     }),
                     secondaryButton: .default(Text("Upload New"), action: {
@@ -68,25 +68,25 @@ struct AccountInfo: View {
                 }
             }
             
-            Text(user.email)
+            Text(authenticationManager.current.email)
                 .font(.headline)
 
-            Text("\(user.firstName) \(user.lastName)")
+            Text("\(authenticationManager.current.firstName) \(authenticationManager.current.lastName)")
             
             HStack {
                 Spacer()
                 VStack {
-                    Text("\(user.viewCount)")
+                    Text("\(authenticationManager.current.viewCount)")
                         .fontWeight(.heavy)
-                    Text("\(user.viewCount == 1 ? "View" : "Views")")
+                    Text("\(authenticationManager.current.viewCount == 1 ? "View" : "Views")")
                         .font(.footnote)
                         .fontWeight(.light)
                 }
                 Spacer()
                 VStack {
-                    Text("\(user.jobsCount)")
+                    Text("\(authenticationManager.current.jobsCount)")
                         .fontWeight(.heavy)
-                    Text("\(user.jobsCount == 1 ? "Post" : "Posts")")
+                    Text("\(authenticationManager.current.jobsCount == 1 ? "Post" : "Posts")")
                         .font(.footnote)
                         .fontWeight(.light)
                 }
@@ -152,6 +152,6 @@ struct AccountInfo: View {
 struct Previews_AccountInfo_Previews: PreviewProvider {
     static var previews: some View {
         @State var user = User.generateRandomUser()
-        AccountInfo(user: $user)
+        AccountInfo()
     }
 }

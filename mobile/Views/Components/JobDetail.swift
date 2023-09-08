@@ -18,6 +18,7 @@ struct JobDetail: View {
     @State private var region: MKCoordinateRegion
     @State private var isApplicationPopupVisible = false
     @State private var isLoading = false
+    @State private var hasApplication = false
     @State private var applicationMessage = "Write your application message here ..."
     @State var job: Job
 
@@ -92,12 +93,16 @@ struct JobDetail: View {
                 Button(action: {
                     isApplicationPopupVisible.toggle()
                 }) {
-//                    if authenticationManager.ownApplications.contains(id: job.jobId) {
+                    if hasApplication {
+                        ApplicationDetail(job: $job)
+                    } else {
                         ApplicationButton()
-  //                  } else {
-    //                    ApplicationDetail(job: $job)
-      //              }
+                    }
                 }
+            }
+            .onAppear() {
+                hasApplication = applicationManager.hasApplication(forUserId:
+                                                                authenticationManager.current.userId, andJobId: job.jobId)
             }
             .padding()
             .sheet(isPresented: $isApplicationPopupVisible) {

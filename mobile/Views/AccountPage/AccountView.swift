@@ -25,7 +25,7 @@ struct AccountView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                AccountInfo(user: $authenticationManager.current)
+                AccountInfo()
                     .padding()
                     .frame(height: 175.0)
                 
