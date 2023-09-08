@@ -13,7 +13,7 @@ struct UpdateUserPreferencesView: View {
 
     var body: some View {
         VStack {
-            Text("Update User Preferences")
+            Text("Update Preferences")
                 .font(.largeTitle)
                 .padding()
             
@@ -33,6 +33,10 @@ struct UpdateUserPreferencesView: View {
 
 struct UpdateUserPreferencesView_Previews: PreviewProvider {
     static var previews: some View {
-        UpdateUserPreferencesView()
+        @State var user = User.generateRandomUser()
+        let errorHandlingManager = ErrorHandlingManager()
+        let authenticationManager = AuthenticationManager(errorHandlingManager: errorHandlingManager)
+
+        UpdateUserPreferencesView().environmentObject(errorHandlingManager).environmentObject(authenticationManager)
     }
 }

@@ -47,6 +47,7 @@ struct AccountView: View {
             .navigationBarItems(leading: Button("Settings") {
                 isSettingsPresented.toggle()
             })
+            .modifier(ErrorViewModifier())
             .sheet(isPresented: $isSettingsPresented) {
                 NavigationView {
                     SettingsView()

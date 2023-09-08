@@ -8,40 +8,81 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @State private var selectedTab = 0
 
     @EnvironmentObject var authenticationManager: AuthenticationManager
     @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
     
+    enum Tab {
+        case updateUser, updateUserPreferences, aboutApp
+    }
+    
+    @State private var selectedTab: Tab = .updateUser
+    
     var body: some View {
-        TabView(selection: $selectedTab) {
-            AppInfoView()
-                .tag(0)
-                .tabItem {
-                    Label("About App", systemImage: "info.circle")
-                        .font(.system(size: 30))
+        NavigationView {
+            VStack(spacing: 0) {
+                tabView
+                
+                HStack {
+                    Spacer()
+                    
+                    Button(action: {
+                        selectedTab = .updateUser
+                    }) {
+                        Image(systemName: "person.circle")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .padding()
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        selectedTab = .updateUserPreferences
+                    }) {
+                        Image(systemName: "gearshape.fill")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .padding()
+                    }
+                    
+                    Spacer()
+                 
+                    Button(action: {
+                        selectedTab = .aboutApp
+                    }) {
+                        Image(systemName: "info.circle")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .padding()
+                    }
+                    
+                    Spacer()
                 }
-            
-            UpdateUserView()
-                .tag(1)
-                .tabItem {
-                    Label("Update User", systemImage: "person.circle")
-                        .font(.system(size: 30))
-                }
-            
-            UpdateUserPreferencesView()
-                .tag(2)
-                .tabItem {
-                    Label("Update Preferences", systemImage: "gearshape.fill")
-                        .font(.system(size: 30))
-                }
+                .background(Color(UIColor.systemBackground))
+            }
+            .navigationBarTitle("", displayMode: .inline)
+            .navigationBarHidden(true)
         }
-        .tabViewStyle(PageTabViewStyle())
+    }
+    
+    @ViewBuilder
+    private var tabView: some View {
+        switch selectedTab {
+        case .aboutApp:
+            AppInfoView()
+        case .updateUser:
+            UpdateUserView(user: $authenticationManager.current)
+        case .updateUserPreferences:
+            UpdateUserPreferencesView()
+        }
     }
 }
-
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        let errorHandlingManager = ErrorHandlingManager()
+        let authenticationManager = AuthenticationManager(errorHandlingManager: errorHandlingManager)
+
+        SettingsView().environmentObject(errorHandlingManager).environmentObject(authenticationManager)
     }
 }
