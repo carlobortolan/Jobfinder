@@ -13,10 +13,15 @@ struct APIResponse: Codable {
 
 // Struct to represent the request body, if needed
 struct RequestBody<T: Encodable>: Encodable {
-    let data: T
+    let customData: T
 
-    init(data: T) {
-        self.data = data
+    init(customData: T) {
+        self.customData = customData
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(customData)
     }
 }
 

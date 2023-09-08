@@ -15,14 +15,15 @@ class ErrorHandlingManager: ObservableObject {
 enum APIError: Error {
     case invalidURL
     case networkError(Error)
-    case authenticationError
+    case authenticationError // 401
     case jsonParsingError(Error)
     case jsonEncodingError(Error)
-    case argumentError(String)
+    case argumentError(String) // 400
+    case validationError(String) // 422
     case unknownError
-    case internalServerError
-    case forbidden
-    case notFound
+    case internalServerError // 500
+    case forbidden // 403
+    case notFound // 404
     case noContent(String)
     
     // TODO: Add other error cases as needed
@@ -41,6 +42,8 @@ enum APIError: Error {
             return "JSON Encoding Error: \(error.localizedDescription) \(error)"
         case .argumentError(let message):
             return "Argument Error: \(message)"
+        case .validationError(let message):
+            return "Validation Error: \(message)"
         case .unknownError:
             return "Unknown Error"
         case .internalServerError:

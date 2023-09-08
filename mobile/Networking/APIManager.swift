@@ -15,27 +15,6 @@ import Foundation
 
 class APIManager {
     
-    /// Delegates the execution of a network request to RequestHandler.
-    ///
-    /// - Parameters:
-    ///   - url: The URL for the network request.
-    ///   - accessToken: The user's access token for authentication.
-    ///   - completion: A closure that receives a `Result` with an array of `Job` or an `APIError`.
-    static func performRequest(url: URL, accessToken: String, completion: @escaping (Result<[Job], APIError>) -> Void) {
-        RequestHandler.performRequest(url: url, httpMethod: HTTPMethod.GET, accessToken: accessToken, responseType: [Job].self, completion: completion)
-    }
-
-    /// Delegates the handling of API errors to RequestHandler.
-    ///
-    /// - Parameters:
-    ///   - json: The JSON response received from the API.
-    ///   - errorKeys: An array of error keys to check in the JSON response.
-    ///   - statusCode: The HTTP status code of the API response.
-    ///   - completion: A closure that receives a `Result` with a generic type conforming to `Decodable` or an `APIError`.
-    static func handleApiErrors<T: Decodable>(json: Any, errorKeys: [String], statusCode: Int, completion: @escaping (Result<T, APIError>) -> Void) {
-        RequestHandler.handleApiErrors(json: json, errorKeys: errorKeys, statusCode: statusCode, completion: completion)
-    }
-
     /// Delegates the fetching of a refresh token to TokenHandler.
     ///
     /// - Parameters:
@@ -94,6 +73,16 @@ class APIManager {
     ///   - completion: A closure that receives a `Result` with an `APIResponse` or an `APIError`.
     static func removeUserImage(accessToken: String, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
         AccountHandler.removeImage(accessToken: accessToken, completion: completion)
+    }
+    
+    /// Delegates the updating of a user's account information to AccountHandler.
+    ///
+    /// - Parameters:
+    ///   - accessToken: The user's access token for authentication.
+    ///   - user: The current user object.
+    ///   - completion: A closure that receives a `Result` with an `APIResponse` or an `APIError`.
+    static func updateAccount(accessToken: String, user: User, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
+        AccountHandler.updateAccount(accessToken: accessToken, user: UserUpdateRequestBody(user: user), completion: completion)
     }
     
     /// Delegates the fetching of a user's preferences to AccountHandler.

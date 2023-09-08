@@ -19,6 +19,48 @@ struct AccessTokenResponse: Codable {
     let access_token: String
 }
 
+struct UserUpdateRequestBody: Encodable {
+    let user: UserData
+
+    init(user: User) {
+        self.user = UserData(user: user)
+    }
+}
+
+struct UserData: Encodable {
+    let first_name: String?
+    let last_name: String?
+    let email: String?
+    let phone: String?
+    let degree: String?
+    let date_of_birth: String?
+    let country_code: String?
+    let city: String?
+    let postal_code: String?
+    let address: String?
+    let twitter_url: String?
+    let facebook_url: String?
+    let linkedin_url: String?
+    let instagram_url: String?
+
+    init(user: User) {
+        self.first_name = user.firstName
+        self.last_name = user.lastName
+        self.email = user.email
+        self.phone = user.phone
+        self.degree = user.degree
+        self.date_of_birth = user.dateOfBirth
+        self.country_code = user.countryCode
+        self.city = user.city
+        self.postal_code = user.postalCode
+        self.address = user.address
+        self.twitter_url = user.twitterURL
+        self.facebook_url = user.facebookURL
+        self.linkedin_url = user.linkedinURL
+        self.instagram_url = user.instagramURL
+    }
+}
+
 struct User: Codable {
     let userId: Int
     var email: String

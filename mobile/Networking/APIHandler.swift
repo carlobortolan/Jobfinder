@@ -47,10 +47,11 @@ class RequestHandler {
             requestHeaders?.forEach { field, value in
                 request.setValue(value, forHTTPHeaderField: field)
             }
-            
+            print("A")
             // Set optional request body
             if let requestBody = requestBody {
                 do {
+                    print("Requestbody: \(requestBody)")
                     let jsonData = try JSONSerialization.data(withJSONObject: requestBody)
                     request.httpBody = jsonData
                     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -70,20 +71,12 @@ class RequestHandler {
                 if let httpResponse = response as? HTTPURLResponse {
                     let statusCode = httpResponse.statusCode
                     print("HTTP Response Code: \(statusCode)")
-
+                    
+                    handleApiErrorsNew(data: data, statusCode: statusCode, completion: completion)
+                    
                     switch statusCode {
                     case 204:
                         completion(.failure(APIError.noContent(String(describing: T.self))))
-                    //case 400:
-                    //    completion(.failure(APIError.badRequest))
-                    case 401:
-                        completion(.failure(APIError.authenticationError))
-                    case 403:
-                        completion(.failure(APIError.forbidden))
-                    case 404:
-                        completion(.failure(APIError.notFound))
-                    case 500:
-                        completion(.failure(APIError.internalServerError))
                     case 200:
                         if let data = data {
                             do {
@@ -106,7 +99,6 @@ class RequestHandler {
                             do {
                                 let json = try JSONSerialization.jsonObject(with: data, options: [])
                                 print("Error JSON = \(json)")
-                                handleApiErrors(json: json, errorKeys: ["token","error", "user", "application", "email", "first_name", "last_name", "password", "password_confirmation", "validity", "email|password", "email||password", String(describing: T.self)], statusCode: statusCode, completion: completion)
                             } catch {
                                 completion(.failure(APIError.jsonParsingError(error)))
                             }
@@ -121,40 +113,62 @@ class RequestHandler {
         }
     }
     
-    /// Handles API error responses and translates them into custom error types.
-    ///
-    /// This function takes JSON data from an API response and maps it to custom error messages
-    /// based on specified `errorKeys`. It creates error messages by combining the "description" and "error" fields
-    /// from the JSON data for each `errorKey`. If there are no error messages, it falls back to a general
-    /// "unknown error" message. The resulting error message is then wrapped in an `APIError` and returned
-    /// via the provided completion handler.
-    ///
-    /// - Parameters:
-    ///   - json: The JSON data from the API response.
-    ///   - errorKeys: An array of keys used to look up error data in the JSON.
-    ///   - statusCode: The HTTP status code of the API response.
-    ///   - completion: A closure that receives a `Result` containing either the custom error or the decoded API response data.
-    ///
-    /// - Note: This function is designed to handle specific error formats commonly found in API responses.
-    ///         If the JSON structure or error handling logic changes, this function may need to be updated.
-    ///
-    /// - Important: It's important to ensure that the provided `errorKeys` match the expected keys in the API response.
-    ///              In case of unexpected response formats, this function falls back to an "unknown error."
-    ///
-    /// - SeeAlso: `APIError` for the possible custom error types.
-    /// - SeeAlso: `Result` for the result type that contains either the custom error or the decoded API response data.
-    ///
-    /// Example usage:
-    ///
-    /// RequestHandler.handleApiErrors(json: responseJson, errorKeys: ["token", "user"], statusCode: 401) { result in
-    ///     switch result {
-    ///     case .success(let data):
-    ///         // Handle successful response data
-    ///     case .failure(let error):
-    ///         // Handle API error (e.g., authentication error)
-    ///         print("API Error: \(error)")
-    ///     }
-    /// }
+    static func handleApiErrorsNew<T: Decodable>(data: Data?, statusCode: Int, completion: @escaping (Result<T, APIError>) -> Void) {
+            
+        switch statusCode {
+            case 400:
+                break
+            case 401:
+                completion(.failure(APIError.authenticationError))
+            case 403:
+                completion(.failure(APIError.forbidden))
+            case 404:
+                completion(.failure(APIError.notFound))
+            case 422:
+                break
+            case 500:
+                completion(.failure(APIError.internalServerError))
+            default: completion(.failure(APIError.unknownError))
+        }
+        
+        if let data = data {
+            do {
+                let json = try JSONSerialization.jsonObject(with: data, options: [])
+                if let errorJSON = json as? [String: Any], let errors = errorJSON["errors"] as? [String] {
+                    let errorMessage = errors.joined(separator: ". ")
+                    completion(.failure(statusCode == 422 ? APIError.validationError(errorMessage) : APIError.argumentError(errorMessage)))
+                } else if let errorDict = json as? [String: Any] {
+                    var errorMessages = [String]()
+                    for errorKey in errorDict.keys {
+                        if let errorTokenArray = errorDict[errorKey] as? [[String: Any]] {
+                            let errorMessagesForKey = errorTokenArray.map { item in
+                                if let description = item["description"] {
+                                    return "\n\(errorKey) (\(description))"
+                                } else {
+                                    return ""
+                                }
+                            }
+                            errorMessages.append(contentsOf: errorMessagesForKey)
+                        }
+                    }
+                    if !errorMessages.isEmpty {
+                        let errorMessage = errorMessages.filter { !$0.isEmpty }.joined(separator: ". ")
+                        completion(.failure(statusCode == 422 ? APIError.validationError(errorMessage) : APIError.argumentError(errorMessage)))
+                    } else {
+                        completion(.failure(APIError.unknownError))
+                    }
+                } else {
+                    completion(.failure(APIError.unknownError))
+                }
+            } catch {
+                completion(.failure(APIError.jsonParsingError(error)))
+            }
+        } else {
+            completion(.failure(APIError.unknownError))
+        }
+    }
+    
+    // TODO: @deprecated: Remove once TokenHandler has been updated
     static func handleApiErrors<T: Decodable>(json: Any, errorKeys: [String], statusCode: Int, completion: @escaping (Result<T, APIError>) -> Void) {
         if let errorDict = json as? [String: Any] {
             var errorMessages: [String] = []
@@ -171,7 +185,7 @@ class RequestHandler {
                 let errorMessage = errorMessages.joined(separator: ", ")
                 print("Error Message: \(errorMessage)")
                 
-                let error = APIError.argumentError(errorMessage)
+                let error = APIError.validationError(errorMessage)
                 completion(.failure(error))
             } else {
                 // Handle unexpected error response format

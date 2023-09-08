@@ -11,9 +11,12 @@ import SwiftUI
 struct ErrorViewModifier: ViewModifier {
     @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
 
+    let zIndex: Double = 1000
+
     func body(content: Content) -> some View {
         ZStack {
             content
+                .zIndex(0)
 
             if let errorMessage = errorHandlingManager.errorMessage {
                 Color(UIColor.black.withAlphaComponent(0.6))
@@ -21,6 +24,8 @@ struct ErrorViewModifier: ViewModifier {
                     .onTapGesture {
                         errorHandlingManager.errorMessage = nil
                     }
+                    .zIndex(zIndex)
+
                 VStack {
                     HStack {
                         Text(errorMessage)
@@ -35,9 +40,10 @@ struct ErrorViewModifier: ViewModifier {
                     }
                     .padding()
                 }
-                .background(BlurView(style: .systemThinMaterial)) // Add background blur effect
+                .background(BlurView(style: .systemThinMaterial))
                 .cornerRadius(12)
                 .padding()
+                .zIndex(zIndex)
             }
         }
     }

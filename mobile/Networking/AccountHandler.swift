@@ -26,7 +26,7 @@ class AccountHandler {
         print("URL: \(url)")
 
         let requestBody = ["user": ["email": email, "first_name": firstName, "last_name": lastName, "password": password, "password_confirmation": passwordConfirmation]]
-        
+
         RequestHandler.performRequest(
             url: url,
             httpMethod: HTTPMethod.POST,
@@ -139,7 +139,7 @@ class AccountHandler {
     }
     
     // TODO: Implement profile image upload
-    static func updateAccount(accessToken: String, user: User, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
+    static func updateAccount(accessToken: String, user: UserUpdateRequestBody, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
         print("Started updating account with: \naccess_token: \(accessToken)")
         guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
               let preferencesPath = ProcessInfo.processInfo.environment["USER_PATH"],
@@ -155,15 +155,21 @@ class AccountHandler {
         
         print("URL: \(url)")
         
-        let requestBody = RequestBody(data: user)
-
-        RequestHandler.performRequest(
-            url: url,
-            httpMethod: HTTPMethod.PATCH,
-            accessToken: accessToken,
-            responseType: APIResponse.self,
-            requestBody: requestBody,
-            completion: completion
-        )
+        do {
+            let jsonData = try JSONEncoder().encode(RequestBody(customData: user))
+            if let jsonDictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
+                RequestHandler.performRequest(
+                    url: url,
+                    httpMethod: HTTPMethod.PATCH,
+                    accessToken: accessToken,
+                    responseType: APIResponse.self,
+                    requestBody: jsonDictionary,
+                    completion: completion
+                )
+            }
+        } catch {
+            print("Error encoding JSON: \(error)")
+            completion(.failure(APIError.jsonEncodingError(error)))
+        }
     }
 }
