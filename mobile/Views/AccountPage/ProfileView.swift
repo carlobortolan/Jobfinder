@@ -84,9 +84,9 @@ struct ProfileView: View {
                     Button(action: {
                         openSocialMediaProfile(urlString: linkedInURL)
                     }) {
-                        Image("linkedInIcon") // Replace "linkedinIcon" with the name of your LinkedIn icon image asset
+                        Image("linkedInIcon")
                             .resizable()
-                            .frame(width: 24, height: 24) // Adjust the size as needed
+                            .frame(width: 24, height: 24)
                             .foregroundColor(.blue)
                     }
                 }
@@ -95,9 +95,9 @@ struct ProfileView: View {
                     Button(action: {
                         openSocialMediaProfile(urlString: twitterURL)
                     }) {
-                        Image("twitterIcon") // Replace "twitterIcon" with the name of your Twitter icon image asset
+                        Image("twitterIcon")
                             .resizable()
-                            .frame(width: 24, height: 24) // Adjust the size as needed
+                            .frame(width: 24, height: 24)
                             .foregroundColor(.blue)
                     }
                 }
@@ -106,9 +106,9 @@ struct ProfileView: View {
                     Button(action: {
                         openSocialMediaProfile(urlString: facebookURL)
                     }) {
-                        Image("facebookIcon") // Replace "facebookIcon" with the name of your Facebook icon image asset
+                        Image("facebookIcon")
                             .resizable()
-                            .frame(width: 24, height: 24) // Adjust the size as needed
+                            .frame(width: 24, height: 24)
                             .foregroundColor(.blue)
                     }
                 }
@@ -117,16 +117,16 @@ struct ProfileView: View {
                     Button(action: {
                         openSocialMediaProfile(urlString: instagramURL)
                     }) {
-                        Image("instagramIcon") // Replace "instagramIcon" with the name of your Instagram icon image asset
+                        Image("instagramIcon")
                             .resizable()
-                            .frame(width: 24, height: 24) // Adjust the size as needed
+                            .frame(width: 24, height: 24)
                             .foregroundColor(.orange)
                     }
                 }
             }.padding()
             
             Spacer()
-                .frame(maxHeight: .infinity) // Fill the remaining space
+                .frame(maxHeight: .infinity)
         }
         .onAppear {
             loadProfile(iteration: 0)
@@ -183,6 +183,7 @@ struct ProfileView: View {
         }
     }
     
+    // TODO: Push to /shared
     private func getWebsiteName(from urlString: String) -> String? {
         if let url = URL(string: urlString) {
             if let host = url.host {
@@ -192,12 +193,13 @@ struct ProfileView: View {
         return nil
     }
     
+    // TODO: Push to /shared
     func formatDate(dateString: String) -> String? {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ" // Adjust the format according to your date string
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         
         if let date = dateFormatter.date(from: dateString) {
-            dateFormatter.dateFormat = "MMM yyyy" // Adjust the desired output format
+            dateFormatter.dateFormat = "MMM yyyy"
             return dateFormatter.string(from: date)
         } else {
             return nil

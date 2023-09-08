@@ -18,6 +18,7 @@ struct AccountView: View {
     @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
     
     @State private var selectedTab: Tab = .profile
+    @State private var isSettingsPresented = false
     
     var body: some View {
         NavigationView {
@@ -38,11 +39,23 @@ struct AccountView: View {
                 Divider()
                 
                 tabView
-                    .frame(maxHeight: .infinity) // Fill the remaining space
+                    .frame(maxHeight: .infinity)
             }
             .navigationBarItems(trailing: Button("Log Out") {
                 authenticationManager.signOut()
             })
+            .navigationBarItems(leading: Button("Settings") {
+                isSettingsPresented.toggle()
+            })
+            .sheet(isPresented: $isSettingsPresented) {
+                NavigationView {
+                    SettingsView()
+                        .navigationBarItems(trailing: Button("Close") {
+                            isSettingsPresented.toggle()
+                        })
+                        .navigationBarTitle("Settings", displayMode: .inline)
+                }
+            }
         }
     }
     
@@ -65,7 +78,7 @@ struct AccountView_Previews: PreviewProvider {
     static var previews: some View {
         let errorHandlingManager = ErrorHandlingManager()
         let authenticationManager = AuthenticationManager(errorHandlingManager: errorHandlingManager)
-
+        
         return AccountView()
             .environmentObject(errorHandlingManager)
             .environmentObject(authenticationManager)

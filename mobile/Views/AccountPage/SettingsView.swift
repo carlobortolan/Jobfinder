@@ -8,8 +8,35 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @State private var selectedTab = 0
+
+    @EnvironmentObject var authenticationManager: AuthenticationManager
+    @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        TabView(selection: $selectedTab) {
+            AppInfoView()
+                .tag(0)
+                .tabItem {
+                    Label("About App", systemImage: "info.circle")
+                        .font(.system(size: 30))
+                }
+            
+            UpdateUserView()
+                .tag(1)
+                .tabItem {
+                    Label("Update User", systemImage: "person.circle")
+                        .font(.system(size: 30))
+                }
+            
+            UpdateUserPreferencesView()
+                .tag(2)
+                .tabItem {
+                    Label("Update Preferences", systemImage: "gearshape.fill")
+                        .font(.system(size: 30))
+                }
+        }
+        .tabViewStyle(PageTabViewStyle())
     }
 }
 

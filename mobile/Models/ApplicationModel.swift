@@ -57,4 +57,23 @@ struct Application: Codable, Hashable {
         let randomApplications = (1...5).map { _ in generateRandomApplication() }
         return ApplicationResponse(applications: randomApplications)
     }
+    
+    func toJSON() -> String? {
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(self) {
+            return String(data: data, encoding: .utf8)
+        }
+        return nil
+    }
+
+    static func fromJSON(_ jsonString: String) -> User? {
+        if let data = jsonString.data(using: .utf8) {
+            let decoder = JSONDecoder()
+            if let user = try? decoder.decode(User.self, from: data) {
+                return user
+            }
+        }
+        return nil
+    }
+
 }
