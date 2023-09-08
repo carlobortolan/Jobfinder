@@ -80,6 +80,21 @@
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
+            key = "REJECT_PATH"
+            value = "/reject"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "ACCEPT_PATH"
+            value = "/accept"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "APPLICATIONS_PATH"
+            value = "/applications"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
             key = "USER_IMAGE_PATH"
             value = "/user/image"
             isEnabled = "YES">
