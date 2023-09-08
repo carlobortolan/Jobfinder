@@ -9,9 +9,13 @@ import SwiftUI
 import URLImage
 
 struct AccountInfo: View {
-    @Binding var user: User
     @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
     @EnvironmentObject var authenticationManager: AuthenticationManager
+    @EnvironmentObject var jobManager: JobManager
+    @EnvironmentObject var applicationManager: ApplicationManager
+    
+    @Binding var user: User
+    
     @State private var isImagePickerPresented = false
     @State private var isImageRemoveAlertPresented = false
     @State private var selectedImage: UIImage?

@@ -12,10 +12,15 @@ struct mobileApp: App {
     var body: some Scene {
         let errorHandlingManager = ErrorHandlingManager()
         let authenticationManager = AuthenticationManager(errorHandlingManager: errorHandlingManager)
+        let jobManager = JobManager(authenticationManager: authenticationManager, errorHandlingManager: errorHandlingManager)
+        let applicationManager = ApplicationManager(authenticationManager: authenticationManager, errorHandlingManager: errorHandlingManager)
         
         WindowGroup {
             ContentView()
-                .environmentObject(authenticationManager).environmentObject(errorHandlingManager)
+            .environmentObject(errorHandlingManager)
+            .environmentObject(authenticationManager)
+            .environmentObject(jobManager)
+            .environmentObject(applicationManager)
         }
     }
 }

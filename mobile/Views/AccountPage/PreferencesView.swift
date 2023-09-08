@@ -10,7 +10,9 @@ import SwiftUI
 struct PreferencesView: View {
     @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
     @EnvironmentObject var authenticationManager: AuthenticationManager
-    
+    @EnvironmentObject var jobManager: JobManager
+    @EnvironmentObject var applicationManager: ApplicationManager
+
     @State var preferences: Preferences?
     @State var isLoading = false
     

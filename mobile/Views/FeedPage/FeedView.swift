@@ -14,6 +14,8 @@ import SwiftUI
 struct FeedView: View {
     @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
     @EnvironmentObject var authenticationManager: AuthenticationManager
+    @EnvironmentObject var jobManager: JobManager
+    @EnvironmentObject var applicationManager: ApplicationManager
 
     @State private var page = 1 // Start with page 1
     @State private var isLoading = false

@@ -10,15 +10,17 @@
 import SwiftUI
 
 struct AccountView: View {
+    @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
+    @EnvironmentObject var authenticationManager: AuthenticationManager
+    @EnvironmentObject var jobManager: JobManager
+    @EnvironmentObject var applicationManager: ApplicationManager
+
+    @State private var selectedTab: Tab = .profile
+    @State private var isSettingsPresented = false
+    
     enum Tab {
         case profile, preferences, ownJobs, ownApplications
     }
-    
-    @EnvironmentObject var authenticationManager: AuthenticationManager
-    @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
-    
-    @State private var selectedTab: Tab = .profile
-    @State private var isSettingsPresented = false
     
     var body: some View {
         NavigationView {
@@ -38,8 +40,7 @@ struct AccountView: View {
                 
                 Divider()
                 
-                tabView
-                    .frame(maxHeight: .infinity)
+                tabView.frame(maxHeight: .infinity)
             }
             .navigationBarItems(trailing: Button("Log Out") {
                 authenticationManager.signOut()

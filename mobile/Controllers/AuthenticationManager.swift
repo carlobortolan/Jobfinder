@@ -18,12 +18,13 @@ class AuthenticationManager: ObservableObject {
 
     init(errorHandlingManager: ErrorHandlingManager) {
         self.errorHandlingManager = errorHandlingManager
+        
         if let cachedUserJSON = UserDefaults.standard.string(forKey: "cachedUserJSON"),
            let cachedUser = User.fromJSON(cachedUserJSON) {
             self.current = cachedUser
         } else {
             self.current = User()
-        }
+         }
     }
     
     private func saveRefreshToken(refreshToken: String?) {

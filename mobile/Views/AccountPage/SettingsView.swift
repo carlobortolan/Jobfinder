@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct SettingsView: View {
-
-    @EnvironmentObject var authenticationManager: AuthenticationManager
     @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
-    
+    @EnvironmentObject var authenticationManager: AuthenticationManager
+    @EnvironmentObject var jobManager: JobManager
+    @EnvironmentObject var applicationManager: ApplicationManager
+
     enum Tab {
         case updateUser, updateUserPreferences, aboutApp
     }

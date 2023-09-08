@@ -1,8 +1,17 @@
+//
+//  ProfileView.swift
+//  mobile
+//
+//  Created by cb on 06.09.23.
+//
+
 import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
     @EnvironmentObject var authenticationManager: AuthenticationManager
+    @EnvironmentObject var jobManager: JobManager
+    @EnvironmentObject var applicationManager: ApplicationManager
 
     @State private var isLoading = false
 

@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct LoginView: View {
-    @EnvironmentObject var authenticationManager: AuthenticationManager
     @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
-    
+    @EnvironmentObject var authenticationManager: AuthenticationManager
+    @EnvironmentObject var jobManager: JobManager
+    @EnvironmentObject var applicationManager: ApplicationManager
+
     @State private var hasAccount: Bool = false
     @State private var contentHeight: CGFloat = 0
     
@@ -48,9 +50,6 @@ struct LoginView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Authentication")
-        }
-        .onAppear {
-            // Fetch access token here if needed on app launch
         }
     }
 }

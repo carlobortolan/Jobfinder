@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct UpdateUserPreferencesView: View {
-    @EnvironmentObject var authenticationManager: AuthenticationManager
     @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
+    @EnvironmentObject var authenticationManager: AuthenticationManager
+    @EnvironmentObject var jobManager: JobManager
+    @EnvironmentObject var applicationManager: ApplicationManager
 
     var body: some View {
         VStack {

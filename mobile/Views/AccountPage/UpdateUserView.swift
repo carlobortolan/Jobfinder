@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct UpdateUserView: View {
-    @EnvironmentObject var authenticationManager: AuthenticationManager
     @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
-    
+    @EnvironmentObject var authenticationManager: AuthenticationManager
+    @EnvironmentObject var jobManager: JobManager
+    @EnvironmentObject var applicationManager: ApplicationManager
+
     @Binding var user: User
     @State private var isUpdating = false
     

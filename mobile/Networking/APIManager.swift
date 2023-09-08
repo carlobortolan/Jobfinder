@@ -102,7 +102,7 @@ class APIManager {
     static func fetchOwnJobs(accessToken: String, completion: @escaping (Result<JobResponse, APIError>) -> Void) {
         JobHandler.fetchOwnJobs(accessToken: accessToken, completion: completion)
     }
-
+    
     /// Delegates the fetching of a user's own applications to ApplicationHandler.
     ///
     /// - Parameters:

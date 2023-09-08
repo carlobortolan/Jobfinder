@@ -128,7 +128,11 @@ struct UserData: Encodable {
         self.longitude = try Double(container.decodeIfPresent(String.self, forKey: .longitude) ?? "0")
         self.latitude = try Double(container.decodeIfPresent(String.self, forKey: .latitude) ?? "0")
         // TODO: Improve in the future
-        self.phone = try String(format: "%.0f", Double(container.decodeIfPresent(String.self, forKey: .phone) ?? "0") ?? "")
+        if let phoneString = try container.decodeIfPresent(String.self, forKey: .phone), !phoneString.isEmpty, phoneString != "0" {
+            self.phone = String(format: "%.0f", Double(phoneString) ?? 0)
+        } else {
+            self.phone = ""
+        }
         self.degree = try container.decodeIfPresent(String.self, forKey: .degree)
         let dateString = try container.decode(String.self, forKey: .dateOfBirth)
         if dateString.isEmpty {
@@ -320,7 +324,11 @@ struct UserData: Encodable {
             linkedinURL = try container.decodeIfPresent(String.self, forKey: .linkedinURL)
             imageURL = try container.decodeIfPresent(String.self, forKey: .imageURL)
             // TODO: Improve in the future
-            self.phone = try String(format: "%.0f", Double(container.decodeIfPresent(String.self, forKey: .phone) ?? "0") ?? "")
+            if let phoneString = try container.decodeIfPresent(String.self, forKey: .phone), !phoneString.isEmpty, phoneString != "0" {
+                self.phone = String(format: "%.0f", Double(phoneString) ?? 0)
+            } else {
+                self.phone = ""
+            }
             degree = try container.decodeIfPresent(String.self, forKey: .degree)
         }
 

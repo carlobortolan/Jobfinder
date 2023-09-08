@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct SignUpForm: View {
-    @EnvironmentObject var authenticationManager: AuthenticationManager
     @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
+    @EnvironmentObject var authenticationManager: AuthenticationManager
+    @EnvironmentObject var jobManager: JobManager
+    @EnvironmentObject var applicationManager: ApplicationManager
+ 
     @Binding var hasAccount: Bool
 
     var body: some View {

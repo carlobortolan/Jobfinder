@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct TabBarView: View {
+    @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
+    @EnvironmentObject var authenticationManager: AuthenticationManager
+    @EnvironmentObject var jobManager: JobManager
+    @EnvironmentObject var applicationManager: ApplicationManager
+
     var body: some View {
         TabView {
             StartView()
