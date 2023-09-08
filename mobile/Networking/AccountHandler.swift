@@ -138,6 +138,7 @@ class AccountHandler {
             completion: completion)
     }
     
+    // TODO: Implement profile image upload
     static func updateAccount(accessToken: String, user: User, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
         print("Started updating account with: \naccess_token: \(accessToken)")
         guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],

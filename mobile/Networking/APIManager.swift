@@ -123,6 +123,34 @@ class APIManager {
         ApplicationHandler.fetchOwnApplications(accessToken: accessToken, completion: completion)
     }
     
+    /// Delegates the rejecting of an applicant's applications to ApplicationHandler.
+    ///
+    /// - Parameters:
+    ///   - accessToken: The user's access token for authentication.
+    ///   - completion: A closure that receives a `Result` with a `APIResponse` or an `APIError`.
+    static func createApplication(accessToken: String, application: Application, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
+        ApplicationHandler.createApplication(accessToken: accessToken, application: application, completion: completion)
+    }
+
+    /// Delegates the accepting of an applicant's applications to ApplicationHandler.
+    ///
+    /// - Parameters:
+    ///   - accessToken: The user's access token for authentication.
+    ///   - completion: A closure that receives a `Result` with a `APIResponse` or an `APIError`.
+    static func acceptApplication(accessToken: String, message: String?, application: Application, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
+        ApplicationHandler.acceptApplication(accessToken: accessToken, message: message, application: application, completion: completion)
+    }
+
+    /// Delegates the rejecting of an applicant's applications to ApplicationHandler.
+    ///
+    /// - Parameters:
+    ///   - accessToken: The user's access token for authentication.
+    ///   - completion: A closure that receives a `Result` with a `APIResponse` or an `APIError`.
+    static func rejectApplication(accessToken: String, message: String?, application: Application, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
+        ApplicationHandler.rejectApplication(accessToken: accessToken, message: message, application: application, completion: completion)
+    }
+
+    
     /// Delegates the fetching of job feed to FeedHandler.
     ///
     /// - Parameters:

@@ -17,15 +17,120 @@ class ApplicationHandler {
             completion(.failure(APIError.invalidURL))
             return
         }
-
+        
         guard let url = urlComponents.url else {
             completion(.failure(APIError.invalidURL))
             return
         }
         
         print("URL: \(url)")
-
+        
         RequestHandler.performRequest(url: url, httpMethod: HTTPMethod.GET, accessToken: accessToken, responseType: ApplicationResponse.self, completion: completion)
+    }
+    
+    static func createApplication(accessToken: String, application: Application, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
+        print("Started creating application with: \naccess_token: \(accessToken)")
+        guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
+              let jobsPath = ProcessInfo.processInfo.environment["JOBS_PATH"],
+              let applicationsPath = ProcessInfo.processInfo.environment["APPLICATIONS_PATH"],
+              let urlComponents = URLComponents(string: rootUrl + jobsPath + "/\(application.jobId)" + applicationsPath) else {
+            completion(.failure(APIError.invalidURL))
+            return
+        }
+        
+        guard let url = urlComponents.url else {
+            completion(.failure(APIError.invalidURL))
+            return
+        }
+        
+        print("URL: \(url)")
+        
+        let requestBody = ["application": application.applicationText]
+        
+        RequestHandler.performRequest(
+            url: url,
+            httpMethod: HTTPMethod.POST,
+            accessToken: accessToken,
+            responseType: APIResponse.self,
+            requestBody: requestBody,
+            completion: completion
+        )
+    }
+    
+    static func acceptApplication(accessToken: String, message: String?, application: Application, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
+        print("Started accepting application with: \naccess_token: \(accessToken)\njobId: \(application.jobId)\nuserId: \(application.userId)")
+        guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
+              let jobsPath = ProcessInfo.processInfo.environment["JOBS_PATH"],
+              let applicationsPath = ProcessInfo.processInfo.environment["APPLICATIONS_PATH"],
+              let acceptPath = ProcessInfo.processInfo.environment["ACCEPT_PATH"],
+              let urlComponents = URLComponents(string: rootUrl + jobsPath + "/\(application.jobId)" + applicationsPath + "/\(application.userId)" + acceptPath) else {
+            completion(.failure(APIError.invalidURL))
+            return
+        }
+        
+        guard let url = urlComponents.url else {
+            completion(.failure(APIError.invalidURL))
+            return
+        }
+        
+        print("URL: \(url)")
+         
+        if let message {
+            RequestHandler.performRequest(
+                url: url,
+                httpMethod: HTTPMethod.PATCH,
+                accessToken: accessToken,
+                responseType: APIResponse.self,
+                queryParameters: ["message": message],
+                completion: completion
+            )
+        } else {
+            RequestHandler.performRequest(
+                url: url,
+                httpMethod: HTTPMethod.PATCH,
+                accessToken: accessToken,
+                responseType: APIResponse.self,
+                completion: completion
+            )
+        }
+    }
+    
+    static func rejectApplication(accessToken: String, message: String?, application: Application, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
+        print("Started rejecting application with: \naccess_token: \(accessToken)\njobId: \(application.jobId)\nuserId: \(application.userId)")
+        guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
+              let jobsPath = ProcessInfo.processInfo.environment["JOBS_PATH"],
+              let applicationsPath = ProcessInfo.processInfo.environment["APPLICATIONS_PATH"],
+              let rejectPath = ProcessInfo.processInfo.environment["REJECT_PATH"],
+              let urlComponents = URLComponents(string: rootUrl + jobsPath + "/\(application.jobId)" + applicationsPath + "/\(application.userId)" + rejectPath) else {
+            completion(.failure(APIError.invalidURL))
+            return
+        }
+        
+        guard let url = urlComponents.url else {
+            completion(.failure(APIError.invalidURL))
+            return
+        }
+        
+        print("URL: \(url)")
+                
+        if let message {
+            RequestHandler.performRequest(
+                url: url,
+                httpMethod: HTTPMethod.PATCH,
+                accessToken: accessToken,
+                responseType: APIResponse.self,
+                queryParameters: ["message": message],
+                completion: completion
+            )
+        } else {
+            RequestHandler.performRequest(
+                url: url,
+                httpMethod: HTTPMethod.PATCH,
+                accessToken: accessToken,
+                responseType: APIResponse.self,
+                completion: completion
+            )
+        }
     }
 }
 

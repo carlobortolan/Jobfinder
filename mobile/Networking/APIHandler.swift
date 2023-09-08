@@ -106,7 +106,7 @@ class RequestHandler {
                             do {
                                 let json = try JSONSerialization.jsonObject(with: data, options: [])
                                 print("Error JSON = \(json)")
-                                handleApiErrors(json: json, errorKeys: ["token","error", "user", "email", "first_name", "last_name", "password", "password_confirmation", "validity", "email|password", "email||password", String(describing: T.self)], statusCode: statusCode, completion: completion)
+                                handleApiErrors(json: json, errorKeys: ["token","error", "user", "application", "email", "first_name", "last_name", "password", "password_confirmation", "validity", "email|password", "email||password", String(describing: T.self)], statusCode: statusCode, completion: completion)
                             } catch {
                                 completion(.failure(APIError.jsonParsingError(error)))
                             }
