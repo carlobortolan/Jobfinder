@@ -31,6 +31,8 @@
 		226B63862AA78C1F004620EE /* ApplicationPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226B63852AA78C1F004620EE /* ApplicationPreview.swift */; };
 		226B63892AA790DB004620EE /* SignInForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226B63882AA790DB004620EE /* SignInForm.swift */; };
 		226B638B2AA790E6004620EE /* SignUpForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226B638A2AA790E6004620EE /* SignUpForm.swift */; };
+		227E9C8F2AAB8F6900049CAB /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E9C8E2AAB8F6900049CAB /* Validator.swift */; };
+		227E9C912AAB9A5500049CAB /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E9C902AAB9A5500049CAB /* DateFormatter.swift */; };
 		22B8041B2AA890BC008D7108 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 22B8041A2AA890BC008D7108 /* URLImage */; };
 		22B8041D2AA891ED008D7108 /* JobDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B8041C2AA891ED008D7108 /* JobDetail.swift */; };
 		22B8041F2AA8F813008D7108 /* APIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B8041E2AA8F813008D7108 /* APIHandler.swift */; };
@@ -112,6 +114,8 @@
 		226B63852AA78C1F004620EE /* ApplicationPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationPreview.swift; sourceTree = "<group>"; };
 		226B63882AA790DB004620EE /* SignInForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInForm.swift; sourceTree = "<group>"; };
 		226B638A2AA790E6004620EE /* SignUpForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpForm.swift; sourceTree = "<group>"; };
+		227E9C8E2AAB8F6900049CAB /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
+		227E9C902AAB9A5500049CAB /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		22B8041C2AA891ED008D7108 /* JobDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetail.swift; sourceTree = "<group>"; };
 		22B8041E2AA8F813008D7108 /* APIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHandler.swift; sourceTree = "<group>"; };
 		22B804202AA8F90A008D7108 /* FeedHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedHandler.swift; sourceTree = "<group>"; };
@@ -310,6 +314,8 @@
 				22D927872AA7FAE90017678C /* HtmlView.swift */,
 				22430F942AAA5C2D00747827 /* ImagePickerView.swift */,
 				22430F972AAA5CEC00747827 /* ImagePicker.swift */,
+				227E9C8E2AAB8F6900049CAB /* Validator.swift */,
+				227E9C902AAB9A5500049CAB /* DateFormatter.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -529,6 +535,7 @@
 				22E40B052A8C20DB00D3F91E /* APIManager.swift in Sources */,
 				2216EA6D2A8D217A00C970DD /* AuthenticationManager.swift in Sources */,
 				226B637E2AA78AB4004620EE /* JobItem.swift in Sources */,
+				227E9C912AAB9A5500049CAB /* DateFormatter.swift in Sources */,
 				22430F952AAA5C2D00747827 /* ImagePickerView.swift in Sources */,
 				22D9278A2AA8015C0017678C /* FilterAndSortView.swift in Sources */,
 				22B804232AA8F969008D7108 /* TokenHandler.swift in Sources */,
@@ -571,6 +578,7 @@
 				2216EA712A8D2E7D00C970DD /* KeyChainManager.swift in Sources */,
 				22B804612AA90EB7008D7108 /* ApplicationHandler.swift in Sources */,
 				2216EA692A8CF5C800C970DD /* FeedView.swift in Sources */,
+				227E9C8F2AAB8F6900049CAB /* Validator.swift in Sources */,
 				22430F9E2AAAB50700747827 /* UpdateUserView.swift in Sources */,
 				2216EA812A8D761700C970DD /* PostView.swift in Sources */,
 				22B8045F2AA90E9C008D7108 /* JobHandler.swift in Sources */,

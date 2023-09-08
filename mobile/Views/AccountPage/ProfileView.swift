@@ -28,6 +28,24 @@ struct ProfileView: View {
                         .fontWeight(.bold)
                         .multilineTextAlignment(.trailing)
                 }
+
+                HStack {
+                    Text("Member since:")
+                        .font(.headline)
+                        .fontWeight(.light)
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                    Text(
+                        formatDate(
+                            dateString: DateFormattedISO8601.dateFormatter.string(
+                                for: authenticationManager.current.dateOfBirth) ?? ""
+                        ) ?? "n.a."
+                    )
+                    .font(.body)
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.trailing)
+                }
+
                 HStack {
                     Text("Member since:")
                         .font(.headline)

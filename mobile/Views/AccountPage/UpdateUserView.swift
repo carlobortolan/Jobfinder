@@ -13,7 +13,14 @@ struct UpdateUserView: View {
     
     @Binding var user: User
     @State private var isUpdating = false
-        
+    
+    @State private var isEmailValid = true
+    @State private var isFirstNameValid = true
+    @State private var isLastNameValid = true
+    @State private var isPhoneValid = true
+    @State private var isDateOfBirthValid = true
+    @State private var isAddressValid = true
+
     var body: some View {
         VStack {
             Text("Update Profile")
@@ -27,39 +34,68 @@ struct UpdateUserView: View {
                 .multilineTextAlignment(.center)
                 .padding()
             
-            if isUpdating {
-                ProgressView()
-            } else {
-                Form {
+            Form {
+                if isUpdating {
+                    ProgressView()
+                } else {
                     Section(header: Text("Personal Information")) {
-                        TextField("Email", text: $user.email)
-                            .keyboardType(.emailAddress)
-                        
-                        TextField("First Name", text: $user.firstName)
-                        TextField("Last Name", text: $user.lastName)
+                        TextField("Email", text: $user.email, onEditingChanged: { editing in
+                            if !editing {
+                                isEmailValid = Validator.isValidEmail(user.email)
+                            }
+                        })
+                        .keyboardType(.emailAddress)
+                        .foregroundColor(isEmailValid ? .primary : .red)
+
+                        TextField("First Name", text: $user.firstName, onEditingChanged: { editing in
+                            if !editing {
+                                isFirstNameValid = Validator.isValidName(user.firstName)
+                            }
+                        })
+                        .foregroundColor(isFirstNameValid ? .primary : .red)
+
+                        TextField("Last Name", text: $user.lastName, onEditingChanged: { editing in
+                            if !editing {
+                                isLastNameValid = Validator.isValidName(user.lastName)
+                            }
+                        })
+                        .foregroundColor(isLastNameValid ? .primary : .red)
+
                         TextField("Phone Number", text: Binding(
                             get: { user.phone ?? "" },
                             set: { user.phone = $0 }
-                        ))
-                        TextField("Date of Birth", text: Binding(
-                            get: { user.dateOfBirth ?? "" },
+                        ), onEditingChanged: { editing in
+                            if !editing {
+                                isPhoneValid = Validator.isValidPhone(user.phone)
+                            }})
+                          .foregroundColor(isPhoneValid ? .primary : .red)
+
+                        DatePicker("Date of Birth", selection: Binding(
+                            get: { user.dateOfBirth ?? Date.distantPast },
                             set: { user.dateOfBirth = $0 }
-                        ))
+                        ), in: ...Date(), displayedComponents: .date)
+                            .foregroundColor(isDateOfBirthValid ? .primary : .red)
+                            .datePickerStyle(WheelDatePickerStyle()) // You can choose a different style if you prefer
+                        
                     }
-                    
+
                     Section(header: Text("Address Information")) {
                         TextField("Address", text: Binding(
                             get: { user.address ?? "" },
                             set: { user.address = $0 }
                         ))
+                        .foregroundColor(isAddressValid ? .primary : .red)
+
                         TextField("City", text: Binding(
                             get: { user.city ?? "" },
                             set: { user.city = $0 }
                         ))
+
                         TextField("Postal Code", text: Binding(
                             get: { user.postalCode ?? "" },
                             set: { user.postalCode = $0 }
                         ))
+
                         TextField("Country Code", text: Binding(
                             get: { user.countryCode ?? "" },
                             set: { user.countryCode = $0 }
@@ -68,8 +104,10 @@ struct UpdateUserView: View {
                 }
                 
                 Button(action: {
-                    // TODO: Implement user update logic
-                    updateUser(iteration: 0)
+                    if validateFields() {
+                        updateUser(iteration: 0)
+                    }
+                    print("ValidateFields: \(validateFields())")
                 }) {
                     Text("Update Profile")
                 }
@@ -77,9 +115,26 @@ struct UpdateUserView: View {
             }
             
             Spacer()
-        }.onAppear(
-
-        )
+        }
+    }
+    
+    private func validateFields() -> Bool {
+        isEmailValid = Validator.isValidEmail(user.email)
+        isFirstNameValid = Validator.isValidName(user.firstName)
+        isLastNameValid = Validator.isValidName(user.lastName)
+        isPhoneValid = Validator.isValidPhone(user.phone)
+        isDateOfBirthValid = true
+        isAddressValid = true // TODO: Implement address validation
+        
+        print("isEmailValid \(isEmailValid)")
+        print("isFirstNameValid \(isFirstNameValid)")
+        print("isLastNameValid \(isLastNameValid)")
+        print("isPhoneValid \(isPhoneValid)")
+        print("isDateOfBirthValid \(isDateOfBirthValid)")
+        print("isAddressValid \(isAddressValid)")
+        
+        // Return true if all fields are valid
+        return isEmailValid && isFirstNameValid && isLastNameValid && isPhoneValid && isDateOfBirthValid && isAddressValid
     }
     
     func updateUser(iteration: Int) {
