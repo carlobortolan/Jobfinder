@@ -15,7 +15,7 @@ struct FeedResponse: Codable {
     let feed: [Job]
 }
 
-struct Job: Codable, Hashable {
+struct Job: Codable, Hashable, Identifiable {
     let jobId: Int
     let jobType: String
     let jobTypeValue: Int
@@ -50,6 +50,8 @@ struct Job: Codable, Hashable {
     let jobValue: String
     let allowedCvFormat: [String]
     let imageUrl: String
+    
+    var id: Int { jobId }
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(jobId)

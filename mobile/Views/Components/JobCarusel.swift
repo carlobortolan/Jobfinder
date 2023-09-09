@@ -25,7 +25,7 @@ struct JobCarousel: View {
                 let offset = getOffset(for: index, currentPage: currentPage)
 
                 JobCardView(job: jobManager.upcomingJobs[index])
-                    .frame(width: UIScreen.main.bounds.width - 40, height: 200)
+                    .frame(width: UIScreen.main.bounds.width - 50, height: 200)
                     .padding(.horizontal, 20)
                     .scaleEffect(scale)
                     .offset(x: offset, y: 0)

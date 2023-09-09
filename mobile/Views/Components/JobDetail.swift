@@ -29,7 +29,6 @@ struct JobDetail: View {
             center: CLLocationCoordinate2D(latitude: job.latitude, longitude: job.longitude),
             span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
         ))
-
     }
     
     var body: some View {
