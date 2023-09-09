@@ -1,5 +1,5 @@
 //
-//  StartView.swift
+//  AccountView.swift
 //  mobile
 //
 //  Created by cb on 15.08.23.

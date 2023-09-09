@@ -22,6 +22,10 @@ struct UpdateUserView: View {
     @State private var isPhoneValid = true
     @State private var isDateOfBirthValid = true
     @State private var isAddressValid = true
+    @State private var isLinkedInURLValid = true
+    @State private var isInstagramURLValid = true
+    @State private var isFacebookURLValid = true
+    @State private var isTwitterURLValid = true
 
     var body: some View {
         let maximumDateOfBirth = Calendar.current.date(byAdding: .year, value: -18, to: Date()) ?? Date()
@@ -105,6 +109,45 @@ struct UpdateUserView: View {
                             set: { user.countryCode = $0 }
                         ))
                     }
+                    
+                    Section(header: Text("Social Media Links")) {
+                           TextField("LinkedIn URL", text: Binding(
+                            get: { user.linkedinURL ?? "" },
+                            set: { user.linkedinURL = $0 }
+                           ))
+                               .keyboardType(.URL)
+                               .autocapitalization(.none)
+                               .disableAutocorrection(true)
+                               .foregroundColor(.primary)
+
+                           TextField("Twitter URL", text:Binding(
+                            get: { user.twitterURL ?? "" },
+                            set: { user.twitterURL = $0 }
+                           ))
+                               .keyboardType(.URL)
+                               .autocapitalization(.none)
+                               .disableAutocorrection(true)
+                               .foregroundColor(.primary)
+
+                           TextField("Facebook URL", text: Binding(
+                            get: { user.facebookURL ?? "" },
+                            set: { user.facebookURL = $0 }
+                           ))
+                               .keyboardType(.URL)
+                               .autocapitalization(.none)
+                               .disableAutocorrection(true)
+                               .foregroundColor(.primary)
+
+                           TextField("Instagram URL", text: Binding(
+                            get: { user.instagramURL ?? "" },
+                            set: { user.instagramURL = $0 }
+                           ))
+                               .keyboardType(.URL)
+                               .autocapitalization(.none)
+                               .disableAutocorrection(true)
+                               .foregroundColor(.primary)
+                       }
+                    
                 }
                 
                 Button(action: {
@@ -128,7 +171,12 @@ struct UpdateUserView: View {
         isLastNameValid = Validator.isValidName(user.lastName)
         isPhoneValid = Validator.isValidPhone(user.phone)
         isDateOfBirthValid = true
-        isAddressValid = true // TODO: Implement address validation
+        isAddressValid = true
+        // TODO: Implement address validation
+        isLinkedInURLValid = Validator.isValidURL(user.linkedinURL ?? "https://embloy.com")
+        isTwitterURLValid = Validator.isValidURL(user.twitterURL ?? "https://embloy.com")
+        isFacebookURLValid = Validator.isValidURL(user.facebookURL ?? "https://embloy.com")
+        isInstagramURLValid = Validator.isValidURL(user.instagramURL ?? "https://embloy.com")
         
         print("isEmailValid \(isEmailValid)")
         print("isFirstNameValid \(isFirstNameValid)")

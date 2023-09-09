@@ -30,5 +30,12 @@ class Validator {
         }
     }
 
-
+    static func isValidURL(_ urlString: String) -> Bool {
+        if let url = URL(string: urlString) {
+            if let scheme = url.scheme {
+                return ["http", "https"].contains(scheme.lowercased())
+            }
+        }
+        return false
+    }
 }

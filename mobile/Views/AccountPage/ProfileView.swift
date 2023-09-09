@@ -39,7 +39,7 @@ struct ProfileView: View {
                 }
 
                 HStack {
-                    Text("Member since:")
+                    Text("Born:")
                         .font(.headline)
                         .fontWeight(.light)
                         .multilineTextAlignment(.leading)
@@ -195,9 +195,13 @@ struct ProfileView: View {
                                     }
                                 }
                             } else {
-                                print("case .else")
+                                if case .argumentError = error {
+                                    self.authenticationManager.signOut()
+                                } else {
+                                    print("case .else")
                                 // Handle other errors
                                 self.errorHandlingManager.errorMessage = error.localizedDescription
+                                }
                             }
                         } else {
                             self.authenticationManager.isAuthenticated = false

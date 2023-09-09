@@ -34,14 +34,14 @@ struct JobDetail: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             RoundedRectangle(cornerRadius: 10)
-                .frame(height: 350)
+                .frame(height: 300)
                 .foregroundColor(Color("FeedBgColor"))
                 .border(Color("FgColor"), width: 3)
                 .cornerRadius(10)
                 .overlay(
                 RoundedRectangle(cornerRadius: 10)
                     .padding(.all)
-                    .frame(height: 350)
+                    .frame(height: 300)
                     .foregroundColor(Color("FeedBgColor"))
                     .border(Color("FgColor"), width: 3)
                     .padding(.horizontal, 10.0)
@@ -94,7 +94,7 @@ struct JobDetail: View {
                     isApplicationPopupVisible.toggle()
                 }) {
                     if hasApplication {
-                        ApplicationDetail(job: $job)
+                        OwnApplicationButton()
                     } else {
                         ApplicationButton()
                     }
@@ -106,14 +106,22 @@ struct JobDetail: View {
             }
             .padding()
             .sheet(isPresented: $isApplicationPopupVisible) {
-                NavigationView {
-                    ApplicationPopup(isVisible: $isApplicationPopupVisible, message: $applicationMessage, job: job)
-                        .navigationBarItems(trailing: Button("Close") {
-                            isApplicationPopupVisible.toggle()
-                        })
-                        .navigationBarTitle("\(job.title)", displayMode: .inline)
+                if hasApplication {
+                    ApplicationDetail(jobId: job.jobId)
+                } else {
+                    NavigationView {
+                        ApplicationPopup(isVisible: $isApplicationPopupVisible, message: $applicationMessage, job: job)
+                            .navigationBarItems(trailing: Button("Close") {
+                                isApplicationPopupVisible.toggle()
+                            })
+                            .navigationBarTitle("\(job.title)", displayMode: .inline)
+                    }
+                    .onDisappear {
+                        hasApplication = applicationManager.hasApplication(forUserId: authenticationManager.current.userId, andJobId: job.jobId)
+                        print("Sheet disappeared - test")
+                    }
                 }
-        }
+            }
     }
 }
 
