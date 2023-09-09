@@ -238,8 +238,8 @@
 			isa = PBXGroup;
 			children = (
 				2216EA7A2A8D730E00C970DD /* README.md */,
-				2216EA852A8D765500C970DD /* StartView.swift */,
 				22DC3AF32AAD23B400B783E8 /* JobsMapView.swift */,
+				2216EA852A8D765500C970DD /* StartView.swift */,
 			);
 			path = StartPage;
 			sourceTree = "<group>";
@@ -257,16 +257,16 @@
 			isa = PBXGroup;
 			children = (
 				2216EA782A8D72CB00C970DD /* README.md */,
+				22B8046E2AA92781008D7108 /* AccountInfo.swift */,
 				2216EA662A8CF24900C970DD /* AccountView.swift */,
-				22B804662AA91D37008D7108 /* ProfileView.swift */,
-				22B804682AA91D42008D7108 /* PreferencesView.swift */,
+				22430FA12AAAB52900747827 /* AppInfoView.swift */,
 				22B8046A2AA91D4B008D7108 /* OwnJobsView.swift */,
 				22B8046C2AA91D54008D7108 /* OwnApplicationsView.swift */,
-				22B8046E2AA92781008D7108 /* AccountInfo.swift */,
+				22B804682AA91D42008D7108 /* PreferencesView.swift */,
+				22B804662AA91D37008D7108 /* ProfileView.swift */,
 				22430F9B2AAAB3C400747827 /* SettingsView.swift */,
 				22430F9D2AAAB50700747827 /* UpdateUserView.swift */,
 				22430F9F2AAAB51600747827 /* UpdateUserPreferencesView.swift */,
-				22430FA12AAAB52900747827 /* AppInfoView.swift */,
 			);
 			path = AccountPage;
 			sourceTree = "<group>";
@@ -276,8 +276,8 @@
 			children = (
 				2216EA772A8D729000C970DD /* README.md */,
 				2216EA822A8D762400C970DD /* ExploreView.swift */,
-				22D927802AA7B4DA0017678C /* SearchBarView.swift */,
 				22D927892AA8015C0017678C /* FilterAndSortView.swift */,
+				22D927802AA7B4DA0017678C /* SearchBarView.swift */,
 			);
 			path = ExplorePage;
 			sourceTree = "<group>";
@@ -316,19 +316,19 @@
 		226B63872AA790B8004620EE /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				226B637B2AA78A85004620EE /* JobPosting.swift */,
-				226B637D2AA78AB4004620EE /* JobItem.swift */,
-				226B637F2AA78ACD004620EE /* JobPreview.swift */,
-				226B63852AA78C1F004620EE /* ApplicationPreview.swift */,
-				22B8041C2AA891ED008D7108 /* JobDetail.swift */,
 				227E9C922AABB76000049CAB /* ApplicationButton.swift */,
 				227E9C942AABB83700049CAB /* ApplicationDetail.swift */,
 				227E9C962AABB91300049CAB /* ApplicationPopup.swift */,
-				227E9C9C2AABECBA00049CAB /* OwnApplicationButton.swift */,
-				22DC3AEA2AACBF7500B783E8 /* JobCarusel.swift */,
+				226B63852AA78C1F004620EE /* ApplicationPreview.swift */,
+				22430F972AAA5CEC00747827 /* ImagePicker.swift */,
+				226B637B2AA78A85004620EE /* JobPosting.swift */,
+				226B637D2AA78AB4004620EE /* JobItem.swift */,
 				22DC3AEF2AACC20F00B783E8 /* JobCard.swift */,
-				22DC3AF52AAD2F6800B783E8 /* JobMapView.swift */,
+				22DC3AEA2AACBF7500B783E8 /* JobCarusel.swift */,
+				22B8041C2AA891ED008D7108 /* JobDetail.swift */,
 				22DC3AF72AAD31ED00B783E8 /* JobMapAnnotation.swift */,
+				226B637F2AA78ACD004620EE /* JobPreview.swift */,
+				227E9C9C2AABECBA00049CAB /* OwnApplicationButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -348,12 +348,12 @@
 		22D927862AA7FAD50017678C /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				22D927822AA7B4FE0017678C /* JobListView.swift */,
+				227E9C902AAB9A5500049CAB /* DateFormatter.swift */,
 				22D927872AA7FAE90017678C /* HtmlView.swift */,
 				22430F942AAA5C2D00747827 /* ImagePickerView.swift */,
-				22430F972AAA5CEC00747827 /* ImagePicker.swift */,
+				22D927822AA7B4FE0017678C /* JobListView.swift */,
+				22DC3AF52AAD2F6800B783E8 /* JobMapView.swift */,
 				227E9C8E2AAB8F6900049CAB /* Validator.swift */,
-				227E9C902AAB9A5500049CAB /* DateFormatter.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
