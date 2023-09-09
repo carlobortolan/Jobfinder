@@ -48,22 +48,66 @@ class ApplicationManager: ObservableObject {
                                 // Refresh the access token and retry the request
                                 self.authenticationManager.requestAccessToken() { accessTokenSuccess in
                                     if accessTokenSuccess {
-                                        self.loadOwnApplications(iteration: 1, completion: completion) // Call with completion closure
+                                        self.loadOwnApplications(iteration: 1, completion: completion)
                                     } else {
                                         self.errorHandlingManager.errorMessage = error.localizedDescription
-                                        completion() // Call the completion closure even on failure
+                                        completion()
                                     }
                                 }
                             } else {
                                 print("case .else")
-                                // Handle other errors
                                 self.errorHandlingManager.errorMessage = error.localizedDescription
-                                completion() // Call the completion closure even on failure
+                                completion()
                             }
                         } else {
                             self.authenticationManager.isAuthenticated = false
                             self.errorHandlingManager.errorMessage = "Tokens expired. Log in to refresh tokens."
-                            completion() // Call the completion closure when loading is complete
+                            completion()
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func loadApplication(iteration: Int, jobId: Int, completion: @escaping (Application?) -> Void) {
+        print("Iteration \(iteration)")
+        if let accessToken = authenticationManager.getAccessToken() {
+            APIManager.fetchApplication(accessToken: accessToken, jobId: jobId) { result in
+                switch result {
+                case .success(let applicationResponse):
+                    DispatchQueue.main.async {
+                        print("case .success")
+                        self.errorHandlingManager.errorMessage = nil
+                        completion(applicationResponse.application.first)
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print("case .failure, iteration: \(iteration)")
+                        if iteration == 0 {
+                            if case .authenticationError = error {
+                                print("case .authenticationError")
+                                // Authentication error (e.g., access token invalid)
+                                // Refresh the access token and retry the request
+                                self.authenticationManager.requestAccessToken() { accessTokenSuccess in
+                                    if accessTokenSuccess {
+                                        self.loadApplication(iteration: 1, jobId: jobId) { application in
+                                            completion(application)
+                                        }
+                                    } else {
+                                        self.errorHandlingManager.errorMessage = error.localizedDescription
+                                        completion(nil)
+                                    }
+                                }
+                            } else {
+                                print("case .else")
+                                self.errorHandlingManager.errorMessage = error.localizedDescription
+                                completion(nil)
+                            }
+                        } else {
+                            self.authenticationManager.isAuthenticated = false
+                            self.errorHandlingManager.errorMessage = "Tokens expired. Log in to refresh tokens."
+                            completion(nil)
                         }
                     }
                 }
@@ -73,7 +117,6 @@ class ApplicationManager: ObservableObject {
     
     func submitApplication(iteration: Int, jobId: Int, userId: Int, message: String) {
         print("Iteration \(iteration)")
-        //isLoading = true
         let application = Application(jobId: jobId, userId: userId, createdAt: "", updatedAt: "", status: "0", applicationText: message, applicationDocuments: nil, response: nil)
         if let accessToken = authenticationManager.getAccessToken() {
             APIManager.createApplication(accessToken: accessToken, application: application) { tokenResponse in
@@ -82,7 +125,7 @@ class ApplicationManager: ObservableObject {
                     DispatchQueue.main.async {
                         print("case .success \(apiResponse)")
                         self.errorHandlingManager.errorMessage = nil
-                    //    isLoading = false
+                        self.ownApplications.append(application)
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
@@ -101,14 +144,12 @@ class ApplicationManager: ObservableObject {
                                 }
                             } else {
                                 print("case .else")
-                                // Handle other errors
                                 self.errorHandlingManager.errorMessage = error.localizedDescription
                             }
                         } else {
                             self.authenticationManager.isAuthenticated = false
                             self.errorHandlingManager.errorMessage = "Tokens expired. Log in to refresh tokens."
                         }
-                       // isLoading = false
                     }
                 }
             }

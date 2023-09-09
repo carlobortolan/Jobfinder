@@ -238,8 +238,17 @@ class AuthenticationManager: ObservableObject {
                 }
                 print("Successfully fetched user data")
             case .failure(let error):
-                DispatchQueue.main.async {
-                    self.errorHandlingManager.errorMessage = error.localizedDescription
+                if case .authenticationError = error {
+                    self.signOut()
+                } else {
+                    print("Error: \(error)")
+                    if case .argumentError = error {
+                        self.signOut()
+                    } else {
+                        DispatchQueue.main.async {
+                            self.errorHandlingManager.errorMessage = error.localizedDescription
+                        }
+                    }
                 }
             }
         }

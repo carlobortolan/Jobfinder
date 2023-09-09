@@ -47,7 +47,7 @@ class RequestHandler {
             requestHeaders?.forEach { field, value in
                 request.setValue(value, forHTTPHeaderField: field)
             }
-            print("A")
+
             // Set optional request body
             if let requestBody = requestBody {
                 do {

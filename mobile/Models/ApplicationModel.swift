@@ -7,8 +7,12 @@
 
 import Foundation
 
-struct ApplicationResponse: Codable {
+struct ApplicationsResponse: Codable {
     let applications: [Application]
+}
+
+struct ApplicationResponse: Codable {
+    let application: [Application]
 }
 
 struct Application: Codable, Hashable {
@@ -53,9 +57,9 @@ struct Application: Codable, Hashable {
         )
     }
     
-    static func generateRandomApplications() -> ApplicationResponse {
+    static func generateRandomApplications() -> ApplicationsResponse {
         let randomApplications = (1...5).map { _ in generateRandomApplication() }
-        return ApplicationResponse(applications: randomApplications)
+        return ApplicationsResponse(applications: randomApplications)
     }
     
     func toJSON() -> String? {

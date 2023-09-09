@@ -102,13 +102,23 @@ class APIManager {
     static func fetchOwnJobs(accessToken: String, completion: @escaping (Result<JobResponse, APIError>) -> Void) {
         JobHandler.fetchOwnJobs(accessToken: accessToken, completion: completion)
     }
+
+    /// Delegates the fetching of a user's own applications to ApplicationHandler.
+    ///
+    /// - Parameters:
+    ///   - accessToken: The user's access token for authentication.
+    ///   - jobId: The job's id.
+    ///   - completion: A closure that receives a `Result` with a `ApplicationResponse` or an `APIError`.
+    static func fetchApplication(accessToken: String, jobId: Int, completion: @escaping (Result<ApplicationResponse, APIError>) -> Void) {
+        ApplicationHandler.fetchApplication(accessToken: accessToken, jobId: jobId, completion: completion)
+    }
     
     /// Delegates the fetching of a user's own applications to ApplicationHandler.
     ///
     /// - Parameters:
     ///   - accessToken: The user's access token for authentication.
-    ///   - completion: A closure that receives a `Result` with a `ApplicationResponse` or an `APIError`.
-    static func fetchOwnApplications(accessToken: String, completion: @escaping (Result<ApplicationResponse, APIError>) -> Void) {
+    ///   - completion: A closure that receives a `Result` with a `ApplicationsResponse` or an `APIError`.
+    static func fetchOwnApplications(accessToken: String, completion: @escaping (Result<ApplicationsResponse, APIError>) -> Void) {
         ApplicationHandler.fetchOwnApplications(accessToken: accessToken, completion: completion)
     }
     
