@@ -141,33 +141,6 @@ class AuthenticationManager: ObservableObject {
         }
     }
         
-    // Request new access token and prompt user to log in if refresh token is invalid
-    /* func fetchAccessToken() {
-        print("Started fetchAccessToken")
-        guard let refreshToken = loadRefreshToken() else {
-            self.errorHandlingManager.errorMessage = "No Refresh Token available"
-            return
-        }
-
-        APIManager.fetchAccessToken(refreshToken: refreshToken) { result in
-            switch result {
-            case .success(let apiResponse):
-                print("\tfetchAccessToken.success")
-                self.saveAccessToken(accessToken: apiResponse.message)
-                DispatchQueue.main.async {
-                    self.errorHandlingManager.errorMessage = nil
-                    self.isAuthenticated = true
-                }
-            case .failure(let error):
-                print("\tfetchAccessToken.failure")
-                DispatchQueue.main.async {
-                    self.errorHandlingManager.errorMessage = error.localizedDescription
-                    self.isAuthenticated = false
-                }
-            }
-        }
-    }*/
-    
     func requestAccessToken(completion: @escaping (Bool) -> Void) {
         guard let refreshToken = loadRefreshToken() else {
             self.errorHandlingManager.errorMessage = "No Refresh Token available"
@@ -253,4 +226,55 @@ class AuthenticationManager: ObservableObject {
             }
         }
     }
+    
+    func loadProfile(iteration: Int, completion: @escaping () -> Void) {
+        print("Iteration \(iteration)")
+    
+        if let accessToken = getAccessToken() {
+            APIManager.fetchAccount(accessToken: accessToken) { result in
+                switch result {
+                case .success(let userResponse):
+                    DispatchQueue.main.async {
+                        print("case .success")
+                        self.current = userResponse.user
+                        self.errorHandlingManager.errorMessage = nil
+                        completion()
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print("case .failure, iteration: \(iteration)")
+                        if iteration == 0 {
+                            if case .authenticationError = error {
+                                print("case .authenticationError")
+                                // Authentication error (e.g., access token invalid)
+                                // Refresh the access token and retry the request
+                                self.requestAccessToken() { accessTokenSuccess in
+                                    if accessTokenSuccess{
+                                        self.loadProfile(iteration: 1, completion: completion)
+                                    } else {
+                                        self.errorHandlingManager.errorMessage = error.localizedDescription
+                                        completion()
+                                    }
+                                }
+                            } else {
+                                if case .argumentError = error {
+                                    self.signOut()
+                                } else {
+                                    print("case .else")
+                                // Handle other errors
+                                self.errorHandlingManager.errorMessage = error.localizedDescription
+                                completion()
+                                }
+                            }
+                        } else {
+                            self.isAuthenticated = false
+                            self.errorHandlingManager.errorMessage = "Tokens expired. Log in to refresh tokens."
+                            completion()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }

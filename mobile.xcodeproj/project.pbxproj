@@ -62,6 +62,10 @@
 		22D927852AA7BD390017678C /* ErrorViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D927842AA7BD390017678C /* ErrorViewModifier.swift */; };
 		22D927882AA7FAE90017678C /* HtmlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D927872AA7FAE90017678C /* HtmlView.swift */; };
 		22D9278A2AA8015C0017678C /* FilterAndSortView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D927892AA8015C0017678C /* FilterAndSortView.swift */; };
+		22DC3AEB2AACBF7500B783E8 /* JobCarusel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC3AEA2AACBF7500B783E8 /* JobCarusel.swift */; };
+		22DC3AEE2AACC05800B783E8 /* Parchment in Frameworks */ = {isa = PBXBuildFile; productRef = 22DC3AED2AACC05800B783E8 /* Parchment */; };
+		22DC3AF02AACC20F00B783E8 /* JobCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC3AEF2AACC20F00B783E8 /* JobCard.swift */; };
+		22DC3AF22AACE4C200B783E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC3AF12AACE4C200B783E8 /* AppDelegate.swift */; };
 		22E40B052A8C20DB00D3F91E /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E40B042A8C20DB00D3F91E /* APIManager.swift */; };
 		22E40B072A8C21AF00D3F91E /* APITypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E40B062A8C21AF00D3F91E /* APITypes.swift */; };
 		22E73EC62A8BFDDF0042CF01 /* mobileApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E73EC52A8BFDDF0042CF01 /* mobileApp.swift */; };
@@ -150,6 +154,9 @@
 		22D927842AA7BD390017678C /* ErrorViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewModifier.swift; sourceTree = "<group>"; };
 		22D927872AA7FAE90017678C /* HtmlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HtmlView.swift; sourceTree = "<group>"; };
 		22D927892AA8015C0017678C /* FilterAndSortView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAndSortView.swift; sourceTree = "<group>"; };
+		22DC3AEA2AACBF7500B783E8 /* JobCarusel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobCarusel.swift; sourceTree = "<group>"; };
+		22DC3AEF2AACC20F00B783E8 /* JobCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobCard.swift; sourceTree = "<group>"; };
+		22DC3AF12AACE4C200B783E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22E40B042A8C20DB00D3F91E /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		22E40B062A8C21AF00D3F91E /* APITypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITypes.swift; sourceTree = "<group>"; };
 		22E73EC22A8BFDDF0042CF01 /* mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -171,6 +178,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				22B8041B2AA890BC008D7108 /* URLImage in Frameworks */,
+				22DC3AEE2AACC05800B783E8 /* Parchment in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +290,7 @@
 				22E73EC52A8BFDDF0042CF01 /* mobileApp.swift */,
 				22E73EC72A8BFDDF0042CF01 /* ContentView.swift */,
 				22D927842AA7BD390017678C /* ErrorViewModifier.swift */,
+				22DC3AF12AACE4C200B783E8 /* AppDelegate.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -309,6 +318,8 @@
 				227E9C942AABB83700049CAB /* ApplicationDetail.swift */,
 				227E9C962AABB91300049CAB /* ApplicationPopup.swift */,
 				227E9C9C2AABECBA00049CAB /* OwnApplicationButton.swift */,
+				22DC3AEA2AACBF7500B783E8 /* JobCarusel.swift */,
+				22DC3AEF2AACC20F00B783E8 /* JobCard.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -431,6 +442,7 @@
 			name = mobile;
 			packageProductDependencies = (
 				22B8041A2AA890BC008D7108 /* URLImage */,
+				22DC3AED2AACC05800B783E8 /* Parchment */,
 			);
 			productName = mobile;
 			productReference = 22E73EC22A8BFDDF0042CF01 /* mobile.app */;
@@ -506,6 +518,7 @@
 			mainGroup = 22E73EB92A8BFDDF0042CF01;
 			packageReferences = (
 				22B804192AA890BC008D7108 /* XCRemoteSwiftPackageReference "url-image" */,
+				22DC3AEC2AACC05800B783E8 /* XCRemoteSwiftPackageReference "Parchment" */,
 			);
 			productRefGroup = 22E73EC32A8BFDDF0042CF01 /* Products */;
 			projectDirPath = "";
@@ -558,6 +571,7 @@
 				22D9278A2AA8015C0017678C /* FilterAndSortView.swift in Sources */,
 				22B804232AA8F969008D7108 /* TokenHandler.swift in Sources */,
 				22430FA02AAAB51600747827 /* UpdateUserPreferencesView.swift in Sources */,
+				22DC3AF22AACE4C200B783E8 /* AppDelegate.swift in Sources */,
 				226B638B2AA790E6004620EE /* SignUpForm.swift in Sources */,
 				22D927852AA7BD390017678C /* ErrorViewModifier.swift in Sources */,
 				22B8041F2AA8F813008D7108 /* APIHandler.swift in Sources */,
@@ -590,6 +604,8 @@
 				22B8041D2AA891ED008D7108 /* JobDetail.swift in Sources */,
 				226B63822AA78BA1004620EE /* ApplicationForm.swift in Sources */,
 				22D927832AA7B4FE0017678C /* JobListView.swift in Sources */,
+				22DC3AF02AACC20F00B783E8 /* JobCard.swift in Sources */,
+				22DC3AEB2AACBF7500B783E8 /* JobCarusel.swift in Sources */,
 				22B804632AA91570008D7108 /* UserModel.swift in Sources */,
 				22B804692AA91D42008D7108 /* PreferencesView.swift in Sources */,
 				22B8046B2AA91D4B008D7108 /* OwnJobsView.swift in Sources */,
@@ -947,6 +963,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		22DC3AEC2AACC05800B783E8 /* XCRemoteSwiftPackageReference "Parchment" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rechsteiner/Parchment";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -954,6 +978,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 22B804192AA890BC008D7108 /* XCRemoteSwiftPackageReference "url-image" */;
 			productName = URLImage;
+		};
+		22DC3AED2AACC05800B783E8 /* Parchment */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 22DC3AEC2AACC05800B783E8 /* XCRemoteSwiftPackageReference "Parchment" */;
+			productName = Parchment;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -20,8 +20,11 @@ class JobManager: ObservableObject {
         self.authenticationManager = authenticationManager
         self.errorHandlingManager = errorHandlingManager
         self._ownJobs = Published(wrappedValue: [])
-        self._upcomingJobs = Published(wrappedValue: [])
+        self._upcomingJobs = Published(wrappedValue: JobModel.generateRandomJobsResponse().jobs)
         self._nearbyJobs = Published(wrappedValue: [])
+        
+        self.loadOwnJobs(iteration: 0) {}
+        self.loadUpcomingJobs(iteration: 0) {}
     }
     
     func loadOwnJobs(iteration: Int, completion: @escaping () -> Void) {
@@ -120,7 +123,7 @@ class JobManager: ObservableObject {
                 case .success(let jobsResponse):
                     DispatchQueue.main.async {
                         print("case .success")
-                        self.upcomingJobs = jobsResponse.jobs
+                        self.nearbyJobs = jobsResponse.jobs
                         self.errorHandlingManager.errorMessage = nil
                         completion()
                     }

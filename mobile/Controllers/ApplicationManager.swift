@@ -18,6 +18,8 @@ class ApplicationManager: ObservableObject {
         self.authenticationManager = authenticationManager
         self.errorHandlingManager = errorHandlingManager
         self._ownApplications = Published(wrappedValue: [])
+        
+        self.loadOwnApplications(iteration: 0) {}
     }
     
     func hasApplication(forUserId userId: Int, andJobId jobId: Int) -> Bool {

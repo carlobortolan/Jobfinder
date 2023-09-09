@@ -12,7 +12,7 @@ struct ContentView: View {
     @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
     @EnvironmentObject var jobManager: JobManager
     @EnvironmentObject var applicationManager: ApplicationManager
-    
+    @State var isLoadingApp = true
     var body: some View {
         Group {
             if authenticationManager.isAuthenticated {
@@ -21,7 +21,22 @@ struct ContentView: View {
                 LoginView()
             }
         }.modifier(ErrorViewModifier())
-    }
+/*            .onAppear {
+                isLoadingApp = true
+                authenticationManager.loadProfile(iteration: 0) {
+                    isLoadingApp = false
+                }
+                applicationManager.loadOwnApplications(iteration: 0) {
+                    isLoadingApp = false
+                }
+                jobManager.loadOwnJobs(iteration: 0) {
+                    isLoadingApp = false
+                }
+                jobManager.loadUpcomingJobs(iteration: 0) {
+                    isLoadingApp = false
+                }
+            }
+*/    }
 }
 
 struct ContentView_Previews: PreviewProvider {

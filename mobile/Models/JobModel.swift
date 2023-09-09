@@ -161,7 +161,7 @@ class JobModel {
             cvRequired: true,
             jobValue: "Random Job Value",
             allowedCvFormat: [".pdf", ".docx"],
-            imageUrl: "https://f005.backblazeb2.com/file/TestEmbloy/qpew2qrgj79r6vnrn5g9r0k0dkyk?Authorization=3_20230906105048_88964a7efef142dda956c4dd_cda0284ea7abf86a4035a68ca856f843216154a4_005_20230913105048_0028_dnld"
+            imageUrl: "https://cdn.mos.cms.futurecdn.net/ohsXtgy8Hmi9PzDNpKhJ5N.jpg"
         )
         return randomJob
     }
