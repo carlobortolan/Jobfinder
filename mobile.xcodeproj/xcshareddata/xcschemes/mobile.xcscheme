@@ -80,6 +80,11 @@
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
+            key = "APPLICATION_PATH"
+            value = "/application"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
             key = "REJECT_PATH"
             value = "/reject"
             isEnabled = "YES">
