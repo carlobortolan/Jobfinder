@@ -36,7 +36,7 @@ struct StartView: View {
                             Text("No confirmed jobs yet.")
                                 .foregroundColor(.secondary)
                         } else {
-                            JobCarousel()
+                            JobCarousel().padding()
                         }
                         Spacer()
                     }
@@ -64,7 +64,7 @@ struct StartView: View {
                     .padding()
                 }
             }
-            .navigationBarTitle("Start", displayMode: .inline)
+            .navigationBarTitle("EMBLOY", displayMode: .inline)
             .padding()
             .onAppear {
                 // Load notifications, upcoming jobs, and nearby jobs

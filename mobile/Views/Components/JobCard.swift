@@ -8,6 +8,9 @@
 import SwiftUI
 import URLImage
 
+import SwiftUI
+import URLImage
+
 struct JobCardView: View {
     @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
     @EnvironmentObject var authenticationManager: AuthenticationManager
@@ -18,27 +21,32 @@ struct JobCardView: View {
 
     var body: some View {
         NavigationLink(destination: JobDetail(job: job)) {
-                ZStack(alignment: .center) {
-                    URLImage(URL(string: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.mos.cms.futurecdn.net%2FohsXtgy8Hmi9PzDNpKhJ5N.jpg&f=1&nofb=1&ipt=beff85e7700e681bbd30275f2a734143240c7d6985562849a485a831fabf0628&ipo=images")!) { image in
-                        image
-                            .resizable(resizingMode: .tile)
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: UIScreen.main.bounds.width - 40, height: 200)
-                            .cornerRadius(10)
-                            .overlay(
-                                VStack(alignment: .center) {
-                                    Spacer()
-                                    Text("\(job.startSlot)")
-                                        .font(.headline)
-                                        .foregroundColor(.white)
-                                        .multilineTextAlignment(.center)
-                                        .padding(.bottom, 5)
-                                }.padding(.horizontal, 20)
-                            )
-                    }
+            ZStack(alignment: .center) {
+                RoundedRectangle(cornerRadius: 10) // Add a RoundedRectangle with a corner radius
+                    .stroke(Color("FgColor"), lineWidth: 1) // Set border color and width
+                    .frame(width: UIScreen.main.bounds.width / 2, height: UIScreen.main.bounds.height / 3.5)
+                    .background(
+                        URLImage(URL(string: job.imageUrl)!) { image in
+                            image
+                                .resizable(resizingMode: .tile)
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: UIScreen.main.bounds.width / 2, height: UIScreen.main.bounds.height / 3.5)
+                                .cornerRadius(10)
+                                .overlay(
+                                    VStack(alignment: .center) {
+                                        Spacer()
+                                        Text("\(job.startSlot)")
+                                            .font(.headline)
+                                            .foregroundColor(.white)
+                                            .multilineTextAlignment(.center)
+                                            .padding(.bottom, 5)
+                                    }.padding(.horizontal, 20)
+                                )
+                        }
+                    )
 
-                    
-                    Text("- 2h 30min")
+                if let startDate = DateParser.date(from: job.startSlot) {
+                    Text("-\(DateParser.timeRemainingCompactString(from: startDate))")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.white)
@@ -46,16 +54,16 @@ struct JobCardView: View {
                         .padding(.horizontal)
                     Spacer()
                 }
-                .border(Color("FgColor"), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
-                .frame(width: UIScreen.main.bounds.width - 40, height: 200)
-                .padding(.horizontal, 20)
-                .cornerRadius(10)
-                .shadow(radius: 3)
-                .padding(.horizontal)
-            Spacer()
+            }
+            .frame(width: UIScreen.main.bounds.width / 2, height: UIScreen.main.bounds.height / 3.5)
+            .padding(.horizontal, 20)
+            .cornerRadius(10)
+            .shadow(radius: 3)
+            .padding(.horizontal)
         }
     }
 }
+
 
 struct Previews_JobCard_Previews: PreviewProvider {
     static var previews: some View {
