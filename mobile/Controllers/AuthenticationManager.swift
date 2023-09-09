@@ -24,7 +24,7 @@ class AuthenticationManager: ObservableObject {
             self.current = cachedUser
         } else {
             self.current = User()
-         }
+        }
     }
     
     private func saveRefreshToken(refreshToken: String?) {
@@ -118,6 +118,11 @@ class AuthenticationManager: ObservableObject {
             self.current.email = ""
             self.current.firstName = ""
             self.current.lastName = ""
+            self.errorHandlingManager.errorMessage = nil
+            UserDefaults.standard.set(nil, forKey: "cachedUserJSON")
+            UserDefaults.standard.set(nil, forKey: "cachedOwnJobsJSON")
+            UserDefaults.standard.set(nil, forKey: "cachedUpcomingJobsJSON")
+            UserDefaults.standard.set(nil, forKey: "cachedOwnApplicationsJSON")
             print("Successfully signed out")
         }
     }

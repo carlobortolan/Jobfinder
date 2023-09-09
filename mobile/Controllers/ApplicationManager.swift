@@ -19,6 +19,12 @@ class ApplicationManager: ObservableObject {
         self.errorHandlingManager = errorHandlingManager
         self._ownApplications = Published(wrappedValue: [])
         
+        if let cachedOwnApplicationsJSON = UserDefaults.standard.string(forKey: "cachedOwnApplicationsJSON"),
+           let cachedOwnApplications = ApplicationsResponse.fromJSON(cachedOwnApplicationsJSON) {
+            self.ownApplications = cachedOwnApplications
+        } else {
+            self.ownApplications = []
+        }
         self.loadOwnApplications(iteration: 0) {}
     }
     
@@ -37,6 +43,9 @@ class ApplicationManager: ObservableObject {
                     DispatchQueue.main.async {
                         print("case .success")
                         self.ownApplications = applicationsResponse.applications
+                        if let ownApplications = applicationsResponse.toJSON() {
+                            UserDefaults.standard.set(ownApplications, forKey: "cachedOwnApplicationsJSON")
+                        }
                         self.errorHandlingManager.errorMessage = nil
                         completion() // Call the completion closure when loading is complete
                     }

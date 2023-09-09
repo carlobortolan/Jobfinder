@@ -9,6 +9,24 @@ import Foundation
 
 struct JobsResponse: Codable {
     let jobs: [Job]
+    
+    func toJSON() -> String? {
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(self) {
+            return String(data: data, encoding: .utf8)
+        }
+        return nil
+    }
+    
+    static func fromJSON(_ jsonString: String) -> [Job]? {
+        let decoder = JSONDecoder()
+        if let data = jsonString.data(using: .utf8) {
+            if let jobsResponse = try? decoder.decode(JobsResponse.self, from: data) {
+                return jobsResponse.jobs
+            }
+        }
+        return nil
+    }
 }
 
 struct FeedResponse: Codable {
@@ -97,6 +115,24 @@ struct Job: Codable, Hashable, Identifiable {
         case allowedCvFormat = "allowed_cv_format"
         case imageUrl = "image_url"
     }
+    
+    func toJSON() -> String? {
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(self) {
+            return String(data: data, encoding: .utf8)
+        }
+        return nil
+    }
+    
+    static func fromJSON(_ jsonString: String) -> Job? {
+        let decoder = JSONDecoder()
+        if let data = jsonString.data(using: .utf8) {
+            if let job = try? decoder.decode(Job.self, from: data) {
+                return job
+            }
+        }
+        return nil
+    }
 }
 
 struct JobDescription: Codable {
@@ -168,6 +204,7 @@ class JobModel {
         return randomJob
     }
     
+    
     static func generateRandomJobsResponse() -> JobsResponse {
         let randomJobs = (1...5).map { _ in generateRandomJob() }
         return JobsResponse(jobs: randomJobs)
@@ -178,3 +215,4 @@ class JobModel {
         return FeedResponse(feed: randomJobs)
     }
 }
+    

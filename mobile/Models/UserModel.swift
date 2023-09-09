@@ -392,17 +392,16 @@ struct User: Codable {
     }
     
     static func fromJSON(_ jsonString: String) -> User? {
-    print("User - FROM JSON: \(jsonString)")
-    let decoder = JSONDecoder()
-    decoder.dateDecodingStrategy = .formatted(DateFormattedISO8601.dateFormatter)
-    
-    if let data = jsonString.data(using: .utf8) {
-        if let user = try? decoder.decode(User.self, from: data) {
-            return user
+        print("User - FROM JSON: \(jsonString)")
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(DateFormattedISO8601.dateFormatter)
+        if let data = jsonString.data(using: .utf8) {
+            if let user = try? decoder.decode(User.self, from: data) {
+                return user
+            }
         }
+        return nil
     }
-    return nil
-}
 
     static func generateRandomUser() -> User {
         let userId = Int.random(in: 1...1000)

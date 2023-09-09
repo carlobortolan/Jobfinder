@@ -19,10 +19,26 @@ class JobManager: ObservableObject {
          errorHandlingManager: ErrorHandlingManager) {
         self.authenticationManager = authenticationManager
         self.errorHandlingManager = errorHandlingManager
-        self._ownJobs = Published(wrappedValue: [])
-        self._upcomingJobs = Published(wrappedValue: JobModel.generateRandomJobsResponse().jobs)
         self._nearbyJobs = Published(wrappedValue: [])
-        
+       
+        if let cachedOwnJobsJSON = UserDefaults.standard.string(forKey: "cachedOwnJobsJSON"),
+           let cachedOwnJobs = JobsResponse.fromJSON(cachedOwnJobsJSON) {
+            print("cachedOwnJobsJSON: TRUE")
+            self._ownJobs = Published(wrappedValue: cachedOwnJobs)
+        } else {
+            print("cachedOwnJobsJSON: FALSE")
+            self._ownJobs = Published(wrappedValue: [])
+        }
+
+        if let cachedUpcomingJobsJSON = UserDefaults.standard.string(forKey: "cachedUpcomingJobsJSON"),
+           let cachedUpcomingJobs = JobsResponse.fromJSON(cachedUpcomingJobsJSON) {
+            print("cachedUpcomingJobsJSON: TRUE")
+            self._upcomingJobs = Published(wrappedValue: cachedUpcomingJobs)
+        } else {
+            print("cachedUpcomingJobsJSON: FALSE")
+            self._upcomingJobs = Published(wrappedValue: JobModel.generateRandomJobsResponse().jobs)
+        }
+        self.loadUpcomingJobs(iteration: 0) {}
         self.loadOwnJobs(iteration: 0) {}
         self.loadUpcomingJobs(iteration: 0) {}
     }
@@ -36,6 +52,9 @@ class JobManager: ObservableObject {
                     DispatchQueue.main.async {
                         print("case .success")
                         self.ownJobs = jobsResponse.jobs
+                        if let ownJobsJSON = jobsResponse.toJSON() {
+                            UserDefaults.standard.set(ownJobsJSON, forKey: "cachedOwnJobsJSON")
+                        }
                         self.errorHandlingManager.errorMessage = nil
                         completion()
                     }
@@ -80,6 +99,9 @@ class JobManager: ObservableObject {
                     DispatchQueue.main.async {
                         print("case .success")
                         self.upcomingJobs = jobsResponse.jobs
+                        if let upcomingJobs = jobsResponse.toJSON() {
+                            UserDefaults.standard.set(upcomingJobs, forKey: "cachedUpcomingJobsJSON")
+                        }
                         self.errorHandlingManager.errorMessage = nil
                         completion()
                     }

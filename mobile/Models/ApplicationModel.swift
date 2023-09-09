@@ -9,6 +9,24 @@ import Foundation
 
 struct ApplicationsResponse: Codable {
     let applications: [Application]
+    
+    func toJSON() -> String? {
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(self) {
+            return String(data: data, encoding: .utf8)
+        }
+        return nil
+    }
+    
+    static func fromJSON(_ jsonString: String) -> [Application]? {
+        let decoder = JSONDecoder()
+        if let data = jsonString.data(using: .utf8) {
+            if let applicationsResponse = try? decoder.decode(ApplicationsResponse.self, from: data) {
+                return applicationsResponse.applications
+            }
+        }
+        return nil
+    }
 }
 
 struct ApplicationResponse: Codable {
