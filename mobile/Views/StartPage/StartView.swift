@@ -22,29 +22,26 @@ struct StartView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 20) {
-                    // Upcoming Jobs Section
                     VStack {
                         Text("Upcoming Jobs")
                             .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(.primary)
                         
-                      //  if isLoadingUpcomingJobs {
-                     //       ProgressView()
-                    //    }
+                        if isLoadingUpcomingJobs {
+                            ProgressView()
+                        }
                         
                         if jobManager.upcomingJobs.isEmpty && !isLoadingUpcomingJobs {
                             Text("No confirmed jobs yet.")
                                 .foregroundColor(.secondary)
                         } else {
                             JobCarousel()
-                            Spacer()
                         }
                         Spacer()
                     }
                     .padding()
 
-                    // Nearby Jobs Section
                     VStack {
                         Text("Jobs Near You")
                             .font(.title)
