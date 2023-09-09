@@ -15,21 +15,11 @@ struct JobDetail: View {
     @EnvironmentObject var jobManager: JobManager
     @EnvironmentObject var applicationManager: ApplicationManager
 
-    @State private var region: MKCoordinateRegion
     @State private var isApplicationPopupVisible = false
     @State private var isLoading = false
     @State private var hasApplication = false
     @State private var applicationMessage = "Write your application message here ..."
     @State var job: Job
-
-    init(job: Job) {
-        self.job = job
-        // Create a coordinate region based on the job's latitude and longitude
-        _region = State(initialValue: MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: job.latitude, longitude: job.longitude),
-            span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-        ))
-    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -86,8 +76,7 @@ struct JobDetail: View {
                         .border(Color("FgColor"), width: 3)
                         .padding(.horizontal, 10.0)
                         .overlay(
-                            Map(coordinateRegion: $region, showsUserLocation: true)
-                                .padding()
+                            JobMapView(job: job).padding()
                         )
                 )
                 Button(action: {
