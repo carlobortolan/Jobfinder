@@ -21,7 +21,7 @@ class FeedHandler {
     ///   - jobType: The type of jobs to search for (e.g., "full-time," "part-time").
     ///   - sortBy: The sorting criteria for search results (e.g., "relevance," "date").
     ///   - accessToken: The access token required for authentication with the API.
-    ///   - completion: A closure that receives a `Result` containing either a `JobResponse` or an API error.
+    ///   - completion: A closure that receives a `Result` containing either a `JobsResponse` or an API error.
     ///
     /// Example usage:
     ///
@@ -43,10 +43,10 @@ class FeedHandler {
     /// ```
     ///
     /// - SeeAlso: `performRequest` for the underlying request implementation.
-    /// - SeeAlso: `JobResponse` for the response that contains the decoded `Job` array.
+    /// - SeeAlso: `JobsResponse` for the response that contains the decoded `Job` array.
     /// - SeeAlso: `APIError` for the possible API error types.
     /// - SeeAlso: `Result` for the result type that contains either the decoded response data or an API error.
-    static func queryJobs(query: String, jobType: String, sortBy: String, accessToken: String, completion: @escaping (Result<JobResponse, APIError>) -> Void) {
+    static func queryJobs(query: String, jobType: String, sortBy: String, accessToken: String, completion: @escaping (Result<JobsResponse, APIError>) -> Void) {
         print("Started querying jobs with: \nquery: \(query)\njobType: \(jobType)\nsortBy: \(sortBy)\naccess_token: \(accessToken)")
         guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
               let jobsFindPath = ProcessInfo.processInfo.environment["JOBS_FIND_PATH"],
@@ -67,7 +67,7 @@ class FeedHandler {
         
         print("URL: \(url)")
 
-        RequestHandler.performRequest(url: url, httpMethod: HTTPMethod.GET, accessToken: accessToken, responseType: JobResponse.self, completion: completion)
+        RequestHandler.performRequest(url: url, httpMethod: HTTPMethod.GET, accessToken: accessToken, responseType: JobsResponse.self, completion: completion)
     }
 
     /// Fetches a feed of jobs based on geographical coordinates and access token.

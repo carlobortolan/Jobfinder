@@ -13,7 +13,6 @@ struct OwnJobsView: View {
     @EnvironmentObject var jobManager: JobManager
     @EnvironmentObject var applicationManager: ApplicationManager
 
-//    @State var ownJobs: [Job] = []
     @State var isLoading = false
 
     var body: some View {

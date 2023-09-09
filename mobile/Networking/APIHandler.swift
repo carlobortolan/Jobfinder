@@ -30,8 +30,10 @@ class RequestHandler {
             }
         }
         
+        
         // Create the final URL with query parameters
         if let finalURL = components?.url {
+            print("finalURL: \(finalURL)")
             var request = URLRequest(url: finalURL)
             request.httpMethod = String(describing: httpMethod)
             if let accessToken {

@@ -34,7 +34,7 @@ struct JobListView: View {
 
 struct Previews_JobListView_Previews: PreviewProvider {
     static var previews: some View {
-        @State var jobs = JobModel.generateRandomJobResponse().jobs
+        @State var jobs = JobModel.generateRandomJobsResponse().jobs
         JobListView(jobs: $jobs)
     }
 }

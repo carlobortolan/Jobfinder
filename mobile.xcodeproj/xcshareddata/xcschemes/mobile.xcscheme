@@ -80,6 +80,16 @@
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
+            key = "JOBS_MAPS_PATH"
+            value = "/maps"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "USER_UPCOMING_PATH"
+            value = "/user/upcoming"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
             key = "APPLICATION_PATH"
             value = "/application"
             isEnabled = "YES">

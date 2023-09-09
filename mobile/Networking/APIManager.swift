@@ -85,7 +85,7 @@ class APIManager {
         AccountHandler.updateAccount(accessToken: accessToken, user: UserUpdateRequestBody(user: user), completion: completion)
     }
     
-    /// Delegates the fetching of a user's preferences to AccountHandler.
+    /// Delegates the fetching of user's preferences to AccountHandler.
     ///
     /// - Parameters:
     ///   - accessToken: The user's access token for authentication.
@@ -94,16 +94,36 @@ class APIManager {
         AccountHandler.fetchPreferences(accessToken: accessToken, completion: completion)
     }
 
-    /// Delegates the fetching of of a user's own jobs to JobHandler.
+    /// Delegates the fetching of a user's own jobs to JobHandler.
+    ///
+    /// - Parameters:
+    ///   - accessToken: The user's access token for authentication.
+    ///   - completion: A closure that receives a `Result` with an `JobsResponse` or an `APIError`.
+    static func fetchOwnJobs(accessToken: String, completion: @escaping (Result<JobsResponse, APIError>) -> Void) {
+        JobHandler.fetchOwnJobs(accessToken: accessToken, completion: completion)
+    }
+    
+    /// Delegates the fetching of a user's upcoming jobs to JobHandler.
     ///
     /// - Parameters:
     ///   - accessToken: The user's access token for authentication.
     ///   - completion: A closure that receives a `Result` with an `JobResponse` or an `APIError`.
-    static func fetchOwnJobs(accessToken: String, completion: @escaping (Result<JobResponse, APIError>) -> Void) {
-        JobHandler.fetchOwnJobs(accessToken: accessToken, completion: completion)
+    static func fetchUpcomingJobs(accessToken: String, completion: @escaping (Result<JobsResponse, APIError>) -> Void) {
+        JobHandler.fetchUpcomingJobs(accessToken: accessToken, completion: completion)
+    }
+    
+    /// Delegates the fetching of nearby joss to JobHandler.
+    ///
+    /// - Parameters:
+    ///   - accessToken: The user's access token for authentication.
+    ///   - longitude: The position's longitude.
+    ///   - latitude: The position's latitude.
+    ///   - completion: A closure that receives a `Result` with an `JobResponse` or an `APIError`.
+    static func fetchNearbyJobs(accessToken: String, longitude: Double, latitude: Double, completion: @escaping (Result<JobsResponse, APIError>) -> Void) {
+        JobHandler.fetchNearbyJobs(accessToken: accessToken, longitude: longitude, latitude: latitude, completion: completion)
     }
 
-    /// Delegates the fetching of a user's own applications to ApplicationHandler.
+    /// Delegates the fetching of a single application to ApplicationHandler.
     ///
     /// - Parameters:
     ///   - accessToken: The user's access token for authentication.
@@ -169,8 +189,8 @@ class APIManager {
     ///   - jobType: The type of job to filter by.
     ///   - sortBy: The sorting criteria for the job list.
     ///   - accessToken: The user's access token for authentication.
-    ///   - completion: A closure that receives a `Result` with a `JobResponse` or an `APIError`.
-    static func queryJobs(query: String, jobType: String, sortBy: String, accessToken: String, completion: @escaping (Result<JobResponse, APIError>) -> Void) {
+    ///   - completion: A closure that receives a `Result` with a `JobsResponse` or an `APIError`.
+    static func queryJobs(query: String, jobType: String, sortBy: String, accessToken: String, completion: @escaping (Result<JobsResponse, APIError>) -> Void) {
         FeedHandler.queryJobs(query: query, jobType: jobType, sortBy: sortBy, accessToken: accessToken, completion: completion)
     }
 }

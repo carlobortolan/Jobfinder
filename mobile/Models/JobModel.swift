@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct JobResponse: Codable {
+struct JobsResponse: Codable {
     let jobs: [Job]
 }
 
@@ -166,9 +166,9 @@ class JobModel {
         return randomJob
     }
     
-    static func generateRandomJobResponse() -> JobResponse {
+    static func generateRandomJobsResponse() -> JobsResponse {
         let randomJobs = (1...5).map { _ in generateRandomJob() }
-        return JobResponse(jobs: randomJobs)
+        return JobsResponse(jobs: randomJobs)
     }
 
     static func generateRandomFeedResponse() -> FeedResponse {
