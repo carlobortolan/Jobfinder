@@ -27,7 +27,7 @@ struct JobsMapView: View {
     var body: some View {
         Map(coordinateRegion: .constant(region), showsUserLocation: true, userTrackingMode: .constant(.follow), annotationItems: nearbyJobs) { job in
             MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: job.latitude, longitude: job.longitude)) {
-                JobMapAnnotation(job: job)
+                JobsMapAnnotation(job: job)
             }
         }
         .frame(width: 300, height: 500)

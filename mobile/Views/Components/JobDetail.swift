@@ -118,8 +118,13 @@ struct JobDetail: View {
 
 struct JobDetail_Previews: PreviewProvider {
     static var previews: some View {
+        let errorHandlingManager = ErrorHandlingManager()
+        let authenticationManager = AuthenticationManager(errorHandlingManager: errorHandlingManager)
+        let jobManager = JobManager(authenticationManager: authenticationManager, errorHandlingManager: errorHandlingManager)
+        let applicationManager = ApplicationManager(authenticationManager: authenticationManager, errorHandlingManager: errorHandlingManager)
+
         let job = JobModel.generateRandomJob()
-        return JobDetail(job: job)
+        return JobDetail(job: job).environmentObject(errorHandlingManager).environmentObject(authenticationManager).environmentObject(jobManager).environmentObject(applicationManager)
     }
 }
 

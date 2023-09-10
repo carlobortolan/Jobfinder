@@ -27,7 +27,9 @@ struct JobMapView: View {
 
     var body: some View {
         Map(coordinateRegion: .constant(region), showsUserLocation: true, userTrackingMode: .constant(.follow), annotationItems: [job]) { job in
-            MapPin(coordinate: CLLocationCoordinate2D(latitude: job.latitude, longitude: job.longitude), tint: .blue)
+            MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: job.latitude, longitude: job.longitude)) {
+                JobMapAnnotation(job: job)
+            }
         }
         .onAppear {
             locationManager.requestWhenInUseAuthorization()
