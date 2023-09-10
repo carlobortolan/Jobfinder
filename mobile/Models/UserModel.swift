@@ -254,7 +254,7 @@ struct User: Codable {
         self.imageURL = "https://embloy.onrender.com/assets/img/features_3.png"
         self.phone = nil
         self.degree = nil
-        }
+    }
     
     init(userId: Int, email: String, passwordDigest: String, activityStatus: Int, firstName: String, lastName: String, longitude: Double?, latitude: Double?, countryCode: String?, postalCode: String?, city: String?, address: String?, dateOfBirth: Date?, userType: String, viewCount: Int, createdAt: String, updatedAt: String, applicationsCount: Int, jobsCount: Int, userRole: String, applicationNotifications: Bool, twitterURL: String?, facebookURL: String?, instagramURL: String?, linkedinURL: String?, imageURL: String?, phone: String?, degree: String?) {
         self.userId = userId

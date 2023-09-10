@@ -58,7 +58,7 @@ struct DateParser {
         } else if let days = components.day, days > 0 {
             return "\(days) \(days == 1 ? "day" : "days") and \(components.hour ?? 0) \(components.hour == 1 ? "hour" : "hours")"
         } else {
-            return "\(components.hour ?? 0) \(components.hour == 1 ? "hour" : "hours") and \(components.minute ?? 0) \(components.minute == 1 ? "minute" : "minutes")"
+            return "\(components.hour ?? 0) \(components.hour == 1 ? "hour" : "hours") and \(components.minute ?? 0) min"
         }
     }
     

@@ -10,6 +10,7 @@ import SwiftUI
 struct ApplicationButton: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 10)
+            .stroke(Color("FgColor"), lineWidth: 5)
             .frame(height: 60)
             .foregroundColor(Color("FeedBgColor"))
             .border(Color("FgColor"), width: 3)

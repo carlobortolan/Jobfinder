@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-
-import SwiftUI
 import URLImage
 
 struct JobsMapAnnotation: View {
@@ -31,7 +29,7 @@ struct JobsMapAnnotation: View {
                 )
             }
             .sheet(isPresented: $isTapped) {
-                JobDetail(job: job)
+                JobDetail2(job: job).background(Color("FeedBgColor"))
             }
 
             Text(job.title)

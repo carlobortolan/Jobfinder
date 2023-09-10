@@ -20,7 +20,7 @@ struct JobCardView: View {
     var job: Job
 
     var body: some View {
-        NavigationLink(destination: JobDetail(job: job)) {
+        NavigationLink(destination: JobDetail2(job: job)) {
             ZStack(alignment: .center) {
                 RoundedRectangle(cornerRadius: 10) // Add a RoundedRectangle with a corner radius
                     .stroke(Color("FgColor"), lineWidth: 1) // Set border color and width

@@ -68,6 +68,9 @@ struct Job: Codable, Hashable, Identifiable {
     let jobValue: String
     let allowedCvFormat: [String]
     let imageUrl: String
+    let employerEmail: String?
+    let employerPhone: Double?
+    let employerName: String?
     
     var id: Int { jobId }
     
@@ -114,6 +117,9 @@ struct Job: Codable, Hashable, Identifiable {
         case jobValue = "job_value"
         case allowedCvFormat = "allowed_cv_format"
         case imageUrl = "image_url"
+        case employerPhone = "employer_phone"
+        case employerEmail = "employer_email"
+        case employerName = "employer_name"
     }
     
     func toJSON() -> String? {
@@ -199,7 +205,10 @@ class JobModel {
             cvRequired: true,
             jobValue: "Random Job Value",
             allowedCvFormat: [".pdf", ".docx"],
-            imageUrl: "https://cdn.mos.cms.futurecdn.net/ohsXtgy8Hmi9PzDNpKhJ5N.jpg"
+            imageUrl: "https://cdn.mos.cms.futurecdn.net/ohsXtgy8Hmi9PzDNpKhJ5N.jpg",
+            employerEmail: "bortolanoffice@embloy.com",
+            employerPhone: 15225237383.0,
+            employerName: "Employer Name"
         )
         return randomJob
     }

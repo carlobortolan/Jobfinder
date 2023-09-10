@@ -22,6 +22,7 @@ struct StartView: View {
         NavigationView {
             VStack(spacing: 20) {
                 RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color("FgColor"), lineWidth: 5)
                     .frame(height: 325)
                     .foregroundColor(Color("FeedBgColor"))
                     .border(Color("FgColor"), width: 3)
@@ -55,6 +56,7 @@ struct StartView: View {
                     )
                 
                 RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color("FgColor"), lineWidth: 5)
                     .frame(height: 300)
                     .foregroundColor(Color("FeedBgColor"))
                     .border(Color("FgColor"), width: 3)

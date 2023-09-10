@@ -17,6 +17,8 @@
 		2216EA812A8D761700C970DD /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2216EA802A8D761700C970DD /* PostView.swift */; };
 		2216EA832A8D762400C970DD /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2216EA822A8D762400C970DD /* ExploreView.swift */; };
 		2216EA862A8D765500C970DD /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2216EA852A8D765500C970DD /* StartView.swift */; };
+		2221CE2D2AAE0E2C00E94A50 /* JobDetail2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2221CE2C2AAE0E2C00E94A50 /* JobDetail2.swift */; };
+		2221CE312AAE5CA700E94A50 /* ContactAndDirections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2221CE302AAE5CA700E94A50 /* ContactAndDirections.swift */; };
 		22430F952AAA5C2D00747827 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22430F942AAA5C2D00747827 /* ImagePickerView.swift */; };
 		22430F982AAA5CEC00747827 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22430F972AAA5CEC00747827 /* ImagePicker.swift */; };
 		22430F9C2AAAB3C400747827 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22430F9B2AAAB3C400747827 /* SettingsView.swift */; };
@@ -114,6 +116,8 @@
 		2216EA802A8D761700C970DD /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		2216EA822A8D762400C970DD /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		2216EA852A8D765500C970DD /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
+		2221CE2C2AAE0E2C00E94A50 /* JobDetail2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetail2.swift; sourceTree = "<group>"; };
+		2221CE302AAE5CA700E94A50 /* ContactAndDirections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactAndDirections.swift; sourceTree = "<group>"; };
 		22430F942AAA5C2D00747827 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		22430F972AAA5CEC00747827 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		22430F9B2AAAB3C400747827 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -321,12 +325,14 @@
 				227E9C942AABB83700049CAB /* ApplicationDetail.swift */,
 				227E9C962AABB91300049CAB /* ApplicationPopup.swift */,
 				226B63852AA78C1F004620EE /* ApplicationPreview.swift */,
+				2221CE302AAE5CA700E94A50 /* ContactAndDirections.swift */,
 				22430F972AAA5CEC00747827 /* ImagePicker.swift */,
 				226B637B2AA78A85004620EE /* JobPosting.swift */,
 				226B637D2AA78AB4004620EE /* JobItem.swift */,
 				22DC3AEF2AACC20F00B783E8 /* JobCard.swift */,
 				22DC3AEA2AACBF7500B783E8 /* JobCarusel.swift */,
 				22B8041C2AA891ED008D7108 /* JobDetail.swift */,
+				2221CE2C2AAE0E2C00E94A50 /* JobDetail2.swift */,
 				22DC3AF72AAD31ED00B783E8 /* JobMapAnnotation.swift */,
 				226B637F2AA78ACD004620EE /* JobPreview.swift */,
 				228E0CEA2AADFF8100AEF8A2 /* JobsMapAnnotation.swift */,
@@ -625,6 +631,7 @@
 				22B8046B2AA91D4B008D7108 /* OwnJobsView.swift in Sources */,
 				22B804672AA91D37008D7108 /* ProfileView.swift in Sources */,
 				2216EA6F2A8D262400C970DD /* ErrorHandlingManager.swift in Sources */,
+				2221CE2D2AAE0E2C00E94A50 /* JobDetail2.swift in Sources */,
 				2216EA712A8D2E7D00C970DD /* KeyChainManager.swift in Sources */,
 				22DC3AF62AAD2F6800B783E8 /* JobMapView.swift in Sources */,
 				22B804612AA90EB7008D7108 /* ApplicationHandler.swift in Sources */,
@@ -637,6 +644,7 @@
 				2216EA812A8D761700C970DD /* PostView.swift in Sources */,
 				227E9C992AABBB4100049CAB /* JobManager.swift in Sources */,
 				228E0CEB2AADFF8100AEF8A2 /* JobsMapAnnotation.swift in Sources */,
+				2221CE312AAE5CA700E94A50 /* ContactAndDirections.swift in Sources */,
 				22B8045F2AA90E9C008D7108 /* JobHandler.swift in Sources */,
 				22E73EC62A8BFDDF0042CF01 /* mobileApp.swift in Sources */,
 			);
