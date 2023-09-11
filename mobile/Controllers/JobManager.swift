@@ -75,9 +75,19 @@ class JobManager: ObservableObject {
                                     }
                                 }
                             } else {
-                                print("case .else")
-                                self.errorHandlingManager.errorMessage = error.localizedDescription
-                                completion()
+                                if case .noContent = error {
+                                    DispatchQueue.main.async {
+                                        print("case .success")
+                                        self.ownJobs = []
+                                        UserDefaults.standard.set(self.ownJobs, forKey: "cachedOwnJobsJSON")
+                                        self.errorHandlingManager.errorMessage = nil
+                                        completion()
+                                    }
+                                } else {
+                                    print("case .else")
+                                    self.errorHandlingManager.errorMessage = error.localizedDescription
+                                    completion()
+                                }
                             }
                         } else {
                             self.authenticationManager.isAuthenticated = false
@@ -122,9 +132,19 @@ class JobManager: ObservableObject {
                                     }
                                 }
                             } else {
-                                print("case .else")
-                                self.errorHandlingManager.errorMessage = error.localizedDescription
-                                completion()
+                                if case .noContent = error {
+                                    DispatchQueue.main.async {
+                                        print("case .success")
+                                        self.upcomingJobs = []
+                                        UserDefaults.standard.set(self.upcomingJobs, forKey: "cachedUpcomingJobsJSON")
+                                        self.errorHandlingManager.errorMessage = nil
+                                        completion()
+                                    }
+                                } else {
+                                    print("case .else")
+                                    self.errorHandlingManager.errorMessage = error.localizedDescription
+                                    completion()
+                                }
                             }
                         } else {
                             self.authenticationManager.isAuthenticated = false
@@ -166,9 +186,18 @@ class JobManager: ObservableObject {
                                     }
                                 }
                             } else {
-                                print("case .else")
-                                self.errorHandlingManager.errorMessage = error.localizedDescription
-                                completion()
+                                if case .noContent = error {
+                                    DispatchQueue.main.async {
+                                        print("case .success")
+                                        self.nearbyJobs = []
+                                        self.errorHandlingManager.errorMessage = nil
+                                        completion()
+                                    }
+                                } else {
+                                    print("case .else")
+                                    self.errorHandlingManager.errorMessage = error.localizedDescription
+                                    completion()
+                                }
                             }
                         } else {
                             self.authenticationManager.isAuthenticated = false

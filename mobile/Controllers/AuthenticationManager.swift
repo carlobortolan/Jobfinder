@@ -64,8 +64,8 @@ class AuthenticationManager: ObservableObject {
                     print("Step: 4")
                     self.requestAccessToken() { accessTokenSuccess in
                         if accessTokenSuccess {
-                            if let accessToken = self.getAccessToken() {
-                                self.fetchUserData(accessToken: accessToken)
+                            if self.getAccessToken() != nil {
+                                self.fetchUserData(iteration: 0)
                             }
                         }
                     }
@@ -90,8 +90,8 @@ class AuthenticationManager: ObservableObject {
                         // Verification succeeded, fetch access token and user
                         self.requestAccessToken() { accessTokenSuccess in
                             if accessTokenSuccess {
-                                if let accessToken = self.getAccessToken() {
-                                    self.fetchUserData(accessToken: accessToken)
+                                if self.getAccessToken() != nil {
+                                    self.fetchUserData(iteration: 0)
                                 }
                             }
                         }
@@ -202,7 +202,7 @@ class AuthenticationManager: ObservableObject {
         }
     }
     
-    func fetchUserData(accessToken: String) {
+    func fetchUserDataD(iteration: Int, accessToken: String) {
         APIManager.fetchAccount(accessToken: accessToken) { result in
             switch result {
             case .success(let userResponse):
@@ -216,21 +216,79 @@ class AuthenticationManager: ObservableObject {
                 }
                 print("Successfully fetched user data")
             case .failure(let error):
-                if case .authenticationError = error {
-                    self.signOut()
-                } else {
-                    print("Error: \(error)")
-                    if case .argumentError = error {
-                        self.signOut()
-                    } else {
-                        DispatchQueue.main.async {
+              //TODO@
+                DispatchQueue.main.async {
+                    print("case .failure, iteration: \(iteration)")
+                    if iteration == 0 {
+                        if case .authenticationError = error {
+                            print("case .authenticationError")
+                            // Authentication error (e.g., access token invalid)
+                            // Refresh the access token and retry the request
+                            self.requestAccessToken() { accessTokenSuccess in
+                                if accessTokenSuccess {
+                                    self.fetchUserData(iteration: 1)
+                                } else {
+                                    self.errorHandlingManager.errorMessage = error.localizedDescription
+                                }
+                            }
+                        } else {
+                            print("case .else")
                             self.errorHandlingManager.errorMessage = error.localizedDescription
+                        }
+                    } else {
+                        self.isAuthenticated = false
+                        self.errorHandlingManager.errorMessage = "Tokens expired. Log in to refresh tokens."
+                    }
+                }
+            }
+        }
+    }
+    
+    func fetchUserData(iteration: Int) {
+        print("Iteration \(iteration)")
+        if let accessToken = self.getAccessToken() {
+            APIManager.fetchAccount(accessToken: accessToken) { result in
+                switch result {
+                case .success(let userResponse):
+                    if let userJSON = userResponse.user.toJSON() {
+                        UserDefaults.standard.set(userJSON, forKey: "cachedUserJSON")
+                    }
+
+                    DispatchQueue.main.async {
+                        print("case .success: \(userResponse)")
+                        self.errorHandlingManager.errorMessage = nil
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print("case .failure, iteration: \(iteration)")
+                        if iteration == 0 {
+                            if case .authenticationError = error {
+                                print("case .authenticationError")
+                                // Authentication error (e.g., access token invalid)
+                                // Refresh the access token and retry the request
+                                self.requestAccessToken() { accessTokenSuccess in
+                                    if accessTokenSuccess {
+                                        self.fetchUserData(iteration: 1)
+                                    } else {
+                                        self.errorHandlingManager.errorMessage = error.localizedDescription
+                                    }
+                                }
+                            } else {
+                                print("case .else")
+                                self.errorHandlingManager.errorMessage = error.localizedDescription
+                            }
+                        } else {
+                            self.signOut()
+                            self.isAuthenticated = false
+                            self.errorHandlingManager.errorMessage = "Tokens expired. Log in to refresh tokens."
                         }
                     }
                 }
             }
         }
     }
+
+    
     
     func uploadUserImage(iteration: Int, image: UIImage, completion: @escaping () -> Void) {
         print("Iteration \(iteration)")
@@ -324,4 +382,95 @@ class AuthenticationManager: ObservableObject {
             }
         }
     }
+    
+    func removeUserImage(iteration: Int, completion: @escaping () -> Void) {
+        print("Iteration \(iteration)")
+        if let accessToken = self.getAccessToken() {
+            APIManager.removeUserImage(accessToken: accessToken) { result in
+                switch result {
+                case .success(let apiResponse):
+                    DispatchQueue.main.async {
+                        print("case .success \(apiResponse)")
+                        self.errorHandlingManager.errorMessage = nil
+                        completion()
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print("case .failure, iteration: \(iteration)")
+                        if iteration == 0 {
+                            if case .authenticationError = error {
+                                print("case .authenticationError")
+                                // Authentication error (e.g., access token invalid)
+                                // Refresh the access token and retry the request
+                                self.requestAccessToken() { accessTokenSuccess in
+                                    if accessTokenSuccess{
+                                        self.removeUserImage(iteration: 1, completion: completion)
+                                    } else {
+                                        self.errorHandlingManager.errorMessage = error.localizedDescription
+                                        completion()
+                                    }
+                                }
+                            } else {
+                                print("case .else")
+                                // Handle other errors
+                                self.errorHandlingManager.errorMessage = error.localizedDescription
+                                completion()
+                            }
+                        } else {
+                            self.isAuthenticated = false
+                            self.errorHandlingManager.errorMessage = "Tokens expired. Log in to refresh tokens."
+                            completion()
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func deleteUser(iteration: Int, completion: @escaping () -> Void) {
+        print("Iteration \(iteration)")
+        if let accessToken = self.getAccessToken() {
+            APIManager.deleteUser(accessToken: accessToken) { result in
+                switch result {
+                case .success(let apiResponse):
+                    DispatchQueue.main.async {
+                        print("case .success \(apiResponse)")
+                        self.errorHandlingManager.errorMessage = nil
+                        self.signOut()
+                        completion()
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print("case .failure, iteration: \(iteration)")
+                        if iteration == 0 {
+                            if case .authenticationError = error {
+                                print("case .authenticationError")
+                                // Authentication error (e.g., access token invalid)
+                                // Refresh the access token and retry the request
+                                self.requestAccessToken() { accessTokenSuccess in
+                                    if accessTokenSuccess{
+                                        self.removeUserImage(iteration: 1, completion: completion)
+                                    } else {
+                                        self.errorHandlingManager.errorMessage = error.localizedDescription
+                                        completion()
+                                    }
+                                }
+                            } else {
+                                print("case .else")
+                                // Handle other errors
+                                self.errorHandlingManager.errorMessage = error.localizedDescription
+                                completion()
+                            }
+                        } else {
+                            self.isAuthenticated = false
+                            self.errorHandlingManager.errorMessage = "Tokens expired. Log in to refresh tokens."
+                            completion()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
 }

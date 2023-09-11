@@ -66,9 +66,19 @@ class ApplicationManager: ObservableObject {
                                     }
                                 }
                             } else {
-                                print("case .else")
-                                self.errorHandlingManager.errorMessage = error.localizedDescription
-                                completion()
+                                if case .noContent = error {
+                                    DispatchQueue.main.async {
+                                        print("case .success")
+                                        self.ownApplications = []
+                                        UserDefaults.standard.set(self.ownApplications, forKey: "cachedOwnApplicationsJSON")
+                                        self.errorHandlingManager.errorMessage = nil
+                                        completion()
+                                    }
+                                } else {
+                                    print("case .else")
+                                    self.errorHandlingManager.errorMessage = error.localizedDescription
+                                    completion()
+                                }
                             }
                         } else {
                             self.authenticationManager.isAuthenticated = false
