@@ -17,6 +17,7 @@ struct JobCarousel: View {
     @EnvironmentObject var applicationManager: ApplicationManager
 
     @State private var currentPage = 0
+    @GestureState var isSwiping = false
 
     var body: some View {
         ZStack {
@@ -36,21 +37,21 @@ struct JobCarousel: View {
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
         .frame(height: 200)
         .onReceive(Just(currentPage)) { page in
-            // Update the currentPage whenever the user swipes
             currentPage = page
         }
         .gesture(
             DragGesture()
                 .onEnded { value in
+                    print("Started swiping")
                     if value.translation.width < 0 {
-                        // Swiped to the left, move to the next page or cycle to the first page
+                        // Swiped to the left
                         if currentPage == jobManager.upcomingJobs.count - 1 {
                             currentPage = 0
                         } else {
                             currentPage = currentPage + 1
                         }
                     } else {
-                        // Swiped to the right, move to the previous page or cycle to the last page
+                        // Swiped to the right
                         if currentPage == 0 {
                             currentPage = jobManager.upcomingJobs.count - 1
                         } else {
@@ -81,6 +82,6 @@ struct Previews_JobCarusel_Previews: PreviewProvider {
         let errorHandlingManager = ErrorHandlingManager()
         let authenticationManager = AuthenticationManager(errorHandlingManager: errorHandlingManager)
         let jobManager = JobManager(authenticationManager: authenticationManager, errorHandlingManager: errorHandlingManager)
-        return JobCarousel()
+        return JobCarousel(isSwiping: false)
             .environmentObject(jobManager)
     }}

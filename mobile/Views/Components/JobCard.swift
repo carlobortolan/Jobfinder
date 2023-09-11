@@ -17,13 +17,15 @@ struct JobCardView: View {
     @EnvironmentObject var jobManager: JobManager
     @EnvironmentObject var applicationManager: ApplicationManager
 
+    @State private var isTapped = false
+    @State private var isSwiping = false
+
     var job: Job
 
     var body: some View {
-        NavigationLink(destination: JobDetail2(job: job)) {
-            ZStack(alignment: .center) {
-                RoundedRectangle(cornerRadius: 10) // Add a RoundedRectangle with a corner radius
-                    .stroke(Color("FgColor"), lineWidth: 1) // Set border color and width
+        Button(action: {}) { ZStack(alignment: .center) {
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color("FgColor"), lineWidth: 1)
                     .frame(width: UIScreen.main.bounds.width / 2, height: UIScreen.main.bounds.height / 3.5)
                     .background(
                         URLImage(URL(string: job.imageUrl)!) { image in
@@ -44,29 +46,35 @@ struct JobCardView: View {
                                 )
                         }
                     )
-
-                if let startDate = DateParser.date(from: job.startSlot) {
-                    Text("-\(DateParser.timeRemainingCompactString(from: startDate))")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal)
-                    Spacer()
+                    if let startDate = DateParser.date(from: job.startSlot) {
+                        Text("-\(DateParser.timeRemainingCompactString(from: startDate))")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal)
+                        Spacer()
+                    }
                 }
+                .frame(width: UIScreen.main.bounds.width / 2, height: UIScreen.main.bounds.height / 3.5)
+                .padding(.horizontal, 20)
+                .cornerRadius(10)
+                .shadow(radius: 3)
+                .padding(.horizontal)
+                .onLongPressGesture() {
+                    isTapped = true
             }
-            .frame(width: UIScreen.main.bounds.width / 2, height: UIScreen.main.bounds.height / 3.5)
-            .padding(.horizontal, 20)
-            .cornerRadius(10)
-            .shadow(radius: 3)
-            .padding(.horizontal)
+            .sheet(isPresented: $isTapped) {
+                JobDetail2(job: job).background(Color("FeedBgColor"))
+            }
+
         }
     }
 }
 
-
 struct Previews_JobCard_Previews: PreviewProvider {
     static var previews: some View {
+        @State var isSwiping = false
         JobCardView(job: JobModel.generateRandomJob())
     }
 }

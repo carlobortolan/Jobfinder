@@ -65,7 +65,7 @@
 		22D927852AA7BD390017678C /* ErrorViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D927842AA7BD390017678C /* ErrorViewModifier.swift */; };
 		22D927882AA7FAE90017678C /* HtmlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D927872AA7FAE90017678C /* HtmlView.swift */; };
 		22D9278A2AA8015C0017678C /* FilterAndSortView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D927892AA8015C0017678C /* FilterAndSortView.swift */; };
-		22DC3AEB2AACBF7500B783E8 /* JobCarusel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC3AEA2AACBF7500B783E8 /* JobCarusel.swift */; };
+		22DC3AEB2AACBF7500B783E8 /* JobCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC3AEA2AACBF7500B783E8 /* JobCarousel.swift */; };
 		22DC3AEE2AACC05800B783E8 /* Parchment in Frameworks */ = {isa = PBXBuildFile; productRef = 22DC3AED2AACC05800B783E8 /* Parchment */; };
 		22DC3AF02AACC20F00B783E8 /* JobCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC3AEF2AACC20F00B783E8 /* JobCard.swift */; };
 		22DC3AF22AACE4C200B783E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC3AF12AACE4C200B783E8 /* AppDelegate.swift */; };
@@ -163,7 +163,7 @@
 		22D927842AA7BD390017678C /* ErrorViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewModifier.swift; sourceTree = "<group>"; };
 		22D927872AA7FAE90017678C /* HtmlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HtmlView.swift; sourceTree = "<group>"; };
 		22D927892AA8015C0017678C /* FilterAndSortView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAndSortView.swift; sourceTree = "<group>"; };
-		22DC3AEA2AACBF7500B783E8 /* JobCarusel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobCarusel.swift; sourceTree = "<group>"; };
+		22DC3AEA2AACBF7500B783E8 /* JobCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobCarousel.swift; sourceTree = "<group>"; };
 		22DC3AEF2AACC20F00B783E8 /* JobCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobCard.swift; sourceTree = "<group>"; };
 		22DC3AF12AACE4C200B783E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22DC3AF32AAD23B400B783E8 /* JobsMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsMapView.swift; sourceTree = "<group>"; };
@@ -330,7 +330,7 @@
 				226B637B2AA78A85004620EE /* JobPosting.swift */,
 				226B637D2AA78AB4004620EE /* JobItem.swift */,
 				22DC3AEF2AACC20F00B783E8 /* JobCard.swift */,
-				22DC3AEA2AACBF7500B783E8 /* JobCarusel.swift */,
+				22DC3AEA2AACBF7500B783E8 /* JobCarousel.swift */,
 				22B8041C2AA891ED008D7108 /* JobDetail.swift */,
 				2221CE2C2AAE0E2C00E94A50 /* JobDetail2.swift */,
 				22DC3AF72AAD31ED00B783E8 /* JobMapAnnotation.swift */,
@@ -625,7 +625,7 @@
 				226B63822AA78BA1004620EE /* ApplicationForm.swift in Sources */,
 				22D927832AA7B4FE0017678C /* JobListView.swift in Sources */,
 				22DC3AF02AACC20F00B783E8 /* JobCard.swift in Sources */,
-				22DC3AEB2AACBF7500B783E8 /* JobCarusel.swift in Sources */,
+				22DC3AEB2AACBF7500B783E8 /* JobCarousel.swift in Sources */,
 				22B804632AA91570008D7108 /* UserModel.swift in Sources */,
 				22B804692AA91D42008D7108 /* PreferencesView.swift in Sources */,
 				22B8046B2AA91D4B008D7108 /* OwnJobsView.swift in Sources */,

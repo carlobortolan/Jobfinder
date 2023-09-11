@@ -20,94 +20,96 @@ struct StartView: View {
 
     var body: some View {
         NavigationView {
-            VStack(spacing: 20) {
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color("FgColor"), lineWidth: 5)
-                    .frame(height: 325)
-                    .foregroundColor(Color("FeedBgColor"))
-                    .border(Color("FgColor"), width: 3)
-                    .cornerRadius(10)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .frame(height: 325)
-                            .foregroundColor(Color("FeedBgColor"))
-                            .border(Color("FgColor"), width: 3)
-                            .padding(.horizontal, 10.0)
-                            .overlay(
-                                VStack {
-                                    Text("Upcoming Jobs")
-                                        .font(.title)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.primary)
-                                    
-                                    if isLoadingUpcomingJobs {
-                                        ProgressView()
-                                    }
-                                    
-                                    if jobManager.upcomingJobs.isEmpty && !isLoadingUpcomingJobs {
-                                        Text("No confirmed jobs yet.")
-                                            .foregroundColor(.secondary)
-                                    } else {
-                                        JobCarousel().padding()
-                                    }
-                                    Spacer()
-                                }.padding([.top, .leading, .trailing])
-                            )
-                    )
-                
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color("FgColor"), lineWidth: 5)
-                    .frame(height: 300)
-                    .foregroundColor(Color("FeedBgColor"))
-                    .border(Color("FgColor"), width: 3)
-                    .cornerRadius(10)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .frame(height: 300)
-                            .foregroundColor(Color("FeedBgColor"))
-                            .border(Color("FgColor"), width: 3)
-                            .padding(.horizontal, 10.0)
-                            .overlay(
-                                VStack {
-                                    Text("Jobs Near You")
-                                        .font(.title)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.primary)
-                                    
-                                    if jobManager.nearbyJobs.isEmpty && !isLoadingNearbyJobs {
-                                        Text("No jobs found.")
-                                            .foregroundColor(.secondary)
-                                    } else {
-                                        NavigationView {
-                                            JobsMapView(nearbyJobs: jobManager.nearbyJobs)
+            ScrollView {
+                VStack(spacing: 20) {
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color("FgColor"), lineWidth: 5)
+                        .frame(height: 325)
+                        .foregroundColor(Color("FeedBgColor"))
+                        .border(Color("FgColor"), width: 3)
+                        .cornerRadius(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .frame(height: 325)
+                                .foregroundColor(Color("FeedBgColor"))
+                                .border(Color("FgColor"), width: 3)
+                                .padding(.horizontal, 10.0)
+                                .overlay(
+                                    VStack {
+                                        Text("Upcoming Jobs")
+                                            .font(.title)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.primary)
+                                        
+                                        if isLoadingUpcomingJobs {
+                                            ProgressView()
                                         }
-                                    }
-                                    Spacer()
-                                }.padding([.top, .leading, .trailing])
-                                    .overlay(
-                                        VStack {
-                                            if isLoadingNearbyJobs {
-                                                Spacer()
-                                                ProgressView()
-                                                Spacer()
-                                            } else {EmptyView()}
-                                        })
-                            )
-                    )
+                                        
+                                        if jobManager.upcomingJobs.isEmpty && !isLoadingUpcomingJobs {
+                                            Text("No confirmed jobs yet.")
+                                                .foregroundColor(.secondary)
+                                        } else {
+                                            JobCarousel().padding()
+                                        }
+                                        Spacer()
+                                    }.padding([.top, .leading, .trailing])
+                                )
+                        )
+                    
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color("FgColor"), lineWidth: 5)
+                        .frame(height: 300)
+                        .foregroundColor(Color("FeedBgColor"))
+                        .border(Color("FgColor"), width: 3)
+                        .cornerRadius(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .frame(height: 300)
+                                .foregroundColor(Color("FeedBgColor"))
+                                .border(Color("FgColor"), width: 3)
+                                .padding(.horizontal, 10.0)
+                                .overlay(
+                                    VStack {
+                                        Text("Jobs Near You")
+                                            .font(.title)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.primary)
+                                        
+                                        if jobManager.nearbyJobs.isEmpty && !isLoadingNearbyJobs {
+                                            Text("No jobs found.")
+                                                .foregroundColor(.secondary)
+                                        } else {
+                                            NavigationView {
+                                                JobsMapView(nearbyJobs: jobManager.nearbyJobs)
+                                            }
+                                        }
+                                        Spacer()
+                                    }.padding([.top, .leading, .trailing])
+                                        .overlay(
+                                            VStack {
+                                                if isLoadingNearbyJobs {
+                                                    Spacer()
+                                                    ProgressView()
+                                                    Spacer()
+                                                } else {EmptyView()}
+                                            })
+                                )
+                        )
+                }
             }
-        }
-        .navigationBarTitle("EMBLOY", displayMode: .inline)
-        .padding()
-        .onAppear {
-            // Load notifications, upcoming jobs, and nearby jobs
-            // Update 'notifications' and 'nearbyJobs'
-            isLoadingUpcomingJobs = true
-            jobManager.loadUpcomingJobs(iteration: 0) {
-                isLoadingUpcomingJobs = false
-            }
-            isLoadingNearbyJobs = true
-            jobManager.loadNearbyJobs(iteration: 0, longitude: 0.0, latitude: 0.0) {
-                isLoadingNearbyJobs = false
+            .navigationBarTitle("EMBLOY", displayMode: .inline)
+            .padding()
+            .onAppear {
+                // Load notifications, upcoming jobs, and nearby jobs
+                // Update 'notifications' and 'nearbyJobs'
+                isLoadingUpcomingJobs = true
+                jobManager.loadUpcomingJobs(iteration: 0) {
+                    isLoadingUpcomingJobs = false
+                }
+                isLoadingNearbyJobs = true
+                jobManager.loadNearbyJobs(iteration: 0, longitude: 0.0, latitude: 0.0) {
+                    isLoadingNearbyJobs = false
+                }
             }
         }
     }
