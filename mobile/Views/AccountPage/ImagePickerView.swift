@@ -13,16 +13,13 @@ struct ImagePickerView: View {
     @EnvironmentObject var jobManager: JobManager
     @EnvironmentObject var applicationManager: ApplicationManager
     
-    @State private var isLoading = false
     @State var selectedImage: UIImage?
     @State var isImagePickerPresented = false
-
+    @Binding var isImagePickerViewPresented: Bool
+    @Binding var isLoading: Bool
 
     var body: some View {
         VStack {
-            if isLoading {
-                ProgressView()
-            }
             Text("Select profile Image")
                 .font(.title)
                 .padding()
@@ -45,7 +42,7 @@ struct ImagePickerView: View {
 
             Button("Remove Image") {
                 selectedImage = nil
-                isImagePickerPresented = false // Close the image picker after removing the image
+                isImagePickerPresented = false
             }
             .padding()
             .disabled(selectedImage == nil)
@@ -58,6 +55,7 @@ struct ImagePickerView: View {
                             isLoading = false
                         }
                     }
+                    isImagePickerViewPresented = false
                 }
             }
             .padding()
@@ -66,7 +64,6 @@ struct ImagePickerView: View {
             Spacer()
         }
         .sheet(isPresented: $isImagePickerPresented) {
-            // Use the ImagePicker here to handle image selection
             ImagePicker(selectedImage: $selectedImage)
         }
     }

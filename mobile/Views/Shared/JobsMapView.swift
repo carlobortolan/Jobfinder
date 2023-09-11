@@ -34,6 +34,7 @@ struct JobsMapView: View {
         .onAppear {
             locationManager.requestWhenInUseAuthorization()
             locationManager.startUpdatingLocation()
+            
             if let userLocation = locationManager.location?.coordinate {
                 region.center = userLocation
             }
@@ -65,4 +66,14 @@ struct JobsMapView: View {
         
         return MKCoordinateRegion(center: center, span: span)
     }
+    
+    private func updateUserLocation(location: CLLocation) {
+        region.center = location.coordinate
+        
+        let coordinates = nearbyJobs.map { CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }
+        if let boundingRegion = regionBounding(coordinates: coordinates) {
+            region = boundingRegion
+        }
+    }
 }
+

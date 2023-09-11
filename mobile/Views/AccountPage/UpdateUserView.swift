@@ -15,7 +15,7 @@ struct UpdateUserView: View {
 
     @Binding var user: User
     @State private var isUpdating = false
-    
+    @State private var isShowingDeleteConfirmationAlert = false
     @State private var isEmailValid = true
     @State private var isFirstNameValid = true
     @State private var isLastNameValid = true
@@ -149,7 +149,6 @@ struct UpdateUserView: View {
                        }
                     
                 }
-                
                 Button(action: {
                     if validateFields() {
                         updateUser(iteration: 0)
@@ -159,6 +158,25 @@ struct UpdateUserView: View {
                     Text("Update Profile")
                 }
                 .disabled(isUpdating)
+                Section {
+                    Button(action: {
+                        isShowingDeleteConfirmationAlert = true
+                    }) {
+                        Text("Delete Profile").foregroundColor(Color("AlertColor"))
+                    }.alert(isPresented: $isShowingDeleteConfirmationAlert) {
+                        Alert(
+                            title: Text("Confirm Deletion"),
+                            message: Text("Are you sure you want to delete your profile? This action cannot be undone."),
+                            primaryButton: .destructive(Text("Delete"), action: {
+                                isUpdating = true
+                                authenticationManager.deleteUser(iteration: 0) {
+                                    isUpdating = false
+                                }
+                            }),
+                            secondaryButton: .cancel()
+                        )
+                    }
+                }
             }
             
             Spacer()
@@ -173,10 +191,10 @@ struct UpdateUserView: View {
         isDateOfBirthValid = true
         isAddressValid = true
         // TODO: Implement address validation
-        isLinkedInURLValid = Validator.isValidURL(user.linkedinURL ?? "https://embloy.com")
-        isTwitterURLValid = Validator.isValidURL(user.twitterURL ?? "https://embloy.com")
-        isFacebookURLValid = Validator.isValidURL(user.facebookURL ?? "https://embloy.com")
-        isInstagramURLValid = Validator.isValidURL(user.instagramURL ?? "https://embloy.com")
+        isLinkedInURLValid = Validator.isValidURL(user.linkedinURL)
+        isTwitterURLValid = Validator.isValidURL(user.twitterURL)
+        isFacebookURLValid = Validator.isValidURL(user.facebookURL)
+        isInstagramURLValid = Validator.isValidURL(user.instagramURL)
         
         print("isEmailValid \(isEmailValid)")
         print("isFirstNameValid \(isFirstNameValid)")
@@ -186,7 +204,7 @@ struct UpdateUserView: View {
         print("isAddressValid \(isAddressValid)")
         
         // Return true if all fields are valid
-        return isEmailValid && isFirstNameValid && isLastNameValid && isPhoneValid && isDateOfBirthValid && isAddressValid
+        return isEmailValid && isFirstNameValid && isLastNameValid && isPhoneValid && isDateOfBirthValid && isAddressValid && isLinkedInURLValid && isTwitterURLValid && isFacebookURLValid && isInstagramURLValid
     }
     
     func updateUser(iteration: Int) {

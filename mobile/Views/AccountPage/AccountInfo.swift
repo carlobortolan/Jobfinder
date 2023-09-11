@@ -13,7 +13,7 @@ struct AccountInfo: View {
     @EnvironmentObject var authenticationManager: AuthenticationManager
     @EnvironmentObject var jobManager: JobManager
     @EnvironmentObject var applicationManager: ApplicationManager
-    
+    @State private var isLoading = false
   //  @Binding var user: User
     
     @State private var isImagePickerViewPresented = false
@@ -22,27 +22,53 @@ struct AccountInfo: View {
 
     var body: some View {
         VStack {
-            URLImage(URL(string: authenticationManager.current.imageURL ?? "https://embloy.onrender.com/assets/img/features_3.png")!) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 100, height: 100)
-                    .clipShape(Circle())
-                    .overlay(
-                        Circle()
-                            .stroke(Color("FgColor"), lineWidth: 5)
-                    )
-                    .onTapGesture {
-                        if authenticationManager.current.imageURL != nil {
-                            // Show the option to remove or upload a new image
-                            isImageRemoveAlertPresented.toggle()
-                        } else {
-                            // Show the image picker to upload a new image
-                            isImagePickerViewPresented.toggle()
-                        }
-                    }
+            if isLoading {
+                ProgressView()
             }
-
+            Group() {
+                if (authenticationManager.current.imageURL != nil) {
+                    URLImage(URL(string: authenticationManager.current.imageURL ?? "https://embloy.onrender.com/assets/img/features_3.png")!) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 100, height: 100)
+                            .clipShape(Circle())
+                            .overlay(
+                                Circle()
+                                    .stroke(Color("FgColor"), lineWidth: 5)
+                            )
+                            .onTapGesture {
+                                if authenticationManager.current.imageURL != nil {
+                                    // Show the option to remove or upload a new image
+                                    isImageRemoveAlertPresented.toggle()
+                                } else {
+                                    // Show the image picker to upload a new image
+                                    isImagePickerViewPresented.toggle()
+                                }
+                            }
+                    }
+                } else {
+                    Image("ProfilePlaceholder")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 100, height: 100)
+                        .clipShape(Circle())
+                        .overlay(
+                            Circle()
+                                .stroke(Color("FgColor"), lineWidth: 5)
+                        )
+                        .onTapGesture {
+                            if authenticationManager.current.imageURL != nil {
+                                // Show the option to remove or upload a new image
+                                isImageRemoveAlertPresented.toggle()
+                            } else {
+                                // Show the image picker to upload a new image
+                                isImagePickerViewPresented.toggle()
+                            }
+                        }
+                }
+            }
+            
             .alert(isPresented: $isImageRemoveAlertPresented) {
                 Alert(
                     title: Text("Profile Image"),
@@ -50,7 +76,8 @@ struct AccountInfo: View {
                     primaryButton: .destructive(Text("Remove"), action: {
                         // Handle image removal
                         authenticationManager.current.imageURL = nil // Set the user's image URL to nil
-                        removeUserImage(iteration: 0)
+                        authenticationManager.removeUserImage(iteration: 0) {
+                        }
                     }),
                     secondaryButton: .default(Text("Upload New"), action: {
                         // Show the image picker to upload a new image
@@ -61,7 +88,7 @@ struct AccountInfo: View {
             // Image Picker
             .sheet(isPresented: $isImagePickerViewPresented) {
                 NavigationView {
-                    ImagePickerView()
+                    ImagePickerView(isImagePickerViewPresented: $isImagePickerViewPresented, isLoading: $isLoading)
                         .navigationBarItems(trailing: Button("Close") {
                             isImagePickerViewPresented.toggle() // Close the image picker
                         })
@@ -102,9 +129,16 @@ struct AccountInfo: View {
             }
             Spacer()
         }
+        //.onAppear() {
+      //      isLoading = true
+          //  authenticationManager.loadProfile(iteration: 0) {
+        //        isLoading = false
+        //    }
+      //  }
         .padding()
     }
     
+   /*
     func removeUserImage(iteration: Int) {
         print("Iteration \(iteration)")
         if let accessToken = authenticationManager.getAccessToken() {
@@ -144,6 +178,7 @@ struct AccountInfo: View {
             }
         }
     }
+    */
 
 }
 
