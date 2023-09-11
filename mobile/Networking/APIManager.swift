@@ -91,7 +91,7 @@ class APIManager {
     ///   - accessToken: The user's access token for authentication.
     ///   - image: The user's new profile image.
     ///   - completion: A closure that receives a `Result` with an `APIResponse` or an `APIError`.
-    static func uploadUserImage(accessToken: String, image: UIImage, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
+    static func uploadUserImage(accessToken: String, image: UIImage, completion: @escaping (Result<ImageResponse, APIError>) -> Void) {
         AccountHandler.uploadImage(accessToken: accessToken, image: image, completion: completion)
     }
     

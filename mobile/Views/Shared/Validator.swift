@@ -42,4 +42,39 @@ class Validator {
             return true
         }
     }
+    
+    static func isValidSocialMediaURL(urlString: String?, hostString: String) -> Bool {
+        if let urlString = urlString {
+            guard let url = URL(string: urlString),
+                  let _ = url.scheme,
+                  let host = url.host else {
+                return false
+            }
+            
+            if host.lowercased() == hostString {
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return true
+        }
+    }
+    
+    static func isValidLinkedInURL(_ urlString: String?) -> Bool {
+        return isValidSocialMediaURL(urlString: urlString, hostString: "linkedin.com")
+    }
+
+    static func isValidTwitterURL(_ urlString: String?) -> Bool {
+        return isValidSocialMediaURL(urlString: urlString, hostString: "twitter.com")
+    }
+
+    static func isValidFacebookURL(_ urlString: String?) -> Bool {
+        return isValidSocialMediaURL(urlString: urlString, hostString: "facebook.com")
+    }
+
+    static func isValidInstagramURL(_ urlString: String?) -> Bool {
+        return isValidSocialMediaURL(urlString: urlString, hostString: "instagram.com")
+    }
+    
 }

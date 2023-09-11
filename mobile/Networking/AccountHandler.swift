@@ -130,27 +130,21 @@ class AccountHandler {
     }
 
     // TODO: Improve attachment
-    static func uploadImage(accessToken: String, image: UIImage, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
+    static func uploadImage(accessToken: String, image: UIImage, completion: @escaping (Result<ImageResponse, APIError>) -> Void) {
         print("Started uploading image with: \naccess_token: \(accessToken)")
-
-        // Prepare the image as Data
-        guard let imageData = image.resized(toWidth: 800)?.jpegData(compressionQuality: 0.9) else {
-            completion(.failure(APIError.imageProcessingError))
-            return
-        }
         
         // Create a unique boundary string
         let boundary = "Boundary-\(UUID().uuidString)"
-
+        
         // Create the URLRequest
         guard let url = URL(string: Routes.ROOT_URL + Routes.USER_IMAGE_PATH) else {
             completion(.failure(APIError.invalidURL))
             return
         }
-
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-
+        
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         request.setValue(accessToken, forHTTPHeaderField: "access_token")
         var body = Data()
@@ -164,31 +158,56 @@ class AccountHandler {
         }
         body.append("\r\n".data(using: .utf8)!)
         body.append("--\(boundary)--\r\n".data(using: .utf8)!)
-
+        
         request.httpBody = body
         
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
+                print("Error fetching data: \(error)")
                 completion(.failure(APIError.networkError(error)))
                 return
             }
-
+            
             if let httpResponse = response as? HTTPURLResponse {
-                if (200...299).contains(httpResponse.statusCode) {
+                let statusCode = httpResponse.statusCode
+                print("HTTP Response Code: \(statusCode)")
+                print("HTTP Response: \(response.debugDescription)")
+                
+                RequestHandler.handleApiErrorsNew(data: data, statusCode: statusCode, completion: completion)
+                switch statusCode {
+                case 204:
+                    completion(.failure(APIError.noContent(String(describing: ImageResponse.self))))
+                case 200:
                     if let data = data {
-                        print("Image uploaded successfully: \(data)")
+                        do {
+                            if let responseString = String(data: data, encoding: .utf8) {
+                                print("Data as String: \(responseString)")
+                            } else {
+                                print("Failed to convert data to string")
+                            }
+                            let responseData = try JSONDecoder().decode(ImageResponse.self, from: data)
+                            completion(.success(responseData))
+                        } catch {
+                            print("JSON Error: \(error)")
+                            completion(.failure(APIError.jsonParsingError(error)))
+                        }
                     } else {
-                        print("Image uploaded successfully.")
+                        completion(.failure(APIError.unknownError))
                     }
-                    completion(.success(APIResponse(message: "Image uploaded successfully")))
-                } else {
-                    print("Server error: \(httpResponse.statusCode)")
-                    print("Server response: \(httpResponse.debugDescription)")
-                    completion(.failure(APIError.internalServerError))
+                default:
+                    if let data = data {
+                        do {
+                            let json = try JSONSerialization.jsonObject(with: data, options: [])
+                            print("Error JSON = \(json)")
+                        } catch {
+                            completion(.failure(APIError.jsonParsingError(error)))
+                        }
+                    } else {
+                        completion(.failure(APIError.unknownError))
+                    }
                 }
             }
-        }
-        task.resume()
+        }.resume()
     }
     
     static func deleteUser(accessToken: String, completion: @escaping (Result<APIResponse, APIError>) -> Void) {

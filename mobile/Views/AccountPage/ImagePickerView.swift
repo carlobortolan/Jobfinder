@@ -16,7 +16,6 @@ struct ImagePickerView: View {
     @State var selectedImage: UIImage?
     @State var isImagePickerPresented = false
     @Binding var isImagePickerViewPresented: Bool
-    @Binding var isLoading: Bool
 
     var body: some View {
         VStack {
@@ -27,14 +26,13 @@ struct ImagePickerView: View {
             if let image = selectedImage {
                 Image(uiImage: image)
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 100, height: 100)
+                    .frame(width: 200, height: 200)
                     .clipShape(Circle())
+                    .padding()
             } else {
                 Text("No Image Selected")
                     .font(.headline)
             }
-
             Button("Select Image") {
                 isImagePickerPresented.toggle()
             }
@@ -49,11 +47,8 @@ struct ImagePickerView: View {
 
             Button("Upload Image") {
                 if let image = selectedImage {
-                    isLoading = true
                     DispatchQueue.main.async {
-                        authenticationManager.uploadUserImage(iteration: 0, image: image) {
-                            isLoading = false
-                        }
+                        authenticationManager.uploadUserImage(iteration: 0, image: image) {}
                     }
                     isImagePickerViewPresented = false
                 }

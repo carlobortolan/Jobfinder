@@ -13,18 +13,12 @@ struct AccountInfo: View {
     @EnvironmentObject var authenticationManager: AuthenticationManager
     @EnvironmentObject var jobManager: JobManager
     @EnvironmentObject var applicationManager: ApplicationManager
-    @State private var isLoading = false
-  //  @Binding var user: User
     
     @State private var isImagePickerViewPresented = false
     @State private var isImageRemoveAlertPresented = false
-    //@State private var selectedImage: UIImage?
 
     var body: some View {
         VStack {
-            if isLoading {
-                ProgressView()
-            }
             Group() {
                 if (authenticationManager.current.imageURL != nil) {
                     URLImage(URL(string: authenticationManager.current.imageURL ?? "https://embloy.onrender.com/assets/img/features_3.png")!) { image in
@@ -39,10 +33,8 @@ struct AccountInfo: View {
                             )
                             .onTapGesture {
                                 if authenticationManager.current.imageURL != nil {
-                                    // Show the option to remove or upload a new image
                                     isImageRemoveAlertPresented.toggle()
                                 } else {
-                                    // Show the image picker to upload a new image
                                     isImagePickerViewPresented.toggle()
                                 }
                             }
@@ -75,12 +67,11 @@ struct AccountInfo: View {
                     message: Text("Do you want to remove your profile image or upload a new one?"),
                     primaryButton: .destructive(Text("Remove"), action: {
                         // Handle image removal
-                        authenticationManager.current.imageURL = nil // Set the user's image URL to nil
+                        authenticationManager.current.imageURL = nil
                         authenticationManager.removeUserImage(iteration: 0) {
                         }
                     }),
                     secondaryButton: .default(Text("Upload New"), action: {
-                        // Show the image picker to upload a new image
                         isImagePickerViewPresented.toggle()
                     })
                 )
@@ -88,9 +79,9 @@ struct AccountInfo: View {
             // Image Picker
             .sheet(isPresented: $isImagePickerViewPresented) {
                 NavigationView {
-                    ImagePickerView(isImagePickerViewPresented: $isImagePickerViewPresented, isLoading: $isLoading)
+                    ImagePickerView(isImagePickerViewPresented: $isImagePickerViewPresented)
                         .navigationBarItems(trailing: Button("Close") {
-                            isImagePickerViewPresented.toggle() // Close the image picker
+                            isImagePickerViewPresented.toggle()
                         })
                 }
             }
@@ -129,57 +120,8 @@ struct AccountInfo: View {
             }
             Spacer()
         }
-        //.onAppear() {
-      //      isLoading = true
-          //  authenticationManager.loadProfile(iteration: 0) {
-        //        isLoading = false
-        //    }
-      //  }
         .padding()
     }
-    
-   /*
-    func removeUserImage(iteration: Int) {
-        print("Iteration \(iteration)")
-        if let accessToken = authenticationManager.getAccessToken() {
-            APIManager.removeUserImage(accessToken: accessToken) { result in
-                switch result {
-                case .success(let apiResponse):
-                    DispatchQueue.main.async {
-                        print("case .success \(apiResponse)")
-                        self.errorHandlingManager.errorMessage = nil
-                    }
-                case .failure(let error):
-                    DispatchQueue.main.async {
-                        print("case .failure, iteration: \(iteration)")
-                        if iteration == 0 {
-                            if case .authenticationError = error {
-                                print("case .authenticationError")
-                                // Authentication error (e.g., access token invalid)
-                                // Refresh the access token and retry the request
-                                self.authenticationManager.requestAccessToken() { accessTokenSuccess in
-                                    if accessTokenSuccess{
-                                        self.removeUserImage(iteration: 1)
-                                    } else {
-                                        self.errorHandlingManager.errorMessage = error.localizedDescription
-                                    }
-                                }
-                            } else {
-                                print("case .else")
-                                // Handle other errors
-                                self.errorHandlingManager.errorMessage = error.localizedDescription
-                            }
-                        } else {
-                            self.authenticationManager.isAuthenticated = false
-                            self.errorHandlingManager.errorMessage = "Tokens expired. Log in to refresh tokens."
-                        }
-                    }
-                }
-            }
-        }
-    }
-    */
-
 }
 
 

@@ -295,9 +295,10 @@ class AuthenticationManager: ObservableObject {
         if let accessToken = self.getAccessToken() {
             APIManager.uploadUserImage(accessToken: accessToken, image: image) { result in
                 switch result {
-                case .success(let apiResponse):
+                case .success(let imageResponse):
                     DispatchQueue.main.async {
-                        print("case .success: \(apiResponse)")
+                        print("IMAGEURL: case .success: \(imageResponse)")
+                        self.current.imageURL = imageResponse.image_url
                         self.errorHandlingManager.errorMessage = nil
                         completion()
                     }

@@ -118,7 +118,7 @@ struct UpdateUserView: View {
                                .keyboardType(.URL)
                                .autocapitalization(.none)
                                .disableAutocorrection(true)
-                               .foregroundColor(.primary)
+                               .foregroundColor(isLinkedInURLValid ? .primary : .red)
 
                            TextField("Twitter URL", text:Binding(
                             get: { user.twitterURL ?? "" },
@@ -127,7 +127,7 @@ struct UpdateUserView: View {
                                .keyboardType(.URL)
                                .autocapitalization(.none)
                                .disableAutocorrection(true)
-                               .foregroundColor(.primary)
+                               .foregroundColor(isTwitterURLValid ? .primary : .red)
 
                            TextField("Facebook URL", text: Binding(
                             get: { user.facebookURL ?? "" },
@@ -136,7 +136,7 @@ struct UpdateUserView: View {
                                .keyboardType(.URL)
                                .autocapitalization(.none)
                                .disableAutocorrection(true)
-                               .foregroundColor(.primary)
+                               .foregroundColor(isFacebookURLValid ? .primary : .red)
 
                            TextField("Instagram URL", text: Binding(
                             get: { user.instagramURL ?? "" },
@@ -145,7 +145,7 @@ struct UpdateUserView: View {
                                .keyboardType(.URL)
                                .autocapitalization(.none)
                                .disableAutocorrection(true)
-                               .foregroundColor(.primary)
+                               .foregroundColor(isInstagramURLValid ? .primary : .red)
                        }
                     
                 }
@@ -191,10 +191,10 @@ struct UpdateUserView: View {
         isDateOfBirthValid = true
         isAddressValid = true
         // TODO: Implement address validation
-        isLinkedInURLValid = Validator.isValidURL(user.linkedinURL)
-        isTwitterURLValid = Validator.isValidURL(user.twitterURL)
-        isFacebookURLValid = Validator.isValidURL(user.facebookURL)
-        isInstagramURLValid = Validator.isValidURL(user.instagramURL)
+        isLinkedInURLValid = Validator.isValidLinkedInURL(user.linkedinURL)
+        isTwitterURLValid = Validator.isValidTwitterURL(user.twitterURL)
+        isFacebookURLValid = Validator.isValidFacebookURL(user.facebookURL)
+        isInstagramURLValid = Validator.isValidInstagramURL(user.instagramURL)
         
         print("isEmailValid \(isEmailValid)")
         print("isFirstNameValid \(isFirstNameValid)")
