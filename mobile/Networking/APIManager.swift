@@ -76,6 +76,15 @@ class APIManager {
         AccountHandler.removeImage(accessToken: accessToken, completion: completion)
     }
 
+    /// Delegates the deletion of a user's account to AccountHandler.
+    ///
+    /// - Parameters:
+    ///   - accessToken: The user's access token for authentication.
+    ///   - completion: A closure that receives a `Result` with an `APIResponse` or an `APIError`.
+    static func deleteUser(accessToken: String, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
+        AccountHandler.deleteUser(accessToken: accessToken, completion: completion)
+    }
+    
     /// Delegates the uploading of a user's profile image to AccountHandler.
     ///
     /// - Parameters:

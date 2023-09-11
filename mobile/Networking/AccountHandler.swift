@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Alamofire
 import UIKit
 
 class AccountHandler {
@@ -130,7 +129,7 @@ class AccountHandler {
             completion: completion)
     }
 
-    // TODO: Improve
+    // TODO: Improve attachment
     static func uploadImage(accessToken: String, image: UIImage, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
         print("Started uploading image with: \naccess_token: \(accessToken)")
 
@@ -152,27 +151,22 @@ class AccountHandler {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
 
-        // Set the request headers, including the Content-Type for multipart form data
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-
-        // Create the request body
+        request.setValue(accessToken, forHTTPHeaderField: "access_token")
         var body = Data()
-
-        // Append the boundary and form data for the image
         body.append("--\(boundary)\r\n".data(using: .utf8)!)
-        body.append("Content-Disposition: form-data; name=\"image\"; filename=\"image.jpg\"\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"image_url\"; filename=\"image.jpg\"\r\n".data(using: .utf8)!)
         body.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
-        body.append(imageData)
+        if let imageData = image.jpegData(compressionQuality: 0.1) {
+            body.append(imageData)
+        } else {
+            completion(.failure(APIError.imageProcessingError))
+        }
         body.append("\r\n".data(using: .utf8)!)
-
-        // Append the closing boundary
         body.append("--\(boundary)--\r\n".data(using: .utf8)!)
 
-        // Set the request body
         request.httpBody = body
-
-        // Create a URLSession task for the request
+        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(.failure(APIError.networkError(error)))
@@ -181,29 +175,45 @@ class AccountHandler {
 
             if let httpResponse = response as? HTTPURLResponse {
                 if (200...299).contains(httpResponse.statusCode) {
-                    // Handle success, parse response data if needed
                     if let data = data {
                         print("Image uploaded successfully: \(data)")
-                        // Parse and handle the response data here if needed
-                        // You can decode it into your APIResponse model
-                        // Example: let responseModel = try? JSONDecoder().decode(APIResponse.self, from: data)
                     } else {
                         print("Image uploaded successfully.")
                     }
-                    completion(.success(APIResponse(message: "Image uploaded successfully"))) // You can replace APIResponse() with the actual response model
+                    completion(.success(APIResponse(message: "Image uploaded successfully")))
                 } else {
-                    // Handle server error
                     print("Server error: \(httpResponse.statusCode)")
+                    print("Server response: \(httpResponse.debugDescription)")
                     completion(.failure(APIError.internalServerError))
                 }
             }
         }
-
-        // Start the URLSession task
         task.resume()
     }
     
-    // TODO: Implement profile image upload
+    static func deleteUser(accessToken: String, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
+        print("Started deleting account with: \naccess_token: \(accessToken)")
+        guard let urlComponents = URLComponents(string: Routes.ROOT_URL + Routes.USER_PATH) else {
+            completion(.failure(APIError.invalidURL))
+            return
+        }
+
+        guard let url = urlComponents.url else {
+            completion(.failure(APIError.invalidURL))
+            return
+        }
+        
+        print("URL: \(url)")
+
+        RequestHandler.performRequest(
+            url: url,
+            httpMethod: HTTPMethod.DELETE,
+            accessToken: accessToken,
+            responseType: APIResponse.self,
+            completion: completion)
+    }
+
+    
     static func updateAccount(accessToken: String, user: UserUpdateRequestBody, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
         print("Started updating account with: \naccess_token: \(accessToken)")
         guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],

@@ -73,9 +73,9 @@ class RequestHandler {
                 if let httpResponse = response as? HTTPURLResponse {
                     let statusCode = httpResponse.statusCode
                     print("HTTP Response Code: \(statusCode)")
+                    print("HTTP Response: \(response.debugDescription)")
                     
                     handleApiErrorsNew(data: data, statusCode: statusCode, completion: completion)
-                    
                     switch statusCode {
                     case 204:
                         completion(.failure(APIError.noContent(String(describing: T.self))))
