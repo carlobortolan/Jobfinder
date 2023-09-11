@@ -232,6 +232,49 @@ class AuthenticationManager: ObservableObject {
         }
     }
     
+    func uploadUserImage(iteration: Int, image: UIImage, completion: @escaping () -> Void) {
+        print("Iteration \(iteration)")
+        if let accessToken = self.getAccessToken() {
+            APIManager.uploadUserImage(accessToken: accessToken, image: image) { result in
+                switch result {
+                case .success(let apiResponse):
+                    DispatchQueue.main.async {
+                        print("case .success: \(apiResponse)")
+                        self.errorHandlingManager.errorMessage = nil
+                        completion()
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print("case .failure, iteration: \(iteration)")
+                        if iteration == 0 {
+                            if case .authenticationError = error {
+                                print("case .authenticationError")
+                                // Authentication error (e.g., access token invalid)
+                                // Refresh the access token and retry the request
+                                self.requestAccessToken() { accessTokenSuccess in
+                                    if accessTokenSuccess {
+                                        self.uploadUserImage(iteration: 1, image: image, completion: completion)
+                                    } else {
+                                        self.errorHandlingManager.errorMessage = error.localizedDescription
+                                        completion()
+                                    }
+                                }
+                            } else {
+                                print("case .else")
+                                self.errorHandlingManager.errorMessage = error.localizedDescription
+                                completion()
+                            }
+                        } else {
+                            self.isAuthenticated = false
+                            self.errorHandlingManager.errorMessage = "Tokens expired. Log in to refresh tokens."
+                            completion()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     func loadProfile(iteration: Int, completion: @escaping () -> Void) {
         print("Iteration \(iteration)")
     
@@ -281,5 +324,4 @@ class AuthenticationManager: ObservableObject {
             }
         }
     }
-
 }

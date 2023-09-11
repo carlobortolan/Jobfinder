@@ -8,14 +8,22 @@
 import SwiftUI
 
 struct ImagePickerView: View {
-    @Binding var selectedImage: UIImage?
-    @Binding var isImagePickerPresented: Bool
+    @EnvironmentObject var errorHandlingManager: ErrorHandlingManager
+    @EnvironmentObject var authenticationManager: AuthenticationManager
+    @EnvironmentObject var jobManager: JobManager
+    @EnvironmentObject var applicationManager: ApplicationManager
     
-    let useCase: String
-        
+    @State private var isLoading = false
+    @State var selectedImage: UIImage?
+    @State var isImagePickerPresented = false
+
+
     var body: some View {
         VStack {
-            Text("Select \(useCase) Image")
+            if isLoading {
+                ProgressView()
+            }
+            Text("Select profile Image")
                 .font(.title)
                 .padding()
 
@@ -23,7 +31,7 @@ struct ImagePickerView: View {
                 Image(uiImage: image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 200, height: 200)
+                    .frame(width: 100, height: 100)
                     .clipShape(Circle())
             } else {
                 Text("No Image Selected")
@@ -42,7 +50,24 @@ struct ImagePickerView: View {
             .padding()
             .disabled(selectedImage == nil)
 
+            Button("Upload Image") {
+                if let image = selectedImage {
+                    isLoading = true
+                    DispatchQueue.main.async {
+                        authenticationManager.uploadUserImage(iteration: 0, image: image) {
+                            isLoading = false
+                        }
+                    }
+                }
+            }
+            .padding()
+            .disabled(selectedImage == nil)
+
             Spacer()
+        }
+        .sheet(isPresented: $isImagePickerPresented) {
+            // Use the ImagePicker here to handle image selection
+            ImagePicker(selectedImage: $selectedImage)
         }
     }
 }

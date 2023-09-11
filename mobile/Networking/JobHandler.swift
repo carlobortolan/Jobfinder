@@ -11,9 +11,7 @@ class JobHandler {
     
     static func fetchOwnJobs(accessToken: String, completion: @escaping (Result<JobsResponse, APIError>) -> Void) {
         print("Started fetching own jobs with: \naccess_token: \(accessToken)")
-        guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
-              let userJobsPath = ProcessInfo.processInfo.environment["USER_JOBS_PATH"],
-              let urlComponents = URLComponents(string: rootUrl + userJobsPath) else {
+        guard let urlComponents = URLComponents(string: Routes.ROOT_URL + Routes.USER_JOBS_PATH) else {
             completion(.failure(APIError.invalidURL))
             return
         }
@@ -30,9 +28,7 @@ class JobHandler {
 
     static func fetchUpcomingJobs(accessToken: String, completion: @escaping (Result<JobsResponse, APIError>) -> Void) {
         print("Started fetching upcoming jobs with: \naccess_token: \(accessToken)")
-        guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
-              let userUpcomingPath = ProcessInfo.processInfo.environment["USER_UPCOMING_PATH"],
-              let urlComponents = URLComponents(string: rootUrl + userUpcomingPath) else {
+        guard let urlComponents = URLComponents(string: Routes.ROOT_URL + Routes.USER_UPCOMING_PATH) else {
             completion(.failure(APIError.invalidURL))
             return
         }
@@ -49,9 +45,7 @@ class JobHandler {
     
     static func fetchNearbyJobs(accessToken: String, longitude: Double, latitude: Double, completion: @escaping (Result<JobsResponse, APIError>) -> Void) {
         print("Started fetching nearby jobs with: \naccess_token: \(accessToken)\nlongitude: \(longitude)\nlatitude: \(latitude)")
-        guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
-              let jobsMapsPath = ProcessInfo.processInfo.environment["JOBS_MAPS_PATH"],
-              let urlComponents = URLComponents(string: rootUrl + jobsMapsPath) else {
+        guard let urlComponents = URLComponents(string: Routes.ROOT_URL + Routes.JOBS_MAPS_PATH) else {
             completion(.failure(APIError.invalidURL))
             return
         }

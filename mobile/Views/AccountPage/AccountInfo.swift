@@ -16,9 +16,9 @@ struct AccountInfo: View {
     
   //  @Binding var user: User
     
-    @State private var isImagePickerPresented = false
+    @State private var isImagePickerViewPresented = false
     @State private var isImageRemoveAlertPresented = false
-    @State private var selectedImage: UIImage?
+    //@State private var selectedImage: UIImage?
 
     var body: some View {
         VStack {
@@ -38,7 +38,7 @@ struct AccountInfo: View {
                             isImageRemoveAlertPresented.toggle()
                         } else {
                             // Show the image picker to upload a new image
-                            isImagePickerPresented.toggle()
+                            isImagePickerViewPresented.toggle()
                         }
                     }
             }
@@ -54,16 +54,16 @@ struct AccountInfo: View {
                     }),
                     secondaryButton: .default(Text("Upload New"), action: {
                         // Show the image picker to upload a new image
-                        isImagePickerPresented.toggle()
+                        isImagePickerViewPresented.toggle()
                     })
                 )
             }
             // Image Picker
-            .sheet(isPresented: $isImagePickerPresented) {
+            .sheet(isPresented: $isImagePickerViewPresented) {
                 NavigationView {
-                    ImagePickerView(selectedImage: $selectedImage, isImagePickerPresented: $isImagePickerPresented, useCase: "profile")
-                        .navigationBarItems(trailing: Button("Done") {
-                            isImagePickerPresented.toggle() // Close the image picker
+                    ImagePickerView()
+                        .navigationBarItems(trailing: Button("Close") {
+                            isImagePickerViewPresented.toggle() // Close the image picker
                         })
                 }
             }

@@ -18,6 +18,7 @@ enum APIError: Error {
     case authenticationError // 401
     case jsonParsingError(Error)
     case jsonEncodingError(Error)
+    case imageProcessingError
     case argumentError(String) // 400
     case validationError(String) // 422
     case unknownError
@@ -40,6 +41,8 @@ enum APIError: Error {
             return "JSON Parsing Error: \(error.localizedDescription) \(error)"
         case .jsonEncodingError(let error):
             return "JSON Encoding Error: \(error.localizedDescription) \(error)"
+        case .imageProcessingError:
+            return "Image processing error"
         case .argumentError(let message):
             return "Argument Error: \(message)"
         case .validationError(let message):

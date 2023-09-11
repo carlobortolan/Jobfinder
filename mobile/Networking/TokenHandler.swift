@@ -42,9 +42,7 @@ class TokenHandler {
     /// - SeeAlso: `Result` for the result type that contains either the decoded response data or an API error.
     static func fetchRefreshToken(email: String, password: String, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
          print("Started fetchRefreshToken")
-         guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
-              let rtPath = ProcessInfo.processInfo.environment["RT_PATH"],
-              let url = URL(string: rootUrl + rtPath) else {
+         guard let url = URL(string: Routes.ROOT_URL + Routes.RT_PATH) else {
              completion(.failure(.invalidURL))
              return
         }
@@ -139,9 +137,7 @@ class TokenHandler {
     /// - SeeAlso: `Result` for the result type that contains either the decoded response data or an API error.
     static func fetchAccessToken(refreshToken: String, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
         print("Started fetchAccessToken with: \nrefreshToken: \(refreshToken)")
-        guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
-              let atPath = ProcessInfo.processInfo.environment["AT_PATH"],
-              let url = URL(string: rootUrl + atPath) else {
+        guard let url = URL(string: Routes.ROOT_URL + Routes.AT_PATH) else {
             completion(.failure(.invalidURL))
             return
         }

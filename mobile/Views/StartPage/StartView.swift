@@ -17,7 +17,7 @@ struct StartView: View {
     @State var isLoadingUpcomingJobs = false
     @State var isLoadingNearbyJobs = false
     @State private var notifications: [String] = ["Notification 1", "Notification 2"]
-
+ 
     var body: some View {
         NavigationView {
             ScrollView {
@@ -100,17 +100,21 @@ struct StartView: View {
             .navigationBarTitle("EMBLOY", displayMode: .inline)
             .padding()
             .onAppear {
-                // Load notifications, upcoming jobs, and nearby jobs
-                // Update 'notifications' and 'nearbyJobs'
-                isLoadingUpcomingJobs = true
-                jobManager.loadUpcomingJobs(iteration: 0) {
-                    isLoadingUpcomingJobs = false
-                }
-                isLoadingNearbyJobs = true
-                jobManager.loadNearbyJobs(iteration: 0, longitude: 0.0, latitude: 0.0) {
-                    isLoadingNearbyJobs = false
-                }
+                    refreshData()
             }
+        }
+    }
+    
+    func refreshData() {
+        // Load notifications, upcoming jobs, and nearby jobs
+        // TODO: Update 'notifications' and 'nearbyJobs'
+        isLoadingUpcomingJobs = true
+        jobManager.loadUpcomingJobs(iteration: 0) {
+            isLoadingUpcomingJobs = false
+        }
+        isLoadingNearbyJobs = true
+        jobManager.loadNearbyJobs(iteration: 0, longitude: 0.0, latitude: 0.0) {
+            isLoadingNearbyJobs = false
         }
     }
 }

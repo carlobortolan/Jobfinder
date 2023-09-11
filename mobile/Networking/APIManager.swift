@@ -12,6 +12,7 @@
 //
 
 import Foundation
+import UIKit
 
 class APIManager {
     
@@ -73,6 +74,16 @@ class APIManager {
     ///   - completion: A closure that receives a `Result` with an `APIResponse` or an `APIError`.
     static func removeUserImage(accessToken: String, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
         AccountHandler.removeImage(accessToken: accessToken, completion: completion)
+    }
+
+    /// Delegates the uploading of a user's profile image to AccountHandler.
+    ///
+    /// - Parameters:
+    ///   - accessToken: The user's access token for authentication.
+    ///   - image: The user's new profile image.
+    ///   - completion: A closure that receives a `Result` with an `APIResponse` or an `APIError`.
+    static func uploadUserImage(accessToken: String, image: UIImage, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
+        AccountHandler.uploadImage(accessToken: accessToken, image: image, completion: completion)
     }
     
     /// Delegates the updating of a user's account information to AccountHandler.

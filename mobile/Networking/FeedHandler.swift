@@ -48,9 +48,7 @@ class FeedHandler {
     /// - SeeAlso: `Result` for the result type that contains either the decoded response data or an API error.
     static func queryJobs(query: String, jobType: String, sortBy: String, accessToken: String, completion: @escaping (Result<JobsResponse, APIError>) -> Void) {
         print("Started querying jobs with: \nquery: \(query)\njobType: \(jobType)\nsortBy: \(sortBy)\naccess_token: \(accessToken)")
-        guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
-              let jobsFindPath = ProcessInfo.processInfo.environment["JOBS_FIND_PATH"],
-              var urlComponents = URLComponents(string: rootUrl + jobsFindPath) else {
+        guard var urlComponents = URLComponents(string: Routes.ROOT_URL + Routes.JOBS_FIND_PATH) else {
             completion(.failure(APIError.invalidURL))
             return
         }
@@ -111,9 +109,7 @@ class FeedHandler {
     /// - SeeAlso: `Result` for the result type that contains either the decoded response data or an API error.
     static func fetchFeed(longitude: Float, latitude: Float, page: Int, accessToken: String, completion: @escaping (Result<FeedResponse, APIError>) -> Void) {
         print("Started fetching feed with: \npage: \(page)\naccess_token: \(accessToken)")
-        guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
-              let jobsFindPath = ProcessInfo.processInfo.environment["JOBS_FEED_PATH"],
-              var urlComponents = URLComponents(string: rootUrl + jobsFindPath) else {
+        guard var urlComponents = URLComponents(string: Routes.ROOT_URL + Routes.JOBS_FEED_PATH) else {
             completion(.failure(APIError.invalidURL))
             return
         }

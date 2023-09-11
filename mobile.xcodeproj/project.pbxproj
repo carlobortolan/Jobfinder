@@ -20,6 +20,8 @@
 		2221CE2D2AAE0E2C00E94A50 /* JobDetail2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2221CE2C2AAE0E2C00E94A50 /* JobDetail2.swift */; };
 		2221CE312AAE5CA700E94A50 /* ContactAndDirections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2221CE302AAE5CA700E94A50 /* ContactAndDirections.swift */; };
 		2221CE332AAE993100E94A50 /* CustomRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2221CE322AAE993100E94A50 /* CustomRating.swift */; };
+		2226B2E12AAF4509006FD759 /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2226B2E02AAF4509006FD759 /* Routes.swift */; };
+		2226B2E42AAF5357006FD759 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 2226B2E32AAF5357006FD759 /* Alamofire */; };
 		22430F952AAA5C2D00747827 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22430F942AAA5C2D00747827 /* ImagePickerView.swift */; };
 		22430F982AAA5CEC00747827 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22430F972AAA5CEC00747827 /* ImagePicker.swift */; };
 		22430F9C2AAAB3C400747827 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22430F9B2AAAB3C400747827 /* SettingsView.swift */; };
@@ -120,6 +122,8 @@
 		2221CE2C2AAE0E2C00E94A50 /* JobDetail2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetail2.swift; sourceTree = "<group>"; };
 		2221CE302AAE5CA700E94A50 /* ContactAndDirections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactAndDirections.swift; sourceTree = "<group>"; };
 		2221CE322AAE993100E94A50 /* CustomRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRating.swift; sourceTree = "<group>"; };
+		2226B2E02AAF4509006FD759 /* Routes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
+		2226B2E72AAF698F006FD759 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		22430F942AAA5C2D00747827 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		22430F972AAA5CEC00747827 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		22430F9B2AAAB3C400747827 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -191,6 +195,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2226B2E42AAF5357006FD759 /* Alamofire in Frameworks */,
 				22B8041B2AA890BC008D7108 /* URLImage in Frameworks */,
 				22DC3AEE2AACC05800B783E8 /* Parchment in Frameworks */,
 			);
@@ -305,6 +310,7 @@
 				22E73EC72A8BFDDF0042CF01 /* ContentView.swift */,
 				22D927842AA7BD390017678C /* ErrorViewModifier.swift */,
 				22DC3AF12AACE4C200B783E8 /* AppDelegate.swift */,
+				2226B2E02AAF4509006FD759 /* Routes.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -409,6 +415,7 @@
 		22E73EC42A8BFDDF0042CF01 /* mobile */ = {
 			isa = PBXGroup;
 			children = (
+				2226B2E72AAF698F006FD759 /* Info.plist */,
 				22D927772AA7B1340017678C /* Models */,
 				2216EA7D2A8D74FF00C970DD /* Main */,
 				2216EA722A8D391800C970DD /* Controllers */,
@@ -464,6 +471,7 @@
 			packageProductDependencies = (
 				22B8041A2AA890BC008D7108 /* URLImage */,
 				22DC3AED2AACC05800B783E8 /* Parchment */,
+				2226B2E32AAF5357006FD759 /* Alamofire */,
 			);
 			productName = mobile;
 			productReference = 22E73EC22A8BFDDF0042CF01 /* mobile.app */;
@@ -540,6 +548,7 @@
 			packageReferences = (
 				22B804192AA890BC008D7108 /* XCRemoteSwiftPackageReference "url-image" */,
 				22DC3AEC2AACC05800B783E8 /* XCRemoteSwiftPackageReference "Parchment" */,
+				2226B2E22AAF5357006FD759 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 22E73EC32A8BFDDF0042CF01 /* Products */;
 			projectDirPath = "";
@@ -639,6 +648,7 @@
 				22DC3AF62AAD2F6800B783E8 /* JobMapView.swift in Sources */,
 				22B804612AA90EB7008D7108 /* ApplicationHandler.swift in Sources */,
 				227E9C952AABB83700049CAB /* ApplicationDetail.swift in Sources */,
+				2226B2E12AAF4509006FD759 /* Routes.swift in Sources */,
 				227E9C9D2AABECBA00049CAB /* OwnApplicationButton.swift in Sources */,
 				227E9C972AABB91300049CAB /* ApplicationPopup.swift in Sources */,
 				2216EA692A8CF5C800C970DD /* FeedView.swift in Sources */,
@@ -812,8 +822,11 @@
 				DEVELOPMENT_TEAM = 9X9M7XG36P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = mobile/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Embloy;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your permission to access your location to find nearby jobs.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "To upload a file you need to access your photo gallery.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -844,8 +857,11 @@
 				DEVELOPMENT_TEAM = 9X9M7XG36P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = mobile/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Embloy;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your permission to access your location to find nearby jobs.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "To upload a file you need to access your photo gallery.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -983,6 +999,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2226B2E22AAF5357006FD759 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		22B804192AA890BC008D7108 /* XCRemoteSwiftPackageReference "url-image" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dmytro-anokhin/url-image.git";
@@ -1002,6 +1026,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2226B2E32AAF5357006FD759 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2226B2E22AAF5357006FD759 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
 		22B8041A2AA890BC008D7108 /* URLImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 22B804192AA890BC008D7108 /* XCRemoteSwiftPackageReference "url-image" */;

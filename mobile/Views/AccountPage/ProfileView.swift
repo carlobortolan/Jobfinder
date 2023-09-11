@@ -17,6 +17,9 @@ struct ProfileView: View {
 
     var body: some View {
         ScrollView {
+            if isLoading {
+                ProgressView()
+            }
             VStack(alignment: .leading, spacing: 10) {
                 Text("Description:")
                     .font(.headline)

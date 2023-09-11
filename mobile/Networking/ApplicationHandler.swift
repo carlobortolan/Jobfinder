@@ -11,10 +11,7 @@ class ApplicationHandler {
     
     static func fetchApplication(accessToken: String, jobId: Int, completion: @escaping (Result<ApplicationResponse, APIError>) -> Void) {
         print("Started fetching own applications with: \naccess_token: \(accessToken)")
-        guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
-              let jobsPath = ProcessInfo.processInfo.environment["JOBS_PATH"],
-              let applicationsPath = ProcessInfo.processInfo.environment["APPLICATION_PATH"],
-              let urlComponents = URLComponents(string: rootUrl + jobsPath + "/\(jobId)" +  applicationsPath ) else {
+        guard let urlComponents = URLComponents(string: Routes.ROOT_URL + Routes.JOBS_PATH + "/\(jobId)" +  Routes.APPLICATION_PATH ) else {
             completion(.failure(APIError.invalidURL))
             return
         }
@@ -31,9 +28,7 @@ class ApplicationHandler {
     
     static func fetchOwnApplications(accessToken: String, completion: @escaping (Result<ApplicationsResponse, APIError>) -> Void) {
         print("Started fetching own applications with: \naccess_token: \(accessToken)")
-        guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
-              let userApplicationsPath = ProcessInfo.processInfo.environment["USER_APPLICATIONS_PATH"],
-              let urlComponents = URLComponents(string: rootUrl + userApplicationsPath) else {
+        guard let urlComponents = URLComponents(string: Routes.ROOT_URL + Routes.USER_APPLICATIONS_PATH) else {
             completion(.failure(APIError.invalidURL))
             return
         }
@@ -50,10 +45,7 @@ class ApplicationHandler {
     
     static func createApplication(accessToken: String, application: Application, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
         print("Started creating application with: \naccess_token: \(accessToken)")
-        guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
-              let jobsPath = ProcessInfo.processInfo.environment["JOBS_PATH"],
-              let applicationsPath = ProcessInfo.processInfo.environment["APPLICATIONS_PATH"],
-              let urlComponents = URLComponents(string: rootUrl + jobsPath + "/\(application.jobId)" + applicationsPath) else {
+        guard let urlComponents = URLComponents(string: Routes.ROOT_URL + Routes.JOBS_PATH + "/\(application.jobId)" + Routes.APPLICATIONS_PATH) else {
             completion(.failure(APIError.invalidURL))
             return
         }
@@ -79,11 +71,7 @@ class ApplicationHandler {
     
     static func acceptApplication(accessToken: String, message: String?, application: Application, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
         print("Started accepting application with: \naccess_token: \(accessToken)\njobId: \(application.jobId)\nuserId: \(application.userId)")
-        guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
-              let jobsPath = ProcessInfo.processInfo.environment["JOBS_PATH"],
-              let applicationsPath = ProcessInfo.processInfo.environment["APPLICATIONS_PATH"],
-              let acceptPath = ProcessInfo.processInfo.environment["ACCEPT_PATH"],
-              let urlComponents = URLComponents(string: rootUrl + jobsPath + "/\(application.jobId)" + applicationsPath + "/\(application.userId)" + acceptPath) else {
+        guard let urlComponents = URLComponents(string: Routes.ROOT_URL + Routes.JOBS_PATH + "/\(application.jobId)" + Routes.APPLICATIONS_PATH + "/\(application.userId)" + Routes.ACCEPT_PATH) else {
             completion(.failure(APIError.invalidURL))
             return
         }
@@ -117,15 +105,11 @@ class ApplicationHandler {
     
     static func rejectApplication(accessToken: String, message: String?, application: Application, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
         print("Started rejecting application with: \naccess_token: \(accessToken)\njobId: \(application.jobId)\nuserId: \(application.userId)")
-        guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
-              let jobsPath = ProcessInfo.processInfo.environment["JOBS_PATH"],
-              let applicationsPath = ProcessInfo.processInfo.environment["APPLICATIONS_PATH"],
-              let rejectPath = ProcessInfo.processInfo.environment["REJECT_PATH"],
-              let urlComponents = URLComponents(string: rootUrl + jobsPath + "/\(application.jobId)" + applicationsPath + "/\(application.userId)" + rejectPath) else {
+        guard let urlComponents = URLComponents(string: Routes.ROOT_URL + Routes.JOBS_PATH + "/\(application.jobId)" + Routes.APPLICATIONS_PATH + "/\(application.userId)" + Routes.REJECT_PATH) else {
             completion(.failure(APIError.invalidURL))
             return
         }
-        
+
         guard let url = urlComponents.url else {
             completion(.failure(APIError.invalidURL))
             return
