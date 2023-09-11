@@ -119,7 +119,7 @@ struct JobDetail2: View {
                                     Divider()                                            .background(Color("FgColor"))
                                     HStack() {
                                         Image(systemName: "calendar.circle")
-                                            .foregroundColor(.blue)
+                                            .foregroundColor(Color("FgColor"))
                                             .font(.system(size: 30))
                                         if let date = DateParser.parseDate(job.startSlot) {
                                             Text(DateParser.formatDate(date: date))
@@ -240,7 +240,7 @@ struct JobDetail2: View {
             .padding()
             .sheet(isPresented: $isApplicationPopupVisible) {
                 if hasApplication {
-                    ApplicationDetail(jobId: job.jobId)
+                    ApplicationDetail(jobId: job.jobId).foregroundColor(Color("FgColor"))
                 } else {
                     NavigationView {
                         ApplicationPopup(isVisible: $isApplicationPopupVisible, message: $applicationMessage, job: job)

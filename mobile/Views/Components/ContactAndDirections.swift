@@ -17,7 +17,6 @@ struct ContactAndDirections: View {
                 Link(destination: URL(string: "tel://\(phone)")!) {
                     Image(systemName: "phone")
                         .font(.title)
-                        .foregroundColor(.blue)
                 }
                 Spacer()
             }
@@ -27,7 +26,6 @@ struct ContactAndDirections: View {
                 Link(destination: URL(string: "mailto:\(email)")!) {
                     Image(systemName: "envelope")
                         .font(.title)
-                        .foregroundColor(.blue)
                 }
                 Spacer()
             }
@@ -35,10 +33,11 @@ struct ContactAndDirections: View {
             Link(destination: getDirectionsURL()) {
                 Image(systemName: "arrow.right.circle")
                     .font(.title)
-                    .foregroundColor(.blue)
             }
             Spacer()
-        }.padding()
+        }
+        .padding()
+        .foregroundColor(Color("SecondaryColor"))
     }
 
     // Function to generate directions URL
