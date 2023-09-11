@@ -19,7 +19,7 @@ enum Routes {
     static let USER_IMAGE_PATH = "/user/image"
     static let JOBS_FEED_PATH = "/jobs"
     static let JOBS_FIND_PATH = "/find"
-    static let USER_VERIFY_PATH = "user/verify"
+    static let USER_VERIFY_PATH = "/user/verify"
     static let RT_PATH = "/user/auth/token/refresh"
     static let AT_PATH = "/user/auth/token/access"
     static let USER_JOBS_PATH = "/user/jobs"
