@@ -65,9 +65,14 @@ struct JobCardView: View {
                     isTapped = true
             }
             .sheet(isPresented: $isTapped) {
-                JobDetail2(job: job).background(Color("FeedBgColor"))
+                NavigationView {
+                    JobDetail2(job: job).background(Color("FeedBgColor"))
+                        .navigationBarItems(trailing: Button("Close") {
+                            isTapped.toggle()
+                        })
+                        .navigationBarTitle("Job Details", displayMode: .inline)
+                }
             }
-
         }
     }
 }

@@ -23,6 +23,7 @@ struct mobileApp: App {
             .environmentObject(authenticationManager)
             .environmentObject(jobManager)
             .environmentObject(applicationManager)
+            .accentColor(Color("PrimaryColor"))
         }
     }
 }

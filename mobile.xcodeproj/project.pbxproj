@@ -19,6 +19,7 @@
 		2216EA862A8D765500C970DD /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2216EA852A8D765500C970DD /* StartView.swift */; };
 		2221CE2D2AAE0E2C00E94A50 /* JobDetail2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2221CE2C2AAE0E2C00E94A50 /* JobDetail2.swift */; };
 		2221CE312AAE5CA700E94A50 /* ContactAndDirections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2221CE302AAE5CA700E94A50 /* ContactAndDirections.swift */; };
+		2221CE332AAE993100E94A50 /* CustomRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2221CE322AAE993100E94A50 /* CustomRating.swift */; };
 		22430F952AAA5C2D00747827 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22430F942AAA5C2D00747827 /* ImagePickerView.swift */; };
 		22430F982AAA5CEC00747827 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22430F972AAA5CEC00747827 /* ImagePicker.swift */; };
 		22430F9C2AAAB3C400747827 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22430F9B2AAAB3C400747827 /* SettingsView.swift */; };
@@ -118,6 +119,7 @@
 		2216EA852A8D765500C970DD /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		2221CE2C2AAE0E2C00E94A50 /* JobDetail2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetail2.swift; sourceTree = "<group>"; };
 		2221CE302AAE5CA700E94A50 /* ContactAndDirections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactAndDirections.swift; sourceTree = "<group>"; };
+		2221CE322AAE993100E94A50 /* CustomRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRating.swift; sourceTree = "<group>"; };
 		22430F942AAA5C2D00747827 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		22430F972AAA5CEC00747827 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		22430F9B2AAAB3C400747827 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				227E9C962AABB91300049CAB /* ApplicationPopup.swift */,
 				226B63852AA78C1F004620EE /* ApplicationPreview.swift */,
 				2221CE302AAE5CA700E94A50 /* ContactAndDirections.swift */,
+				2221CE322AAE993100E94A50 /* CustomRating.swift */,
 				22430F972AAA5CEC00747827 /* ImagePicker.swift */,
 				226B637B2AA78A85004620EE /* JobPosting.swift */,
 				226B637D2AA78AB4004620EE /* JobItem.swift */,
@@ -641,6 +644,7 @@
 				2216EA692A8CF5C800C970DD /* FeedView.swift in Sources */,
 				227E9C8F2AAB8F6900049CAB /* Validator.swift in Sources */,
 				22430F9E2AAAB50700747827 /* UpdateUserView.swift in Sources */,
+				2221CE332AAE993100E94A50 /* CustomRating.swift in Sources */,
 				2216EA812A8D761700C970DD /* PostView.swift in Sources */,
 				227E9C992AABBB4100049CAB /* JobManager.swift in Sources */,
 				228E0CEB2AADFF8100AEF8A2 /* JobsMapAnnotation.swift in Sources */,

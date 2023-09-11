@@ -87,83 +87,124 @@ struct JobDetail2: View {
                             .overlay(
                                 VStack(alignment: .center, spacing: 10) {
                                     HStack(alignment: .center) {
-                                        Text("By: \(job.employerName ?? "n.a.")")
-                                            .font(.title3)
-                                            .fontWeight(.semibold)
-                                        Text("Rating: \(job.employerRating)")
-                                            .font(.headline)
-                                            .fontWeight(.medium)
-                                            .padding(.horizontal)
+                                        VStack(alignment: .leading) {
+                                            Text("Employer:")
+                                                .font(.subheadline)
+                                                .fontWeight(.light)
+                                            Text(job.employerName ?? "n.a.")
+                                                .font(.title3)
+                                                .fontWeight(.semibold)
+                                        }
+                                        Divider()
+                                            .background(Color("FgColor"))
+                                            .padding(.horizontal, 10)
+                                        VStack(alignment: .center) {
+                                            HStack {
+                                                CustomRating(rating: Double(job.employerRating))
+                                                Text("(51)")
+                                                    .font(.caption2)
+                                                    .fontWeight(.light)
+                                                    .multilineTextAlignment(.center)
+                                            }
+                                            Text("82%")
+                                                .font(.title2)
+                                                .fontWeight(.medium)
+                                                .multilineTextAlignment(.center)
+                                            Text("would work here again")
+                                                .font(.caption2)
+                                                .fontWeight(.light)
+                                                .multilineTextAlignment(.center)
+                                        }
                                     }.padding()
-                                    Divider()
-                                    ContactAndDirections(job: job)
-                                }
+                                    Divider()                                            .background(Color("FgColor"))
+                                    HStack() {
+                                        Image(systemName: "calendar.circle")
+                                            .foregroundColor(.blue)
+                                            .font(.system(size: 30))
+                                        if let date = DateParser.parseDate(job.startSlot) {
+                                            Text(DateParser.formatDate(date: date))
+                                        } else {
+                                            Text("Invalid Date Format")
+                                        }
+                                    }.padding([.horizontal, .bottom])
+                                }.foregroundColor(Color("FgColor"))
                             )
                     )
                                         
                                         
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(Color("FgColor"), lineWidth: 5)
-                    .frame(height: 350)
+                    .frame(height: 410)
                     .foregroundColor(Color("FeedBgColor"))
                     .border(Color("FgColor"), width: 3)
                     .cornerRadius(10)
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
                             .padding(.all)
-                            .frame(height: 350)
+                            .frame(height: 410)
                             .foregroundColor(Color("FeedBgColor"))
                             .border(Color("FgColor"), width: 3)
                             .padding(.horizontal, 10.0)
                             .overlay(
-                                VStack(alignment: .leading, spacing: 10) {
-                                    Group {
-                                        Text("About the job")
-                                            .font(.title3)
-                                            .fontWeight(.semibold)
-                                        Text("Job Type: \(job.jobType)")
-                                            .font(.headline)
-                                            .fontWeight(.medium)
-                                            .padding(.horizontal)
-                                        Text("Salary: \(job.salary) \(job.currency) for \(job.duration) h")
-                                            .font(.headline)
-                                            .fontWeight(.medium)
-                                            .padding(.horizontal)
-                                        Text("Duration: \(job.duration) months")
-                                            .font(.headline)
-                                            .fontWeight(.medium)
-                                            .padding(.horizontal)
-                                    }.background(Color("FeedBgColor"))
+                                VStack(alignment: .leading) {
+                                    VStack(alignment: .leading, spacing: 10) {
+                                        Group {
+                                            Text("About the job")
+                                                .font(.title3)
+                                                .fontWeight(.semibold)
+                                            Text("Job Type: \(job.jobType)")
+                                                .font(.headline)
+                                                .fontWeight(.medium)
+                                                .padding(.horizontal)
+                                            Text("Salary: \(job.salary) \(job.currency) for \(job.duration) h")
+                                                .font(.headline)
+                                                .fontWeight(.medium)
+                                                .padding(.horizontal)
+                                            Text("Duration: \(job.duration) months")
+                                                .font(.headline)
+                                                .fontWeight(.medium)
+                                                .padding(.horizontal)
+                                        }.padding(.horizontal)
+                                    }.padding(.horizontal)
                                     Divider()
-                                    Group {
-                                        Text("About you")
-                                            .font(.title3)
-                                            .fontWeight(.semibold)
-                                        Text("Position: \(job.position)")
-                                            .font(.headline)
-                                            .fontWeight(.medium)
-                                            .padding(.horizontal)
-                                        Text("Key skills: \(job.keySkills)")
-                                            .font(.headline)
-                                            .fontWeight(.medium)
-                                            .padding(.horizontal)
-                                    }.background(Color("FeedBgColor"))
+                                        .background(Color("FgColor"))
+                                    VStack(alignment: .leading, spacing: 10) {
+                                        Group {
+                                            Text("About you")
+                                                .font(.title3)
+                                                .fontWeight(.semibold)
+                                            Text("Position: \(job.position)")
+                                                .font(.headline)
+                                                .fontWeight(.medium)
+                                                .padding(.horizontal)
+                                            Text("Key skills: \(job.keySkills)")
+                                                .font(.headline)
+                                                .fontWeight(.medium)
+                                                .padding(.horizontal)
+                                        }.padding(.horizontal)
+                                    }.padding(.horizontal)
                                     Divider()
-                                    Group {
-                                        Text("Location")
-                                            .font(.title3)
-                                            .fontWeight(.semibold)
-                                        Text("Location: \(job.city), \(job.countryCode)")
-                                            .font(.subheadline)
-                                            .padding(.horizontal)
-                                    }                            .background(Color("FeedBgColor"))
-                                }
-                                    .background(Color("FeedBgColor"))
-                                    .padding()
-                                
+                                        .background(Color("FgColor"))
+                                    VStack(alignment: .leading, spacing: 10) {
+                                        Group {
+                                            Text("Location")
+                                                .font(.title3)
+                                                .fontWeight(.semibold)
+                                            Text("\(job.city), \(job.countryCode), \(job.postalCode) ,\(job.address)")
+                                                .font(.headline)
+                                                .fontWeight(.medium)
+                                                .padding(.horizontal)
+                                            ContactAndDirections(job: job)
+                                        }.padding(.horizontal)
+                                    }.padding(.horizontal)
+                                }.foregroundColor(Color("FgColor"))
                             )
                     )
                 
+
+                
+                    
+                    
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(Color("FgColor"), lineWidth: 5)
                     .frame(height: 200)
@@ -227,7 +268,6 @@ struct JobDetail2_Previews: PreviewProvider {
         let applicationManager = ApplicationManager(authenticationManager: authenticationManager, errorHandlingManager: errorHandlingManager)
 
         let job = JobModel.generateRandomJob()
-        let user = User.generateRandomUser()
         return JobDetail2(job: job).environmentObject(errorHandlingManager).environmentObject(authenticationManager).environmentObject(jobManager).environmentObject(applicationManager)
     }
 }

@@ -17,23 +17,23 @@ struct DateFormattedISO8601: Codable {
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
         return formatter
     }()
-
+    
     private var date: Date?
-
+    
     var wrappedValue: Date? {
         get { return date }
         set { date = newValue }
     }
-
+    
     init(wrappedValue: Date?) {
         self.date = wrappedValue
     }
-
+    
     init(from decoder: Decoder) throws {
         let dateString = try decoder.singleValueContainer().decode(String.self)
         date = DateFormattedISO8601.dateFormatter.date(from: dateString)
     }
-
+    
     func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         if let date = date {
@@ -42,7 +42,6 @@ struct DateFormattedISO8601: Codable {
             try container.encodeNil()
         }
     }
-    
 }
 
 struct DateParser {
@@ -81,4 +80,32 @@ struct DateParser {
     static func date(from dateString: String) -> Date? {
         return DateFormattedISO8601.dateFormatter.date(from: dateString)
     }
+    
+    static func parseISO8601Date(_ dateString: String) -> Date? {
+        let dateFormatter = ISO8601DateFormatter()
+        if let date = dateFormatter.date(from: dateString) {
+            return date
+        }
+        return nil
+    }
+    
+    static func parseDate(_ dateString: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        
+        if let date = dateFormatter.date(from: dateString) {
+            return date
+        }
+        return nil
+    }
+
+    static func formatDate(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy HH:mm"
+
+        let dateString = dateFormatter.string(from: date)
+        
+        return dateString
+    }
+
 }
