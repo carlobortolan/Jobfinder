@@ -136,11 +136,11 @@ class ApplicationManager: ObservableObject {
         }
     }
     
-    func submitApplication(iteration: Int, jobId: Int, userId: Int, message: String) {
+    func submitApplication(iteration: Int, jobId: Int, userId: Int, message: String, cv: Data?) {
         print("Iteration \(iteration)")
         let application = Application(jobId: jobId, userId: userId, createdAt: "", updatedAt: "", status: "0", applicationText: message, applicationDocuments: nil, response: nil)
         if let accessToken = authenticationManager.getAccessToken() {
-            APIManager.createApplication(accessToken: accessToken, application: application) { tokenResponse in
+            APIManager.createApplication(accessToken: accessToken, application: application, cv: cv) { tokenResponse in
                 switch tokenResponse {
                 case .success(let apiResponse):
                     DispatchQueue.main.async {
@@ -158,7 +158,7 @@ class ApplicationManager: ObservableObject {
                                 // Refresh the access token and retry the request
                                 self.authenticationManager.requestAccessToken() { accessTokenSuccess in
                                     if accessTokenSuccess{
-                                        self.submitApplication(iteration: 1, jobId: jobId, userId: userId, message: message)
+                                        self.submitApplication(iteration: 1, jobId: jobId, userId: userId, message: message, cv: cv)
                                     } else {
                                         self.errorHandlingManager.errorMessage = error.localizedDescription
                                     }
