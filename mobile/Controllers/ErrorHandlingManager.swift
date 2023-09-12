@@ -26,6 +26,7 @@ enum APIError: Error {
     case forbidden // 403
     case notFound // 404
     case noContent(String)
+    case fileFormatError(String)
     
     // TODO: Add other error cases as needed
 
@@ -57,6 +58,8 @@ enum APIError: Error {
             return "Not found. This page does not exist."
         case .noContent(let cause):
             return "No \(cause) found"
+        case .fileFormatError(let message):
+            return "File Format Error: \(message)"
         }
     }
 }

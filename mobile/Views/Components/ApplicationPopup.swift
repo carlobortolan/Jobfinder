@@ -16,6 +16,7 @@ struct ApplicationPopup: View {
     @Binding var isVisible: Bool
     @Binding var message: String
     @State var cvData: Data?
+    @State var fileName: String = ""
     @State private var isLoading = false
     @State private var isPickingDocument = false
     var job: Job
@@ -60,11 +61,11 @@ struct ApplicationPopup: View {
                                             .cornerRadius(10)
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: 10)
-                                                    .foregroundColor(Color("SuccessColor"))
+                                                    .foregroundColor(Color("SecondaryColor"))
                                                     .border(Color("FgColor"), width: 3)
                                                     .padding(.horizontal, 10.0)
                                                     .overlay(
-                                                        Text("UPLOAD CV [\(String(describing: job.allowedCvFormat))]")
+                                                        Text(fileName == "" ? "UPLOAD CV \(job.allowedCvFormat.joined(separator: ", "))" : fileName)
                                                             .font(.headline)
                                                             .fontWeight(.black)
                                                             .foregroundColor(Color.white)
@@ -73,25 +74,29 @@ struct ApplicationPopup: View {
                                     }
                                     .padding()
                                     .cornerRadius(10)
-                                    .fileImporter(isPresented: $isPickingDocument, allowedContentTypes: [.pdf], onCompletion: handleDocumentSelection)
+                                    .fileImporter(isPresented: $isPickingDocument, allowedContentTypes: FileFormatter.toUTType(allowedCvFormat: job.allowedCvFormat), onCompletion: handleDocumentSelection)
                                 }
 
                                 
                                 Button(action: {
-                                    applicationManager.submitApplication(iteration: 0, jobId: job.jobId, userId: authenticationManager.current.userId, message: message, cv: cvData)
-                                    isVisible = false
-                                }) {
+                                    isLoading = true
+                                    DispatchQueue.main.async {
+                                        applicationManager.submitApplication(iteration: 0, jobId: job.jobId, userId: authenticationManager.current.userId, message: message, cv: cvData, format: job.allowedCvFormat) {
+                                            isLoading = false
+                                            isVisible = false
+                                        }
+                                    }                                }) {
                                     RoundedRectangle(cornerRadius: 10)
                                         .foregroundColor(Color("FeedBgColor"))
                                         .cornerRadius(10)
                                         .overlay(
                                             RoundedRectangle(cornerRadius: 10)
-                                                .foregroundColor(Color("SuccessColor"))
+                                                .foregroundColor(cvData != nil || !job.cvRequired ? Color("SuccessColor") : Color.gray)
                                                 .border(Color("FgColor"), width: 3)
                                                 .padding(.horizontal, 10.0)
                                                 .overlay(
                                                     Text("APPLY")
-                                                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                                                        .font(.title)
                                                         .fontWeight(.black)
                                                         .foregroundColor(Color.white)
                                                 )
@@ -99,24 +104,25 @@ struct ApplicationPopup: View {
                                 }
                                 .padding()
                                 .cornerRadius(10)
-                                
+                                .disabled(cvData == nil && job.cvRequired)
                             }
                         )
                 )
         }
     }
     
-    private func handleDocumentSelection(result: Result<URL, Error>) {
-        if case .success(let url) = result {
+    func handleDocumentSelection(result: Result<URL, Error>) {
+        switch result {
+        case .success(let selectedURL):
             do {
-                cvData = try Data(contentsOf: url)
+                cvData = try Data(contentsOf: selectedURL)
             } catch {
-                // Handle error while reading file data
                 print("Error reading file data: \(error)")
             }
-        } else if case .failure(let error) = result {
-            // Handle document picker error
-            print("Document picker error: \(error)")
+            fileName = selectedURL.lastPathComponent
+        case .failure(let error):
+            print("File Selection Error: \(error.localizedDescription)")
         }
     }
+    
 }

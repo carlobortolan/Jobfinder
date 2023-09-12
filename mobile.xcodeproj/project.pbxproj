@@ -45,6 +45,7 @@
 		227E9C992AABBB4100049CAB /* JobManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E9C982AABBB4100049CAB /* JobManager.swift */; };
 		227E9C9B2AABBB5500049CAB /* ApplicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E9C9A2AABBB5500049CAB /* ApplicationManager.swift */; };
 		227E9C9D2AABECBA00049CAB /* OwnApplicationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227E9C9C2AABECBA00049CAB /* OwnApplicationButton.swift */; };
+		228800CE2AB10C4300AE9A4B /* FileFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228800CD2AB10C4300AE9A4B /* FileFormatter.swift */; };
 		228E0CEB2AADFF8100AEF8A2 /* JobsMapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228E0CEA2AADFF8100AEF8A2 /* JobsMapAnnotation.swift */; };
 		22B8041B2AA890BC008D7108 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 22B8041A2AA890BC008D7108 /* URLImage */; };
 		22B8041D2AA891ED008D7108 /* JobDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B8041C2AA891ED008D7108 /* JobDetail.swift */; };
@@ -148,6 +149,7 @@
 		227E9C982AABBB4100049CAB /* JobManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobManager.swift; sourceTree = "<group>"; };
 		227E9C9A2AABBB5500049CAB /* ApplicationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationManager.swift; sourceTree = "<group>"; };
 		227E9C9C2AABECBA00049CAB /* OwnApplicationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnApplicationButton.swift; sourceTree = "<group>"; };
+		228800CD2AB10C4300AE9A4B /* FileFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileFormatter.swift; sourceTree = "<group>"; };
 		228E0CEA2AADFF8100AEF8A2 /* JobsMapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsMapAnnotation.swift; sourceTree = "<group>"; };
 		22B8041C2AA891ED008D7108 /* JobDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetail.swift; sourceTree = "<group>"; };
 		22B8041E2AA8F813008D7108 /* APIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHandler.swift; sourceTree = "<group>"; };
@@ -369,6 +371,7 @@
 			isa = PBXGroup;
 			children = (
 				227E9C902AAB9A5500049CAB /* DateFormatter.swift */,
+				228800CD2AB10C4300AE9A4B /* FileFormatter.swift */,
 				22D927872AA7FAE90017678C /* HtmlView.swift */,
 				22430F972AAA5CEC00747827 /* ImagePicker.swift */,
 				22D927822AA7B4FE0017678C /* JobListView.swift */,
@@ -634,6 +637,7 @@
 				227E9C9B2AABBB5500049CAB /* ApplicationManager.swift in Sources */,
 				2216EA832A8D762400C970DD /* ExploreView.swift in Sources */,
 				22B8046D2AA91D54008D7108 /* OwnApplicationsView.swift in Sources */,
+				228800CE2AB10C4300AE9A4B /* FileFormatter.swift in Sources */,
 				22B8046F2AA92781008D7108 /* AccountInfo.swift in Sources */,
 				22430FA22AAAB52900747827 /* AppInfoView.swift in Sources */,
 				22B8041D2AA891ED008D7108 /* JobDetail.swift in Sources */,
