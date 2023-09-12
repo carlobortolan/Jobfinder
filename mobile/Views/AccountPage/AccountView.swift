@@ -48,16 +48,14 @@ struct AccountView: View {
             .navigationBarItems(leading: Button("Settings") {
                 isSettingsPresented.toggle()
             })
-            .sheet(isPresented: $isSettingsPresented) {
-                NavigationView {
-                    SettingsView()
-                        .navigationBarItems(trailing: Button("Close") {
-                            isSettingsPresented.toggle()
-                        })
-                        .navigationBarTitle("Settings", displayMode: .inline)
-                }
-                .modifier(ErrorViewModifier())
-            }
+            .background(
+                NavigationLink("", destination: SettingsView()
+                    .navigationBarTitle("Settings", displayMode: .inline)
+                    .modifier(ErrorViewModifier()),
+                    isActive: $isSettingsPresented
+                )
+                .opacity(0)
+            )
         }
     }
     

@@ -54,21 +54,21 @@ struct UpdateUserView: View {
                             }
                         })
                         .keyboardType(.emailAddress)
-                        .foregroundColor(isEmailValid ? .primary : .red)
+                        .foregroundColor(isEmailValid ? .primary : Color("AlertColor"))
 
                         TextField("First Name", text: $user.firstName, onEditingChanged: { editing in
                             if !editing {
                                 isFirstNameValid = Validator.isValidName(user.firstName)
                             }
                         })
-                        .foregroundColor(isFirstNameValid ? .primary : .red)
+                        .foregroundColor(isFirstNameValid ? .primary : Color("AlertColor"))
 
                         TextField("Last Name", text: $user.lastName, onEditingChanged: { editing in
                             if !editing {
                                 isLastNameValid = Validator.isValidName(user.lastName)
                             }
                         })
-                        .foregroundColor(isLastNameValid ? .primary : .red)
+                        .foregroundColor(isLastNameValid ? .primary : Color("AlertColor"))
 
                         TextField("Phone Number", text: Binding(
                             get: { user.phone ?? "" },
@@ -77,13 +77,13 @@ struct UpdateUserView: View {
                             if !editing {
                                 isPhoneValid = Validator.isValidPhone(user.phone)
                             }})
-                          .foregroundColor(isPhoneValid ? .primary : .red)
+                          .foregroundColor(isPhoneValid ? .primary : Color("AlertColor"))
 
                         DatePicker("Date of Birth", selection: Binding(
                             get: { user.dateOfBirth ?? maximumDateOfBirth },
                             set: { user.dateOfBirth = $0 }
                         ), in: reasonableMinimumDate...maximumDateOfBirth, displayedComponents: .date)
-                        .foregroundColor(isDateOfBirthValid ? .primary : .red)
+                        .foregroundColor(isDateOfBirthValid ? .primary : Color("AlertColor"))
                         .datePickerStyle(CompactDatePickerStyle())
                     }
 
@@ -92,7 +92,7 @@ struct UpdateUserView: View {
                             get: { user.address ?? "" },
                             set: { user.address = $0 }
                         ))
-                        .foregroundColor(isAddressValid ? .primary : .red)
+                        .foregroundColor(isAddressValid ? .primary : Color("AlertColor"))
 
                         TextField("City", text: Binding(
                             get: { user.city ?? "" },
@@ -118,7 +118,7 @@ struct UpdateUserView: View {
                                .keyboardType(.URL)
                                .autocapitalization(.none)
                                .disableAutocorrection(true)
-                               .foregroundColor(isLinkedInURLValid ? .primary : .red)
+                               .foregroundColor(isLinkedInURLValid ? .primary : Color("AlertColor"))
 
                            TextField("Twitter URL", text:Binding(
                             get: { user.twitterURL ?? "" },
@@ -127,7 +127,7 @@ struct UpdateUserView: View {
                                .keyboardType(.URL)
                                .autocapitalization(.none)
                                .disableAutocorrection(true)
-                               .foregroundColor(isTwitterURLValid ? .primary : .red)
+                               .foregroundColor(isTwitterURLValid ? .primary : Color("AlertColor"))
 
                            TextField("Facebook URL", text: Binding(
                             get: { user.facebookURL ?? "" },
@@ -136,7 +136,7 @@ struct UpdateUserView: View {
                                .keyboardType(.URL)
                                .autocapitalization(.none)
                                .disableAutocorrection(true)
-                               .foregroundColor(isFacebookURLValid ? .primary : .red)
+                               .foregroundColor(isFacebookURLValid ? .primary : Color("AlertColor"))
 
                            TextField("Instagram URL", text: Binding(
                             get: { user.instagramURL ?? "" },
@@ -145,7 +145,7 @@ struct UpdateUserView: View {
                                .keyboardType(.URL)
                                .autocapitalization(.none)
                                .disableAutocorrection(true)
-                               .foregroundColor(isInstagramURLValid ? .primary : .red)
+                               .foregroundColor(isInstagramURLValid ? .primary : Color("AlertColor"))
                        }
                     
                 }
@@ -156,13 +156,16 @@ struct UpdateUserView: View {
                     print("ValidateFields: \(validateFields())")
                 }) {
                     Text("Update Profile")
+                        .fontWeight(.bold)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.blue)
                 }
                 .disabled(isUpdating)
                 Section {
                     Button(action: {
                         isShowingDeleteConfirmationAlert = true
                     }) {
-                        Text("Delete Profile").foregroundColor(Color("AlertColor"))
+                        Text("Delete Profile").fontWeight(.bold).foregroundColor(Color("AlertColor")).multilineTextAlignment(.center)
                     }.alert(isPresented: $isShowingDeleteConfirmationAlert) {
                         Alert(
                             title: Text("Confirm Deletion"),
@@ -184,29 +187,64 @@ struct UpdateUserView: View {
     }
     
     private func validateFields() -> Bool {
-        isEmailValid = Validator.isValidEmail(user.email)
-        isFirstNameValid = Validator.isValidName(user.firstName)
-        isLastNameValid = Validator.isValidName(user.lastName)
-        isPhoneValid = Validator.isValidPhone(user.phone)
-        isDateOfBirthValid = true
-        isAddressValid = true
-        // TODO: Implement address validation
-        isLinkedInURLValid = Validator.isValidLinkedInURL(user.linkedinURL)
-        isTwitterURLValid = Validator.isValidTwitterURL(user.twitterURL)
-        isFacebookURLValid = Validator.isValidFacebookURL(user.facebookURL)
-        isInstagramURLValid = Validator.isValidInstagramURL(user.instagramURL)
+        var errorMessages: [String] = []
         
-        print("isEmailValid \(isEmailValid)")
-        print("isFirstNameValid \(isFirstNameValid)")
-        print("isLastNameValid \(isLastNameValid)")
-        print("isPhoneValid \(isPhoneValid)")
-        print("isDateOfBirthValid \(isDateOfBirthValid)")
-        print("isAddressValid \(isAddressValid)")
+        isEmailValid = Validator.isValidEmail(user.email)
+        if !isEmailValid {
+            errorMessages.append("Invalid email")
+        }
+        
+        isFirstNameValid = Validator.isValidName(user.firstName)
+        if !isFirstNameValid {
+            errorMessages.append("Invalid first name")
+        }
+        
+        isLastNameValid = Validator.isValidName(user.lastName)
+        if !isLastNameValid {
+            errorMessages.append("Invalid last name")
+        }
+        
+        isPhoneValid = Validator.isValidPhone(user.phone)
+        if !isPhoneValid {
+            errorMessages.append("Invalid phone number")
+        }
+        
+        isDateOfBirthValid = true // You may implement this validation separately
+        if !isDateOfBirthValid {
+            errorMessages.append("Invalid date of birth")
+        }
+        
+        isAddressValid = true // Implement address validation separately
+        if !isAddressValid {
+            errorMessages.append("Invalid address")
+        }
+        
+        isLinkedInURLValid = Validator.isValidLinkedInURL(user.linkedinURL)
+        if !isLinkedInURLValid {
+            errorMessages.append("Invalid LinkedIn URL")
+        }
+        
+        isTwitterURLValid = Validator.isValidTwitterURL(user.twitterURL)
+        if !isTwitterURLValid {
+            errorMessages.append("Invalid Twitter URL")
+        }
+        
+        isFacebookURLValid = Validator.isValidFacebookURL(user.facebookURL)
+        if !isFacebookURLValid {
+            errorMessages.append("Invalid Facebook URL")
+        }
+        
+        isInstagramURLValid = Validator.isValidInstagramURL(user.instagramURL)
+        if !isInstagramURLValid {
+            errorMessages.append("Invalid Instagram URL")
+        }
+        
+        // Set the error message
+        errorHandlingManager.errorMessage = errorMessages.joined(separator: "\n")
         
         // Return true if all fields are valid
-        return isEmailValid && isFirstNameValid && isLastNameValid && isPhoneValid && isDateOfBirthValid && isAddressValid && isLinkedInURLValid && isTwitterURLValid && isFacebookURLValid && isInstagramURLValid
+        return errorMessages.isEmpty
     }
-    
     func updateUser(iteration: Int) {
         print("Iteration \(iteration)")
         isUpdating = true

@@ -22,18 +22,15 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                tabView
-                
-                HStack {
+                HStack(spacing: 30) {
                     Spacer()
                     
                     Button(action: {
                         selectedTab = .updateUser
                     }) {
-                        Image(systemName: "person.circle")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .padding()
+                        Image(systemName: "person")
+                            .font(.system(size: 20))
+                            .foregroundColor(selectedTab == .updateUser ? .blue : .gray)
                     }
                     
                     Spacer()
@@ -41,10 +38,9 @@ struct SettingsView: View {
                     Button(action: {
                         selectedTab = .updateUserPreferences
                     }) {
-                        Image(systemName: "gearshape.fill")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .padding()
+                        Image(systemName: "gear")
+                            .font(.system(size: 20))
+                            .foregroundColor(selectedTab == .updateUserPreferences ? .blue : .gray)
                     }
                     
                     Spacer()
@@ -53,14 +49,18 @@ struct SettingsView: View {
                         selectedTab = .aboutApp
                     }) {
                         Image(systemName: "info.circle")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .padding()
+                            .font(.system(size: 20))
+                            .foregroundColor(selectedTab == .aboutApp ? .blue : .gray)
                     }
                     
                     Spacer()
                 }
+                .padding(.top, 10)
                 .background(Color(UIColor.systemBackground))
+                
+                Divider()
+                
+                tabView
             }
             .navigationBarTitle("", displayMode: .inline)
             .navigationBarHidden(true)
@@ -77,13 +77,5 @@ struct SettingsView: View {
         case .updateUserPreferences:
             UpdateUserPreferencesView()
         }
-    }
-}
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        let errorHandlingManager = ErrorHandlingManager()
-        let authenticationManager = AuthenticationManager(errorHandlingManager: errorHandlingManager)
-
-        SettingsView().environmentObject(errorHandlingManager).environmentObject(authenticationManager)
     }
 }

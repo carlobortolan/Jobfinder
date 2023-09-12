@@ -15,8 +15,9 @@ struct ApplicationPopup: View {
     
     @Binding var isVisible: Bool
     @Binding var message: String
+    @State var cvData: Data?
     @State private var isLoading = false
-    
+    @State private var isPickingDocument = false
     var job: Job
     
     var body: some View {
@@ -50,8 +51,34 @@ struct ApplicationPopup: View {
                                     .padding()
                                     .frame(width: 350, height: 300)
                                 
+                                if job.cvRequired {
+                                    Button(action: {
+                                        isPickingDocument.toggle()
+                                    }) {
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .foregroundColor(Color("FeedBgColor"))
+                                            .cornerRadius(10)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .foregroundColor(Color("SuccessColor"))
+                                                    .border(Color("FgColor"), width: 3)
+                                                    .padding(.horizontal, 10.0)
+                                                    .overlay(
+                                                        Text("UPLOAD CV [\(String(describing: job.allowedCvFormat))]")
+                                                            .font(.headline)
+                                                            .fontWeight(.black)
+                                                            .foregroundColor(Color.white)
+                                                    )
+                                            )
+                                    }
+                                    .padding()
+                                    .cornerRadius(10)
+                                    .fileImporter(isPresented: $isPickingDocument, allowedContentTypes: [.pdf], onCompletion: handleDocumentSelection)
+                                }
+
+                                
                                 Button(action: {
-                                    applicationManager.submitApplication(iteration: 0, jobId: job.jobId, userId: authenticationManager.current.userId, message: message)
+                                    applicationManager.submitApplication(iteration: 0, jobId: job.jobId, userId: authenticationManager.current.userId, message: message, cv: cvData)
                                     isVisible = false
                                 }) {
                                     RoundedRectangle(cornerRadius: 10)
@@ -72,9 +99,24 @@ struct ApplicationPopup: View {
                                 }
                                 .padding()
                                 .cornerRadius(10)
+                                
                             }
                         )
                 )
+        }
+    }
+    
+    private func handleDocumentSelection(result: Result<URL, Error>) {
+        if case .success(let url) = result {
+            do {
+                cvData = try Data(contentsOf: url)
+            } catch {
+                // Handle error while reading file data
+                print("Error reading file data: \(error)")
+            }
+        } else if case .failure(let error) = result {
+            // Handle document picker error
+            print("Document picker error: \(error)")
         }
     }
 }

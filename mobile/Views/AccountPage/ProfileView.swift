@@ -89,7 +89,7 @@ struct ProfileView: View {
                         .font(.headline)
                         .fontWeight(.light)
                     Spacer()
-                    if let websiteURL = URL(string: "https://about.embloy.com"),
+                    if let websiteURL = URL(string: "http://about.embloy.com"),
                        let websiteName = getWebsiteName(from: websiteURL.absoluteString) {
                         Link(destination: websiteURL, label: {
                             Text(websiteName)
