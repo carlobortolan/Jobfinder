@@ -235,9 +235,7 @@ class AccountHandler {
     
     static func updateAccount(accessToken: String, user: UserUpdateRequestBody, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
         print("Started updating account with: \naccess_token: \(accessToken)")
-        guard let rootUrl = ProcessInfo.processInfo.environment["ROOT_URL"],
-              let preferencesPath = ProcessInfo.processInfo.environment["USER_PATH"],
-              let urlComponents = URLComponents(string: rootUrl + preferencesPath) else {
+        guard let urlComponents = URLComponents(string: Routes.ROOT_URL + Routes.USER_PATH) else {
             completion(.failure(APIError.invalidURL))
             return
         }
