@@ -103,13 +103,9 @@ class ApplicationHandler {
         }
     }
     
-    static func createAttachmentApplication(accessToken: String, application: Application, attachment: Data, format: [String], completion: @escaping (Result<APIResponse, APIError>) -> Void) {
+    static func createAttachmentApplication(accessToken: String, application: Application, attachment: Data, format: String, completion: @escaping (Result<APIResponse, APIError>) -> Void) {
         print("Started creating application with: \naccess_token: \(accessToken)\njobId: \(application.jobId)\nuserId: \(application.userId)")
 
-        // Create a unique boundary string
-//        let boundary = "Boundary-\(UUID().uuidString)"
-        
-        // Create the URLRequest
         guard let urlComponents = URLComponents(string: Routes.ROOT_URL + Routes.JOBS_PATH + "/\(application.jobId)" + Routes.APPLICATIONS_PATH) else {
             completion(.failure(APIError.invalidURL))
             return
@@ -133,16 +129,27 @@ class ApplicationHandler {
         body.append("Content-Disposition: form-data; name=\"application_text\"\r\n\r\n".data(using: .utf8)!)
         body.append("\(application.applicationText)\r\n".data(using: .utf8)!)
 
-        // Update the "Content-Type" and filename based on the specified format
-        for formatItem in format {
-            body.append("--\(boundary)\r\n".data(using: .utf8)!)
-            let filename = "\(application.jobId)_\(application.userId)_cv\(formatItem)"
-            body.append("Content-Disposition: form-data; name=\"application_attachment\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)
-            body.append("Content-Type: application/\(formatItem)\r\n\r\n".data(using: .utf8)!)
-            body.append(attachment)
-            body.append("\r\n".data(using: .utf8)!)
+        var contentType = ""
+        switch format {
+            case ".pdf":
+                contentType = "application/pdf"
+            case ".docx":
+                contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            case ".xml":
+                contentType = "text/xml"
+            case ".txt":
+                contentType = "text/plain"
+            default:
+                contentType = ""
         }
-
+        let filename = "\(application.jobId)_\(application.userId)_cv\(format)"
+        print("ContentType: \(contentType)")
+        print("fileName: \(filename)")
+        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"application_attachment\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)
+        body.append("Content-Type: \(contentType)\r\n\r\n".data(using: .utf8)!)
+        body.append(attachment)
+        body.append("\r\n".data(using: .utf8)!)
         body.append("--\(boundary)--\r\n".data(using: .utf8)!)
 
         request.httpBody = body

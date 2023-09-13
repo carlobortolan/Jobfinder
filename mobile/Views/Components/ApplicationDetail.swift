@@ -36,12 +36,14 @@ struct ApplicationDetail: View {
             }
         }
         .onAppear {
-            applicationManager.loadApplication(iteration: 0, jobId: jobId) { application in
-                if let application = application {
-                    self.application = application
-                    print("Application found: \(application)")
-                } else {
-                    print("Application not found or error occurred")
+            DispatchQueue.main.async {
+                applicationManager.loadApplication(iteration: 0, jobId: jobId) { application in
+                    if let application = application {
+                        self.application = application
+                        print("Application found: \(application)")
+                    } else {
+                        print("Application not found or error occurred")
+                    }
                 }
             }
         }

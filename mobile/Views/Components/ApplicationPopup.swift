@@ -16,6 +16,7 @@ struct ApplicationPopup: View {
     @Binding var isVisible: Bool
     @Binding var message: String
     @State var cvData: Data?
+    @State var cvFormat: String?
     @State var fileName: String = ""
     @State private var isLoading = false
     @State private var isPickingDocument = false
@@ -81,11 +82,12 @@ struct ApplicationPopup: View {
                                 Button(action: {
                                     isLoading = true
                                     DispatchQueue.main.async {
-                                        applicationManager.submitApplication(iteration: 0, jobId: job.jobId, userId: authenticationManager.current.userId, message: message, cv: cvData, format: job.allowedCvFormat) {
+                                        applicationManager.submitApplication(iteration: 0, jobId: job.jobId, userId: authenticationManager.current.userId, message: message, cv: cvData, format: cvFormat) {
                                             isLoading = false
                                             isVisible = false
                                         }
-                                    }                                }) {
+                                    }
+                                }) {
                                     RoundedRectangle(cornerRadius: 10)
                                         .foregroundColor(Color("FeedBgColor"))
                                         .cornerRadius(10)
@@ -112,17 +114,32 @@ struct ApplicationPopup: View {
     }
     
     func handleDocumentSelection(result: Result<URL, Error>) {
-        switch result {
-        case .success(let selectedURL):
-            do {
-                cvData = try Data(contentsOf: selectedURL)
-            } catch {
-                print("Error reading file data: \(error)")
+        DispatchQueue.main.async {
+            switch result {
+            case .success(let selectedURL):
+                do {
+                    cvData = try Data(contentsOf: selectedURL)
+                    let fileExtension = selectedURL.pathExtension.lowercased()
+                        switch fileExtension {
+                        case "pdf":
+                            cvFormat = ".pdf"
+                        case "doc", "docx":
+                            cvFormat = ".docx"
+                        case "xml":
+                            cvFormat = ".xml"
+                        case "txt":
+                            cvFormat = ".txt"
+                        default:
+                            cvFormat = "unknown"
+                        }
+                    print("CVFORMAT EXTENSION: \(String(describing: cvFormat))")
+                } catch {
+                    print("Error reading file data: \(error)")
+                }
+                fileName = selectedURL.lastPathComponent
+            case .failure(let error):
+                print("File Selection Error: \(error.localizedDescription)")
             }
-            fileName = selectedURL.lastPathComponent
-        case .failure(let error):
-            print("File Selection Error: \(error.localizedDescription)")
         }
     }
-    
 }

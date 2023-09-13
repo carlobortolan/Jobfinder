@@ -136,7 +136,7 @@ class ApplicationManager: ObservableObject {
         }
     }
     
-    func submitApplication(iteration: Int, jobId: Int, userId: Int, message: String, cv: Data?, format: [String]?, completion: @escaping () -> Void) {
+    func submitApplication(iteration: Int, jobId: Int, userId: Int, message: String, cv: Data?, format: String?, completion: @escaping () -> Void) {
         print("Iteration \(iteration)")
         let application = Application(jobId: jobId, userId: userId, createdAt: "", updatedAt: "", status: "0", applicationText: message, applicationDocuments: nil, response: nil)
         if let accessToken = authenticationManager.getAccessToken() {
