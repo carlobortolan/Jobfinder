@@ -69,8 +69,6 @@ The app is designed to work on iOS devices running iOS 14 and later. It adapts t
 
 - [URLImage 3.1.1](https://github.com/dmytro-anokhin/url-image/):  AsyncImage before iOS 15. Lightweight, pure SwiftUI Image view, that displays an image downloaded from URL, with auxiliary views and local cache. 
 
-- [OpenAI GPT-3](https://openai.com/gpt-3): The AI model assisting in writing the documentation.
-
 ---
 
 © Carlo Bortolan, Jan Hummel
