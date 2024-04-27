@@ -8,7 +8,7 @@ The app is a iOS >= 14.0 application built with SwiftUI that serves as a mobile 
 
 ## Demo
 
-# TODO:
+https://github.com/carlobortolan/Jobfinder/assets/106114526/913f8a9e-c184-4ef5-969d-4c8d4d7c913c
 
 ## License
 
