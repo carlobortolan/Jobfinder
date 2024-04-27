@@ -81,5 +81,5 @@ The app is designed to work on iOS devices running iOS 14 and later. It adapts t
 © Carlo Bortolan
 
 > Carlo Bortolan &nbsp;&middot;&nbsp;
-> GitHub [@carlobortolan](https://github.com/carlobortolan) &nbsp;&middot;&nbsp;
-> contact via [bortolanoffice@embloy.com](mailto:bortolanoffice@embloy.com)
+> GitHub [carlobortolan](https://github.com/carlobortolan) &nbsp;&middot;&nbsp;
+> contact via [carlobortolan@gmail.com](carlobortolan@gmail.com)
