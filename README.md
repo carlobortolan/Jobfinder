@@ -1,7 +1,14 @@
-# Embloy Mobile App
+# Jobfinder App
 
-This repository contains the source code for Embloy's mobile app.
-The Embloy Mobile App is a iOS >= 14.0 application built with SwiftUI that serves as a mobile client to [Embloy's API](httpt://github.com/embloy/embloy-backend). It allows users to search for jobs, apply filters, and view job details.
+> [!IMPORTANT]
+> As of April 27, 2024, this project has been archived and will probably not be activated or updated in the future.
+
+This repository contains the source code for a simple jobfinder mobile app written before the start of the TUM iPraktikum W23/24.
+The app is a iOS >= 14.0 application built with SwiftUI that serves as a mobile client to a deprecated version of [Embloy's API](httpt://github.com/embloy/). It allows users to search for jobs, apply filters, and view job details.
+
+## Demo
+
+# TODO:
 
 ## License
 
@@ -71,12 +78,8 @@ The app is designed to work on iOS devices running iOS 14 and later. It adapts t
 
 ---
 
-© Carlo Bortolan, Jan Hummel
+© Carlo Bortolan
 
 > Carlo Bortolan &nbsp;&middot;&nbsp;
 > GitHub [@carlobortolan](https://github.com/carlobortolan) &nbsp;&middot;&nbsp;
 > contact via [bortolanoffice@embloy.com](mailto:bortolanoffice@embloy.com)
->
-> Jan Hummel &nbsp;&middot;&nbsp;
-> GitHub [@github4touchdouble](https://github.com/github4touchdouble) &nbsp;&middot;&nbsp;
-> contact via [hummeloffice@embloy.com](mailto:hummeloffice@embloy.com)
